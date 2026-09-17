@@ -1,0 +1,15 @@
+{
+  "short_name": "RouteGuard AI",
+  "name": "RouteGuard AI - Software Route Intelligence Platform",
+  "icons": [
+    {
+      "src": "https://leafletjs.com/docs/images/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#090d16",
+  "theme_color": "#090d16",
+  "display": "standalone"
+}

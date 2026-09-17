@@ -1,0 +1,4758 @@
+{
+  "id": "state_arunachal",
+  "name": "Arunachal Pradesh",
+  "capital": "Itanagar",
+  "code": "AR",
+  "census_code": 12,
+  "riskProfile": "🔴 High Alpine & Landslide Prone",
+  "totalDivisions": 5,
+  "totalDistricts": 28,
+  "divisions": [
+    {
+      "id": "kameng",
+      "name": "Kameng Division (West)",
+      "districts": [
+        {
+          "name": "Tawang",
+          "circles": [
+            {
+              "name": "Tawang",
+              "villages": [
+                {
+                  "id": "VIL_TAW_1",
+                  "name": "Tawang Town",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Tawang Town - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Tawang Town - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Tawang Town - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Tawang Town - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_TAW_2",
+                  "name": "Kharung",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Kharung - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Kharung - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Kharung - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Kharung - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_TAW_3",
+                  "name": "Lhou",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Lhou - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Lhou - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Lhou - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Lhou - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_TAW_4",
+                  "name": "Gyangkhar",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Gyangkhar - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Gyangkhar - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Gyangkhar - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Gyangkhar - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_TAW_5",
+                  "name": "Seru",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Seru - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Seru - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Seru - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Seru - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_TAW_6",
+                  "name": "Mukto",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Mukto - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Mukto - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Mukto - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Mukto - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Kitpi",
+              "villages": [
+                {
+                  "id": "VIL_TAW_1",
+                  "name": "Kitpi",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Kitpi - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Kitpi - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Kitpi - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Kitpi - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_TAW_2",
+                  "name": "Lhou Basti",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Lhou Basti - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Lhou Basti - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Lhou Basti - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Lhou Basti - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_TAW_3",
+                  "name": "Namet",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Namet - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Namet - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Namet - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Namet - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_TAW_4",
+                  "name": "Paikhar",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Paikhar - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Paikhar - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Paikhar - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Paikhar - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Jang",
+              "villages": [
+                {
+                  "id": "VIL_TAW_1",
+                  "name": "Jang",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Jang - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Jang - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Jang - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Jang - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_TAW_2",
+                  "name": "Mago",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Mago - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Mago - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Mago - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Mago - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_TAW_3",
+                  "name": "Thingbu",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Thingbu - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Thingbu - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Thingbu - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Thingbu - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_TAW_4",
+                  "name": "Rho",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Rho - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Rho - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Rho - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Rho - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_TAW_5",
+                  "name": "Lemberdung",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Lemberdung - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Lemberdung - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Lemberdung - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Lemberdung - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Lumla",
+              "villages": [
+                {
+                  "id": "VIL_TAW_1",
+                  "name": "Lumla",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Lumla - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Lumla - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Lumla - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Lumla - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_TAW_2",
+                  "name": "Dudunghar",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Dudunghar - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Dudunghar - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Dudunghar - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Dudunghar - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_TAW_3",
+                  "name": "Zemithang",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Zemithang - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Zemithang - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Zemithang - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Zemithang - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_TAW_4",
+                  "name": "Khinmey",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Khinmey - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Khinmey - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Khinmey - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Khinmey - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_TAW_5",
+                  "name": "Socktsen",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Socktsen - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Socktsen - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Socktsen - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Socktsen - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "West Kameng",
+          "circles": [
+            {
+              "name": "Bomdila",
+              "villages": [
+                {
+                  "id": "VIL_WES_1",
+                  "name": "Bomdila HQ",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Bomdila HQ - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Bomdila HQ - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Bomdila HQ - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Bomdila HQ - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_WES_2",
+                  "name": "Sera",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Sera - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Sera - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Sera - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Sera - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_WES_3",
+                  "name": "Wanghoo",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Wanghoo - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Wanghoo - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Wanghoo - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Wanghoo - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_WES_4",
+                  "name": "Pedung",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Pedung - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Pedung - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Pedung - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Pedung - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_WES_5",
+                  "name": "Rahu",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Rahu - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Rahu - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Rahu - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Rahu - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Dirang",
+              "villages": [
+                {
+                  "id": "VIL_WES_1",
+                  "name": "Dirang Basti",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Dirang Basti - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Dirang Basti - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Dirang Basti - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Dirang Basti - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_WES_2",
+                  "name": "Thembang",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Thembang - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Thembang - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Thembang - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Thembang - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_WES_3",
+                  "name": "Sange",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Sange - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Sange - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Sange - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Sange - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_WES_4",
+                  "name": "Manda",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Manda - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Manda - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Manda - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Manda - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_WES_5",
+                  "name": "Rama Camp",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Rama Camp - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Rama Camp - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Rama Camp - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Rama Camp - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Bhalukpong",
+              "villages": [
+                {
+                  "id": "VIL_WES_1",
+                  "name": "Bhalukpong Town",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Bhalukpong Town - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Bhalukpong Town - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Bhalukpong Town - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Bhalukpong Town - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_WES_2",
+                  "name": "Tipi",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Tipi - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Tipi - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Tipi - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Tipi - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_WES_3",
+                  "name": "Sessa",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Sessa - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Sessa - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Sessa - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Sessa - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_WES_4",
+                  "name": "Pinjoli",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Pinjoli - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Pinjoli - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Pinjoli - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Pinjoli - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_WES_5",
+                  "name": "Dojmara",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Dojmara - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Dojmara - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Dojmara - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Dojmara - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Rupa",
+              "villages": [
+                {
+                  "id": "VIL_WES_1",
+                  "name": "Rupa Basti",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Rupa Basti - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Rupa Basti - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Rupa Basti - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Rupa Basti - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_WES_2",
+                  "name": "Jigaon",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Jigaon - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Jigaon - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Jigaon - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Jigaon - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_WES_3",
+                  "name": "Sallari",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Sallari - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Sallari - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Sallari - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Sallari - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_WES_4",
+                  "name": "Shergaon",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Shergaon - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Shergaon - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Shergaon - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Shergaon - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Kalaktang",
+              "villages": [
+                {
+                  "id": "VIL_WES_1",
+                  "name": "Kalaktang",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Kalaktang - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Kalaktang - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Kalaktang - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Kalaktang - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_WES_2",
+                  "name": "Balemu",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Balemu - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Balemu - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Balemu - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Balemu - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_WES_3",
+                  "name": "Boha",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Boha - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Boha - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Boha - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Boha - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_WES_4",
+                  "name": "Angkaling",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Angkaling - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Angkaling - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Angkaling - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Angkaling - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_WES_5",
+                  "name": "Morshing",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Morshing - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Morshing - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Morshing - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Morshing - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Singchung",
+              "villages": [
+                {
+                  "id": "VIL_WES_1",
+                  "name": "Singchung",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Singchung - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Singchung - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Singchung - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Singchung - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_WES_2",
+                  "name": "Dahlung",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Dahlung - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Dahlung - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Dahlung - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Dahlung - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_WES_3",
+                  "name": "Nafra Link",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Nafra Link - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Nafra Link - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Nafra Link - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Nafra Link - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_WES_4",
+                  "name": "Kaspi",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Kaspi - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Kaspi - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Kaspi - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Kaspi - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Bichom",
+          "circles": [
+            {
+              "name": "Nafra",
+              "villages": [
+                {
+                  "id": "VIL_BIC_1",
+                  "name": "Nafra Basti",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Nafra Basti - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Nafra Basti - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Nafra Basti - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Nafra Basti - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_BIC_2",
+                  "name": "Draka",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Draka - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Draka - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Draka - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Draka - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_BIC_3",
+                  "name": "Khellong",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Khellong - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Khellong - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Khellong - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Khellong - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_BIC_4",
+                  "name": "Nachiban",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Nachiban - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Nachiban - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Nachiban - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Nachiban - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Lada",
+              "villages": [
+                {
+                  "id": "VIL_BIC_1",
+                  "name": "Lada HQ",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Lada HQ - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Lada HQ - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Lada HQ - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Lada HQ - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_BIC_2",
+                  "name": "Sawa",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Sawa - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Sawa - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Sawa - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Sawa - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_BIC_3",
+                  "name": "Bana Link",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Bana Link - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Bana Link - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Bana Link - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Bana Link - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "East Kameng",
+          "circles": [
+            {
+              "name": "Seppa",
+              "villages": [
+                {
+                  "id": "VIL_EAS_1",
+                  "name": "Seppa Town",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Seppa Town - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Seppa Town - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Seppa Town - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Seppa Town - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_EAS_2",
+                  "name": "Pechang",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Pechang - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Pechang - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Pechang - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Pechang - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_EAS_3",
+                  "name": "Type Colony",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Type Colony - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Type Colony - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Type Colony - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Type Colony - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_EAS_4",
+                  "name": "Kakoki",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Kakoki - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Kakoki - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Kakoki - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Kakoki - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Chayang Tajo",
+              "villages": [
+                {
+                  "id": "VIL_EAS_1",
+                  "name": "Chayang Tajo",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Chayang Tajo - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Chayang Tajo - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Chayang Tajo - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Chayang Tajo - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_EAS_2",
+                  "name": "Khenewa",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Khenewa - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Khenewa - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Khenewa - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Khenewa - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_EAS_3",
+                  "name": "Pipu",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Pipu - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Pipu - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Pipu - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Pipu - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_EAS_4",
+                  "name": "Gyawepurang",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Gyawepurang - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Gyawepurang - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Gyawepurang - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Gyawepurang - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Bameng",
+              "villages": [
+                {
+                  "id": "VIL_EAS_1",
+                  "name": "Bameng",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Bameng - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Bameng - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Bameng - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Bameng - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_EAS_2",
+                  "name": "Pakke Camp",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Pakke Camp - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Pakke Camp - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Pakke Camp - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Pakke Camp - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_EAS_3",
+                  "name": "Liyak",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Liyak - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Liyak - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Liyak - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Liyak - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Pakke-Kessang",
+          "circles": [
+            {
+              "name": "Pakke-Kessang",
+              "villages": [
+                {
+                  "id": "VIL_PAK_1",
+                  "name": "Lemmi HQ",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Lemmi HQ - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Lemmi HQ - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Lemmi HQ - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Lemmi HQ - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_PAK_2",
+                  "name": "Rilloh",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Rilloh - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Rilloh - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Rilloh - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Rilloh - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_PAK_3",
+                  "name": "Veo",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Veo - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Veo - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Veo - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Veo - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Seijosa",
+              "villages": [
+                {
+                  "id": "VIL_PAK_1",
+                  "name": "Seijosa Basti",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Seijosa Basti - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Seijosa Basti - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Seijosa Basti - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Seijosa Basti - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_PAK_2",
+                  "name": "Darlong",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Darlong - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Darlong - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Darlong - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Darlong - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_PAK_3",
+                  "name": "A2",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "A2 - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "A2 - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "A2 - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "A2 - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_PAK_4",
+                  "name": "Upper Mobuso",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Upper Mobuso - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Upper Mobuso - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Upper Mobuso - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Upper Mobuso - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subansiri",
+      "name": "Subansiri Division (Central-West)",
+      "districts": [
+        {
+          "name": "Papum Pare",
+          "circles": [
+            {
+              "name": "Yupia",
+              "villages": [
+                {
+                  "id": "VIL_PAP_1",
+                  "name": "Yupia HQ",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Yupia HQ - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Yupia HQ - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Yupia HQ - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Yupia HQ - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_PAP_2",
+                  "name": "Tigdo",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Tigdo - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Tigdo - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Tigdo - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Tigdo - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_PAP_3",
+                  "name": "Hollongi",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Hollongi - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Hollongi - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Hollongi - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Hollongi - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_PAP_4",
+                  "name": "Borum",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Borum - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Borum - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Borum - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Borum - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Kimin",
+              "villages": [
+                {
+                  "id": "VIL_PAP_1",
+                  "name": "Kimin Town",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Kimin Town - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Kimin Town - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Kimin Town - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Kimin Town - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_PAP_2",
+                  "name": "Lichi",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Lichi - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Lichi - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Lichi - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Lichi - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_PAP_3",
+                  "name": "Kheel",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Kheel - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Kheel - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Kheel - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Kheel - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_PAP_4",
+                  "name": "Belapu",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Belapu - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Belapu - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Belapu - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Belapu - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Sagalee",
+              "villages": [
+                {
+                  "id": "VIL_PAP_1",
+                  "name": "Sagalee",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Sagalee - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Sagalee - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Sagalee - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Sagalee - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_PAP_2",
+                  "name": "Leporiang",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Leporiang - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Leporiang - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Leporiang - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Leporiang - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_PAP_3",
+                  "name": "Mengio",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Mengio - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Mengio - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Mengio - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Mengio - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_PAP_4",
+                  "name": "Toru",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Toru - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Toru - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Toru - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Toru - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Itanagar Capital Complex",
+          "circles": [
+            {
+              "name": "Itanagar",
+              "villages": [
+                {
+                  "id": "VIL_ITA_1",
+                  "name": "Itanagar Core",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Itanagar Core - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Itanagar Core - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Itanagar Core - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Itanagar Core - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_ITA_2",
+                  "name": "Ganga Village",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Ganga Village - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Ganga Village - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Ganga Village - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Ganga Village - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_ITA_3",
+                  "name": "Chimpu",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Chimpu - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Chimpu - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Chimpu - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Chimpu - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_ITA_4",
+                  "name": "Jully",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Jully - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Jully - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Jully - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Jully - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Naharlagun",
+              "villages": [
+                {
+                  "id": "VIL_ITA_1",
+                  "name": "Model Village",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Model Village - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Model Village - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Model Village - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Model Village - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_ITA_2",
+                  "name": "Nirjuli",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Nirjuli - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Nirjuli - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Nirjuli - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Nirjuli - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_ITA_3",
+                  "name": "Banderdewa",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Banderdewa - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Banderdewa - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Banderdewa - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Banderdewa - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_ITA_4",
+                  "name": "Karsingsa",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Karsingsa - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Karsingsa - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Karsingsa - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Karsingsa - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Lower Subansiri",
+          "circles": [
+            {
+              "name": "Ziro",
+              "villages": [
+                {
+                  "id": "VIL_LOW_1",
+                  "name": "Hapoli",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Hapoli - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Hapoli - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Hapoli - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Hapoli - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_LOW_2",
+                  "name": "Hari",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Hari - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Hari - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Hari - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Hari - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_LOW_3",
+                  "name": "Hong",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Hong - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Hong - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Hong - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Hong - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_LOW_4",
+                  "name": "Bullaa",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Bullaa - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Bullaa - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Bullaa - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Bullaa - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_LOW_5",
+                  "name": "Hija",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Hija - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Hija - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Hija - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Hija - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_LOW_6",
+                  "name": "Dutta",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Dutta - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Dutta - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Dutta - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Dutta - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Yachuli",
+              "villages": [
+                {
+                  "id": "VIL_LOW_1",
+                  "name": "Yachuli",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Yachuli - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Yachuli - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Yachuli - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Yachuli - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_LOW_2",
+                  "name": "Mai",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Mai - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Mai - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Mai - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Mai - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_LOW_3",
+                  "name": "Pitapool",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Pitapool - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Pitapool - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Pitapool - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Pitapool - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_LOW_4",
+                  "name": "Talo",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Talo - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Talo - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Talo - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Talo - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Keyi Panyor",
+          "circles": [
+            {
+              "name": "Yachuli",
+              "villages": [
+                {
+                  "id": "VIL_KEY_1",
+                  "name": "Yachuli Sadar",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Yachuli Sadar - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Yachuli Sadar - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Yachuli Sadar - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Yachuli Sadar - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_KEY_2",
+                  "name": "Pistana",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Pistana - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Pistana - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Pistana - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Pistana - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_KEY_3",
+                  "name": "Kheel",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Kheel - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Kheel - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Kheel - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Kheel - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Kurung Kumey",
+          "circles": [
+            {
+              "name": "Koloriang",
+              "villages": [
+                {
+                  "id": "VIL_KUR_1",
+                  "name": "Koloriang Town",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Koloriang Town - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Koloriang Town - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Koloriang Town - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Koloriang Town - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_KUR_2",
+                  "name": "Damin",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Damin - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Damin - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Damin - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Damin - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_KUR_3",
+                  "name": "Parsiparlo",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Parsiparlo - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Parsiparlo - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Parsiparlo - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Parsiparlo - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_KUR_4",
+                  "name": "Nyapin",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Nyapin - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Nyapin - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Nyapin - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Nyapin - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_KUR_5",
+                  "name": "Sangram",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Sangram - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Sangram - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Sangram - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Sangram - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Kra Daadi",
+          "circles": [
+            {
+              "name": "Palin",
+              "villages": [
+                {
+                  "id": "VIL_KRA_1",
+                  "name": "Palin HQ",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Palin HQ - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Palin HQ - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Palin HQ - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Palin HQ - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_KRA_2",
+                  "name": "Chambang",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Chambang - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Chambang - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Chambang - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Chambang - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_KRA_3",
+                  "name": "Yangte",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Yangte - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Yangte - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Yangte - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Yangte - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_KRA_4",
+                  "name": "Tali",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Tali - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Tali - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Tali - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Tali - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_KRA_5",
+                  "name": "Pipsorang",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Pipsorang - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Pipsorang - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Pipsorang - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Pipsorang - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Kamle",
+          "circles": [
+            {
+              "name": "Raga",
+              "villages": [
+                {
+                  "id": "VIL_KAM_1",
+                  "name": "Raga HQ",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Raga HQ - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Raga HQ - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Raga HQ - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Raga HQ - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_KAM_2",
+                  "name": "Giba",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Giba - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Giba - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Giba - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Giba - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_KAM_3",
+                  "name": "Dollungmukh",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Dollungmukh - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Dollungmukh - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Dollungmukh - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Dollungmukh - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_KAM_4",
+                  "name": "Puchigeko",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Puchigeko - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Puchigeko - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Puchigeko - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Puchigeko - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Upper Subansiri",
+          "circles": [
+            {
+              "name": "Daporijo",
+              "villages": [
+                {
+                  "id": "VIL_UPP_1",
+                  "name": "Daporijo Town",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Daporijo Town - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Daporijo Town - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Daporijo Town - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Daporijo Town - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_UPP_2",
+                  "name": "Dumporijo",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Dumporijo - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Dumporijo - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Dumporijo - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Dumporijo - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_UPP_3",
+                  "name": "Nacho",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Nacho - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Nacho - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Nacho - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Nacho - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_UPP_4",
+                  "name": "Taliha",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Taliha - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Taliha - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Taliha - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Taliha - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_UPP_5",
+                  "name": "Siyum",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Siyum - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Siyum - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Siyum - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Siyum - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "siang",
+      "name": "Siang Division (Central)",
+      "districts": [
+        {
+          "name": "East Siang",
+          "circles": [
+            {
+              "name": "Pasighat",
+              "villages": [
+                {
+                  "id": "VIL_EAS_1",
+                  "name": "Pasighat Municipal",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Pasighat Municipal - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Pasighat Municipal - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Pasighat Municipal - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Pasighat Municipal - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_EAS_2",
+                  "name": "Ruksin",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Ruksin - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Ruksin - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Ruksin - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Ruksin - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_EAS_3",
+                  "name": "Mebo",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Mebo - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Mebo - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Mebo - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Mebo - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_EAS_4",
+                  "name": "Sille-Oyan",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Sille-Oyan - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Sille-Oyan - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Sille-Oyan - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Sille-Oyan - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_EAS_5",
+                  "name": "Bilat",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Bilat - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Bilat - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Bilat - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Bilat - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "West Siang",
+          "circles": [
+            {
+              "name": "Aalo",
+              "villages": [
+                {
+                  "id": "VIL_WES_1",
+                  "name": "Aalo Town",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Aalo Town - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Aalo Town - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Aalo Town - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Aalo Town - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_WES_2",
+                  "name": "Liromoba",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Liromoba - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Liromoba - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Liromoba - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Liromoba - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_WES_3",
+                  "name": "Yomcha",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Yomcha - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Yomcha - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Yomcha - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Yomcha - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_WES_4",
+                  "name": "Kamba",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Kamba - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Kamba - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Kamba - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Kamba - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_WES_5",
+                  "name": "Darak",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Darak - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Darak - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Darak - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Darak - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Siang",
+          "circles": [
+            {
+              "name": "Boleng",
+              "villages": [
+                {
+                  "id": "VIL_SIA_1",
+                  "name": "Boleng HQ",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Boleng HQ - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Boleng HQ - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Boleng HQ - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Boleng HQ - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_SIA_2",
+                  "name": "Pangin",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Pangin - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Pangin - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Pangin - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Pangin - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_SIA_3",
+                  "name": "Rumgong",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Rumgong - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Rumgong - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Rumgong - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Rumgong - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_SIA_4",
+                  "name": "Kaying",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Kaying - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Kaying - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Kaying - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Kaying - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_SIA_5",
+                  "name": "Riga",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Riga - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Riga - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Riga - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Riga - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Upper Siang",
+          "circles": [
+            {
+              "name": "Yingkiong",
+              "villages": [
+                {
+                  "id": "VIL_UPP_1",
+                  "name": "Yingkiong Town",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Yingkiong Town - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Yingkiong Town - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Yingkiong Town - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Yingkiong Town - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_UPP_2",
+                  "name": "Tuting",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Tuting - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Tuting - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Tuting - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Tuting - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_UPP_3",
+                  "name": "Gelling",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Gelling - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Gelling - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Gelling - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Gelling - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_UPP_4",
+                  "name": "Singa",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Singa - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Singa - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Singa - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Singa - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_UPP_5",
+                  "name": "Mariyang",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Mariyang - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Mariyang - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Mariyang - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Mariyang - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Lower Siang",
+          "circles": [
+            {
+              "name": "Likabali",
+              "villages": [
+                {
+                  "id": "VIL_LOW_1",
+                  "name": "Likabali HQ",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Likabali HQ - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Likabali HQ - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Likabali HQ - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Likabali HQ - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_LOW_2",
+                  "name": "Nari",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Nari - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Nari - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Nari - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Nari - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_LOW_3",
+                  "name": "Gensi",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Gensi - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Gensi - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Gensi - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Gensi - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_LOW_4",
+                  "name": "Kora",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Kora - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Kora - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Kora - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Kora - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Leparada",
+          "circles": [
+            {
+              "name": "Basar",
+              "villages": [
+                {
+                  "id": "VIL_LEP_1",
+                  "name": "Basar Town",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Basar Town - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Basar Town - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Basar Town - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Basar Town - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_LEP_2",
+                  "name": "Tirbin",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Tirbin - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Tirbin - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Tirbin - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Tirbin - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_LEP_3",
+                  "name": "Daring",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Daring - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Daring - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Daring - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Daring - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_LEP_4",
+                  "name": "Sago",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Sago - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Sago - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Sago - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Sago - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Shi-Yomi",
+          "circles": [
+            {
+              "name": "Tato",
+              "villages": [
+                {
+                  "id": "VIL_SHI_1",
+                  "name": "Tato HQ",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Tato HQ - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Tato HQ - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Tato HQ - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Tato HQ - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_SHI_2",
+                  "name": "Mechuka Valley",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Mechuka Valley - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Mechuka Valley - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Mechuka Valley - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Mechuka Valley - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_SHI_3",
+                  "name": "Monigong",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Monigong - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Monigong - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Monigong - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Monigong - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_SHI_4",
+                  "name": "Pidi",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Pidi - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Pidi - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Pidi - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Pidi - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lohit_dibang",
+      "name": "Lohit & Dibang Division (East)",
+      "districts": [
+        {
+          "name": "Dibang Valley",
+          "circles": [
+            {
+              "name": "Anini",
+              "villages": [
+                {
+                  "id": "VIL_DIB_1",
+                  "name": "Anini Town",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Anini Town - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Anini Town - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Anini Town - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Anini Town - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_DIB_2",
+                  "name": "Etalin",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Etalin - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Etalin - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Etalin - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Etalin - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_DIB_3",
+                  "name": "Anelih",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Anelih - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Anelih - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Anelih - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Anelih - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_DIB_4",
+                  "name": "Kronli",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Kronli - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Kronli - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Kronli - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Kronli - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_DIB_5",
+                  "name": "Mipi",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Mipi - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Mipi - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Mipi - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Mipi - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Lower Dibang Valley",
+          "circles": [
+            {
+              "name": "Roing",
+              "villages": [
+                {
+                  "id": "VIL_LOW_1",
+                  "name": "Roing Town",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Roing Town - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Roing Town - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Roing Town - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Roing Town - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_LOW_2",
+                  "name": "Dambuk",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Dambuk - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Dambuk - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Dambuk - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Dambuk - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_LOW_3",
+                  "name": "Hunzli",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Hunzli - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Hunzli - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Hunzli - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Hunzli - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_LOW_4",
+                  "name": "Koronu",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Koronu - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Koronu - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Koronu - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Koronu - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_LOW_5",
+                  "name": "Desali",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Desali - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Desali - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Desali - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Desali - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Lohit",
+          "circles": [
+            {
+              "name": "Tezu",
+              "villages": [
+                {
+                  "id": "VIL_LOH_1",
+                  "name": "Tezu Municipality",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Tezu Municipality - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Tezu Municipality - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Tezu Municipality - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Tezu Municipality - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_LOH_2",
+                  "name": "Sunpura",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Sunpura - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Sunpura - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Sunpura - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Sunpura - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_LOH_3",
+                  "name": "Wakro",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Wakro - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Wakro - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Wakro - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Wakro - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_LOH_4",
+                  "name": "Tafragam",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Tafragam - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Tafragam - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Tafragam - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Tafragam - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Anjaw",
+          "circles": [
+            {
+              "name": "Hawai",
+              "villages": [
+                {
+                  "id": "VIL_ANJ_1",
+                  "name": "Hawai HQ",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Hawai HQ - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Hawai HQ - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Hawai HQ - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Hawai HQ - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_ANJ_2",
+                  "name": "Hayuliang",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Hayuliang - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Hayuliang - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Hayuliang - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Hayuliang - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_ANJ_3",
+                  "name": "Manchal",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Manchal - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Manchal - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Manchal - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Manchal - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_ANJ_4",
+                  "name": "Walong",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Walong - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Walong - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Walong - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Walong - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_ANJ_5",
+                  "name": "Kibithu",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Kibithu - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Kibithu - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Kibithu - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Kibithu - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Namsai",
+          "circles": [
+            {
+              "name": "Namsai",
+              "villages": [
+                {
+                  "id": "VIL_NAM_1",
+                  "name": "Namsai Town",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Namsai Town - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Namsai Town - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Namsai Town - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Namsai Town - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_NAM_2",
+                  "name": "Chowkham",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Chowkham - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Chowkham - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Chowkham - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Chowkham - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_NAM_3",
+                  "name": "Mahadevpur",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Mahadevpur - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Mahadevpur - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Mahadevpur - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Mahadevpur - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_NAM_4",
+                  "name": "Lathao",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Lathao - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Lathao - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Lathao - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Lathao - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_NAM_5",
+                  "name": "Piyong",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Piyong - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Piyong - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Piyong - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Piyong - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "patkai",
+      "name": "Patkai Division (South-East)",
+      "districts": [
+        {
+          "name": "Tirap",
+          "circles": [
+            {
+              "name": "Khonsa",
+              "villages": [
+                {
+                  "id": "VIL_TIR_1",
+                  "name": "Khonsa Town",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Khonsa Town - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Khonsa Town - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Khonsa Town - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Khonsa Town - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_TIR_2",
+                  "name": "Deomali",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Deomali - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Deomali - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Deomali - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Deomali - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_TIR_3",
+                  "name": "Namsang",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Namsang - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Namsang - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Namsang - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Namsang - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_TIR_4",
+                  "name": "Lazu",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Lazu - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Lazu - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Lazu - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Lazu - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_TIR_5",
+                  "name": "Dadam",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Dadam - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Dadam - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Dadam - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Dadam - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_TIR_6",
+                  "name": "Soha",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Soha - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Soha - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Soha - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Soha - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Changlang",
+          "circles": [
+            {
+              "name": "Changlang HQ",
+              "villages": [
+                {
+                  "id": "VIL_CHA_1",
+                  "name": "Changlang HQ",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Changlang HQ - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Changlang HQ - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Changlang HQ - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Changlang HQ - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_CHA_2",
+                  "name": "Miao",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Miao - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Miao - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Miao - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Miao - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_CHA_3",
+                  "name": "Jairampur",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Jairampur - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Jairampur - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Jairampur - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Jairampur - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_CHA_4",
+                  "name": "Bordumsa",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Bordumsa - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Bordumsa - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Bordumsa - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Bordumsa - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_CHA_5",
+                  "name": "Diyun",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Diyun - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Diyun - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Diyun - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Diyun - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_CHA_6",
+                  "name": "Nampong",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Nampong - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Nampong - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Nampong - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Nampong - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Longding",
+          "circles": [
+            {
+              "name": "Longding",
+              "villages": [
+                {
+                  "id": "VIL_LON_1",
+                  "name": "Longding Town",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Longding Town - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Longding Town - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Longding Town - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Longding Town - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_LON_2",
+                  "name": "Kanubari",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Kanubari - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Kanubari - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Kanubari - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Kanubari - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_LON_3",
+                  "name": "Pangchau",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Pangchau - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Pangchau - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Pangchau - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Pangchau - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_LON_4",
+                  "name": "Wakka",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Wakka - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Wakka - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Wakka - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Wakka - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                },
+                {
+                  "id": "VIL_LON_5",
+                  "name": "Pumao",
+                  "wards": [
+                    {
+                      "ward_no": 1,
+                      "name": "Pumao - Ward 01 (Upper Sector)"
+                    },
+                    {
+                      "ward_no": 2,
+                      "name": "Pumao - Ward 02 (Middle Sector)"
+                    },
+                    {
+                      "ward_no": 3,
+                      "name": "Pumao - Ward 03 (Market/TCP)"
+                    },
+                    {
+                      "ward_no": 4,
+                      "name": "Pumao - Ward 04 (Lower Basti)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
