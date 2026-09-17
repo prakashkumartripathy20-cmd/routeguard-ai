@@ -1,42 +1,42 @@
 <!DOCTYPE html>
-<html lang="en" style="height:100%; margin:0; padding:0; background-color:#090d16;">
+<html lang="en" class="h-full bg-slate-950">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RouteGuard AI - Software Route Risk Intelligence Platform (College Live Demo)</title>
-
-  <!-- Force Purge Old PWA Cache -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister()));
-    }
-    if ('caches' in window) {
-      caches.keys().then(keys => keys.forEach(k => caches.delete(k)));
-    }
-  </script>
-
-  <!-- Local & CDN Leaflet CSS -->
-  <link rel="stylesheet" href="leaflet.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <title>RouteGuard AI - Software Route Risk Intelligence Platform</title>
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          }
+        }
+      }
+    }
+  </script>
 
-  <!-- Local & CDN Leaflet JS -->
-  <script src="leaflet.js"></script>
+  <!-- Leaflet CSS & JS CDN (Keyless, Free) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
   <style>
-    html, body { height: 100%; width: 100%; margin: 0; padding: 0; overflow: hidden; font-family: system-ui, -apple-system, sans-serif; background-color: #090d16; color: #f8fafc; }
+    html, body { height: 100%; width: 100%; margin: 0; padding: 0; overflow: hidden; }
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: #090d16; }
     ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-    
-    #mapContainer { position: relative; width: 100%; height: 100%; min-height: 500px; background: #090d16; }
-    #map { position: absolute; top: 0; bottom: 0; left: 0; right: 0; width: 100%; height: 100%; background: #090d16; z-index: 1; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
 
-    .leaflet-popup-content-wrapper { background: #0f172a !important; color: #f8fafc !important; border: 1px solid #334155 !important; border-radius: 12px !important; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5) !important; }
-    .leaflet-popup-tip { background: #0f172a !important; }
+    #map { width: 100%; height: 100%; min-height: 500px; background: #090d16; }
 
     .pulse-marker-red {
       background-color: #ef4444; width: 18px; height: 18px; border-radius: 50%; border: 3px solid #ffffff;
@@ -47,81 +47,98 @@
       70% { transform: scale(1.2); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
       100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
     }
+
+    .leaflet-popup-content-wrapper {
+      background: #0f172a !important; color: #f8fafc !important; border: 1px solid #334155 !important;
+      border-radius: 12px !important; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5) !important;
+    }
+    .leaflet-popup-tip { background: #0f172a !important; }
   </style>
 </head>
-<body class="flex flex-col h-screen w-screen overflow-hidden bg-slate-950">
+<body class="h-full flex flex-col font-sans text-slate-100 overflow-hidden bg-slate-950">
 
   <!-- TOP NAVIGATION BAR -->
-  <header class="h-16 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-4 md:px-6 z-30 flex-shrink-0">
+  <header class="h-16 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-4 md:px-6 z-20 flex-shrink-0">
     <div class="flex items-center gap-3">
-      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center font-black text-xl text-white shadow-lg">🛡️</div>
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center font-black text-xl text-white shadow-lg shadow-indigo-500/20">
+        🛡️
+      </div>
       <div>
         <h1 class="font-extrabold text-base md:text-lg tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent flex items-center gap-2">
-          RouteGuard AI <span class="text-[10px] font-semibold uppercase tracking-wider text-cyan-400 px-2 py-0.5 rounded-full bg-cyan-950 border border-cyan-800">USB Pendrive Live Demo</span>
+          RouteGuard AI <span class="text-[10px] font-semibold uppercase tracking-wider text-cyan-400 px-2 py-0.5 rounded-full bg-cyan-950 border border-cyan-800">NER Logistics Safety</span>
         </h1>
         <p class="text-[11px] text-slate-400 hidden sm:block">Software Route Risk Intelligence • PostGIS & Multilingual Safety Telemetry</p>
       </div>
     </div>
 
+    <!-- VOICE CONTROLS & ACTION BUTTONS -->
     <div class="flex items-center gap-2">
       <div class="hidden sm:flex items-center gap-1.5 bg-slate-950 border border-slate-800 rounded-xl px-2.5 py-1">
-        <span class="text-xs text-slate-300">🔊 Voice:</span>
+        <span class="text-xs">🔊 Voice:</span>
         <select id="voiceLangSelect" class="bg-transparent text-xs font-bold text-cyan-400 outline-none cursor-pointer">
           <option value="en-US" class="bg-slate-900 text-slate-200">English (EN)</option>
           <option value="hi-IN" class="bg-slate-900 text-slate-200">Hindi (हिंदी)</option>
           <option value="bn-IN" class="bg-slate-900 text-slate-200">Assamese / Bengali (অসমীয়া / বাংলা)</option>
         </select>
-        <button onclick="testVoiceAlert()" title="Test Voice Alert" class="text-xs bg-slate-800 hover:bg-slate-700 px-2 py-0.5 rounded text-slate-300">🗣️ Test</button>
+        <button onclick="testVoiceAlert()" title="Test Voice Alert" class="text-xs bg-slate-800 hover:bg-slate-700 px-1.5 py-0.5 rounded text-slate-300">
+          🗣️ Test
+        </button>
       </div>
 
-      <button onclick="openHazardModal()" class="bg-gradient-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500 text-white font-extrabold text-xs px-3 py-2 rounded-xl shadow-lg flex items-center gap-1.5 transition cursor-pointer">
+      <button onclick="openHazardModal()" class="bg-gradient-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500 text-white font-extrabold text-xs px-3 py-2 rounded-xl shadow-lg flex items-center gap-1.5 transition">
         ⚠️ Report Hazard
       </button>
-      <button onclick="triggerSOSPanic()" class="bg-red-600 hover:bg-red-500 text-white font-black text-xs px-3 py-2 rounded-xl shadow-lg flex items-center gap-1 transition cursor-pointer">
+      <button onclick="triggerSOSPanic()" class="bg-red-600 hover:bg-red-500 text-white font-black text-xs px-3 py-2 rounded-xl shadow-lg flex items-center gap-1 transition">
         🚨 SOS
       </button>
     </div>
   </header>
 
-  <!-- MAIN CONTAINER -->
+  <!-- MAIN CONTENT CONTAINER -->
   <div class="flex-1 flex flex-col lg:flex-row overflow-hidden relative">
 
-    <!-- LEFT SIDEBAR CONTROL PANEL -->
-    <aside class="w-full lg:w-96 bg-slate-900 border-r border-slate-800 flex flex-col z-20 overflow-y-auto p-4 space-y-4 flex-shrink-0">
-      <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4">
+    <!-- LEFT TELEMETRY CONTROL SIDEBAR -->
+    <aside class="w-full lg:w-96 bg-slate-900/90 border-r border-slate-800 flex flex-col z-10 overflow-y-auto p-4 space-y-4 flex-shrink-0">
+      <div class="bg-slate-950/80 border border-slate-800 rounded-2xl p-4 shadow-inner">
         <label class="block text-xs font-extrabold text-slate-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
           📍 Select Logistics Corridor
         </label>
-        <select id="corridorSelect" onchange="evaluateSelectedRoute()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100 font-semibold focus:ring-2 focus:ring-indigo-500 outline-none cursor-pointer">
-          <option value="guwahati_tawang">Guwahati ➔ Tawang (NH-13 Sela Pass)</option>
-          <option value="shillong_silchar">Shillong ➔ Silchar (NH-6 Sonapur Tunnel)</option>
-          <option value="dimapur_kohima">Dimapur ➔ Kohima (NH-29 Phesama Slip)</option>
+        <select id="corridorSelect" onchange="evaluateSelectedRoute()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100 font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
+          <option value="guwahati_tawang">Guwahati ➔ Tawang (NH-13 via Bhalukpong & Sela Pass)</option>
+          <option value="shillong_silchar">Shillong ➔ Silchar (NH-6 via Sonapur Tunnel & Jowai)</option>
+          <option value="dimapur_kohima">Dimapur ➔ Kohima (NH-29 via Phesama Slip Zone)</option>
+          <option value="tezpur_itanagar">Tezpur ➔ Itanagar (NH-415 via Holongi Highway)</option>
+          <option value="siliguri_gangtok">Siliguri ➔ Gangtok (NH-10 via Teesta River Valley)</option>
         </select>
       </div>
 
-      <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-3">
+      <!-- SIMULATION CONTROLS -->
+      <div class="bg-slate-950/80 border border-slate-800 rounded-2xl p-4 space-y-3">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-bold text-slate-300">🌧️ Rainfall Simulation</span>
+          <span class="text-xs font-bold text-slate-300">🌧️ Live Rainfall Override</span>
           <span id="rainValDisplay" class="text-xs font-extrabold text-cyan-400">Default</span>
         </div>
         <input type="range" id="sliderRain" min="0" max="150" value="0" step="5" oninput="updateSliderLabels(); evaluateSelectedRoute();" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-400">
 
         <div class="flex items-center justify-between pt-2">
-          <span class="text-xs font-bold text-slate-300">🚚 Freight Traffic Density</span>
+          <span class="text-xs font-bold text-slate-300">🚚 Freight Convoy Traffic</span>
           <span id="trafficValDisplay" class="text-xs font-extrabold text-amber-400">Default</span>
         </div>
         <input type="range" id="sliderTraffic" min="1" max="5" value="1" step="0.5" oninput="updateSliderLabels(); evaluateSelectedRoute();" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-400">
 
-        <button onclick="resetSliders()" class="w-full py-1.5 text-xs text-slate-400 hover:text-slate-200 bg-slate-900 rounded-lg border border-slate-800 transition cursor-pointer">↺ Reset Sliders</button>
+        <button onclick="resetSliders()" class="w-full py-1.5 text-xs text-slate-400 hover:text-slate-200 bg-slate-900 hover:bg-slate-850 rounded-lg border border-slate-800 transition">
+          ↺ Reset Simulation Sliders
+        </button>
       </div>
 
-      <div id="telemetryCard" class="bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-3">
+      <!-- TELEMETRY DISPLAY CARD -->
+      <div id="telemetryCard" class="bg-slate-950/80 border border-slate-800 rounded-2xl p-4 space-y-3">
         <div class="animate-pulse text-xs text-slate-400">Evaluating telemetry data...</div>
       </div>
     </aside>
 
-    <!-- RIGHT MAP CONTAINER -->
-    <main id="mapContainer" class="flex-1 relative">
+    <!-- RIGHT LEAFLET MAP CONTAINER -->
+    <main class="flex-1 relative h-full w-full">
       <div id="map"></div>
     </main>
 
@@ -132,31 +149,32 @@
     <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-md p-6 space-y-4 shadow-2xl">
       <div class="flex items-center justify-between">
         <h3 class="font-extrabold text-base text-slate-100 flex items-center gap-2">⚠️ 1-Tap Driver Hazard Report</h3>
-        <button onclick="closeHazardModal()" class="text-slate-400 hover:text-white text-lg font-bold">✕</button>
+        <button onclick="closeHazardModal()" class="text-slate-400 hover:text-white">✕</button>
       </div>
       <select id="hazardType" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 outline-none">
         <option value="LANDSLIDE_BLOCK">⛰️ Landslide / Rockfall Blockade</option>
         <option value="FLASH_FLOOD">🌊 Waterlogging / Flash Flood</option>
         <option value="ROAD_CAVE_IN">🛣️ Severe Road Subsidence / Cave-in</option>
       </select>
-      <button onclick="submitDriverHazard()" class="w-full bg-gradient-to-r from-red-600 to-amber-600 hover:from-red-500 hover:to-amber-500 text-white font-extrabold text-sm py-2.5 rounded-xl shadow-lg transition cursor-pointer">🚀 Broadcast Hazard Alert</button>
+      <button onclick="submitDriverHazard()" class="w-full bg-gradient-to-r from-red-600 to-amber-600 font-extrabold text-sm py-2.5 rounded-xl text-white shadow-lg">🚀 Broadcast Hazard Alert</button>
     </div>
   </div>
 
   <script>
     let map = null;
-    let primaryPoly = null;
-    let alternatePoly = null;
-    let markersGroup = null;
-    let currentData = null;
+    let primaryPolyline = null;
+    let alternatePolyline = null;
+    let emergencyMarkersGroup = null;
+    let hazardMarkersGroup = null;
+    let currentEvaluatedData = null;
     const synth = window.speechSynthesis;
 
-    window.addEventListener('load', () => {
+    document.addEventListener('DOMContentLoaded', () => {
       initMap();
+      evaluateSelectedRoute();
     });
 
     function initMap() {
-      if (map) return;
       const NER_CENTER = [26.1445, 91.7362];
       
       map = L.map('map', {
@@ -165,29 +183,18 @@
         zoomControl: true
       });
 
-      // Keyless OpenStreetMap & Esri Dark Tiles (No API Keys Required)
-      const osmTileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-      const esriDarkUrl = 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}';
-
-      let tiles = L.tileLayer(osmTileUrl, {
+      // Pure Keyless OpenStreetMap Tile Layer (100% Free, Unrestricted)
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         maxZoom: 19
-      });
+      }).addTo(map);
 
-      tiles.on('tileerror', function() {
-        console.warn('OSM tile error, switching to Esri Dark tiles...');
-        map.removeLayer(tiles);
-        L.tileLayer(esriDarkUrl, { attribution: 'Tiles &copy; Esri', maxZoom: 18 }).addTo(map);
-      });
+      emergencyMarkersGroup = L.layerGroup().addTo(map);
+      hazardMarkersGroup = L.layerGroup().addTo(map);
 
-      tiles.addTo(map);
-      markersGroup = L.layerGroup().addTo(map);
-
-      // Force size invalidation so map fills container immediately
       setTimeout(() => {
-        map.invalidateSize();
-        evaluateSelectedRoute();
-      }, 250);
+        if (map) map.invalidateSize();
+      }, 300);
 
       window.addEventListener('resize', () => {
         if (map) map.invalidateSize();
@@ -208,26 +215,127 @@
       evaluateSelectedRoute();
     }
 
-    function evaluateSelectedRoute() {
+    async function evaluateSelectedRoute() {
       const corridorId = document.getElementById('corridorSelect').value;
-      const rVal = parseFloat(document.getElementById('sliderRain').value);
-      const tVal = parseFloat(document.getElementById('sliderTraffic').value);
+      const sliderRainVal = parseFloat(document.getElementById('sliderRain').value);
+      const sliderTrafficVal = parseFloat(document.getElementById('sliderTraffic').value);
 
+      const payload = {
+        corridor_id: corridorId,
+        rainfall_override: sliderRainVal > 0 ? sliderRainVal : null,
+        traffic_override: sliderTrafficVal > 1 ? sliderTrafficVal : null
+      };
+
+      try {
+        const res = await fetch('/api/evaluate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) throw new Error('API status: ' + res.status);
+        const data = await res.json();
+        currentEvaluatedData = data;
+        renderTelemetryUI(data);
+        renderMapRoutes(data);
+      } catch (err) {
+        const data = evaluateLocalFallback(payload);
+        currentEvaluatedData = data;
+        renderTelemetryUI(data);
+        renderMapRoutes(data);
+      }
+    }
+
+    function renderTelemetryUI(data) {
+      const p = data.primary_route;
+      const a = data.alternate_route;
+      const card = document.getElementById('telemetryCard');
+
+      card.innerHTML = `
+        <div class="space-y-3">
+          <div class="p-3 bg-slate-900 border border-slate-800 rounded-xl space-y-1">
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-bold text-slate-300">Primary Route</span>
+              <span class="px-2 py-0.5 text-[10px] font-black rounded text-white" style="background-color: ${p.badge_color}">${p.risk_score_pct}% ${p.badge_label}</span>
+            </div>
+            <div class="text-xs text-slate-400">${p.name} • ${p.distance_km} km</div>
+            <div class="text-xs text-amber-400 font-bold">ETA: ${p.adjusted_eta_hours} hrs (Base ${p.base_eta_hours} hrs)</div>
+          </div>
+
+          <div class="p-3 bg-slate-900 border border-slate-800 rounded-xl space-y-1">
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-bold text-slate-300">Safer Alternate Bypass</span>
+              <span class="px-2 py-0.5 text-[10px] font-black rounded text-white" style="background-color: ${a.badge_color}">${a.risk_score_pct}% ${a.badge_label}</span>
+            </div>
+            <div class="text-xs text-slate-400">${a.name} • ${a.distance_km} km</div>
+            <div class="text-xs text-emerald-400 font-bold">ETA: ${a.adjusted_eta_hours} hrs</div>
+          </div>
+
+          <div class="p-2.5 bg-emerald-950/50 border border-emerald-800 rounded-xl text-xs text-emerald-300 font-bold flex items-center gap-1.5">
+            💡 ${data.recommendation_reason}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderMapRoutes(data) {
+      if (!map) return;
+      if (primaryPolyline) map.removeLayer(primaryPolyline);
+      if (alternatePolyline) map.removeLayer(alternatePolyline);
+      if (emergencyMarkersGroup) emergencyMarkersGroup.clearLayers();
+
+      primaryPolyline = L.polyline(data.primary_route.waypoints, {
+        color: data.primary_route.badge_color,
+        weight: 6,
+        opacity: 0.95
+      }).addTo(map);
+
+      alternatePolyline = L.polyline(data.alternate_route.waypoints, {
+        color: data.alternate_route.badge_color,
+        weight: 5,
+        dashArray: '8, 8',
+        opacity: 0.95
+      }).addTo(map);
+
+      // Start & End markers
+      const startPt = data.primary_route.waypoints[0];
+      const endPt = data.primary_route.waypoints[data.primary_route.waypoints.length - 1];
+
+      L.circleMarker(startPt, { radius: 8, color: '#ffffff', fillColor: '#3b82f6', fillOpacity: 1 }).bindPopup(`<b>Corridor Origin</b><br>${data.corridor_name.split('➔')[0]}`).addTo(emergencyMarkersGroup);
+      L.circleMarker(endPt, { radius: 8, color: '#ffffff', fillColor: '#ef4444', fillOpacity: 1 }).bindPopup(`<b>Corridor Destination</b><br>${data.corridor_name.split('➔')[1]}`).addTo(emergencyMarkersGroup);
+
+      setTimeout(() => {
+        map.invalidateSize();
+        map.fitBounds(primaryPolyline.getBounds().extend(alternatePolyline.getBounds()), { padding: [50, 50] });
+      }, 100);
+    }
+
+    function evaluateLocalFallback(payload) {
+      const corridorId = payload.corridor_id || 'guwahati_tawang';
       const corridors = {
         'guwahati_tawang': {
-          id: 'guwahati_tawang', name: 'Guwahati ➔ Tawang Corridor', state_pair: 'Assam ➔ Arunachal Pradesh', highway: 'NH-13 Sela Pass',
-          primary_route: { name: 'Primary NH-13 Bhalukpong-Dirang', distance_km: 320.5, base_eta_hours: 9.5, terrain: 'Alpine Mountain Slope', waypoints: [[26.1445,91.7362],[26.4350,92.0300],[27.0010,92.6350],[27.2645,92.4162],[27.5861,91.8594]], simulated_conditions: { rainfall_mm_hr: rVal || 114, recent_incidents: 4, road_condition_score: 3.2, traffic_density_score: tVal || 4.1, terrain_slope_index: 4.8 } },
-          alternate_route: { name: 'Safer Alternate Kalaktang Bypass', distance_km: 348.2, base_eta_hours: 9.8, terrain: 'Foothill Ridge', waypoints: [[26.1445,91.7362],[26.6500,92.1000],[27.1000,92.2500],[27.3800,92.4100],[27.5861,91.8594]], simulated_conditions: { rainfall_mm_hr: 38, recent_incidents: 1, road_condition_score: 8.1, traffic_density_score: 2.0, terrain_slope_index: 2.4 } }
+          id: 'guwahati_tawang', name: 'Guwahati ➔ Tawang Corridor', state_pair: 'Assam ➔ Arunachal Pradesh', highway: 'NH-13 via Bhalukpong & Sela Pass',
+          primary_route: { id: 'primary_gt', name: 'Primary NH-13 Bhalukpong-Dirang Route', distance_km: 320.5, base_eta_hours: 9.5, terrain: 'High Mountain Alpine Slope (14% Incline)', waypoints: [[26.1445,91.7362],[26.4350,92.0300],[27.0010,92.6350],[27.0134,92.6416],[27.2645,92.4162],[27.5300,92.1200],[27.5861,91.8594]], simulated_conditions: { rainfall_mm_hr: payload.rainfall_override || 114, recent_incidents: 4, road_condition_score: 3.2, traffic_density_score: payload.traffic_override || 4.1, terrain_slope_index: 4.8 } },
+          alternate_route: { id: 'alternate_gt', name: 'Safer Alternate Kalaktang-Shergaon Bypass', distance_km: 348.2, base_eta_hours: 9.8, terrain: 'Mid-Elevation Foothill Ridge', waypoints: [[26.1445,91.7362],[26.6500,92.1000],[27.1000,92.2500],[27.3445,92.4962],[27.5861,91.8594]], simulated_conditions: { rainfall_mm_hr: 38, recent_incidents: 1, road_condition_score: 8.1, traffic_density_score: 2.0, terrain_slope_index: 2.4 } }
         },
         'shillong_silchar': {
-          id: 'shillong_silchar', name: 'Shillong ➔ Silchar Corridor', state_pair: 'Meghalaya ➔ Assam', highway: 'NH-6 Sonapur Tunnel',
-          primary_route: { name: 'Primary NH-6 East Jaintia Hills Route', distance_km: 215.8, base_eta_hours: 6.2, terrain: 'Karst Limestone Ridge', waypoints: [[25.5788,91.8933],[25.4500,92.2000],[25.1150,92.3680],[24.8333,92.7789]], simulated_conditions: { rainfall_mm_hr: rVal || 98, recent_incidents: 3, road_condition_score: 4.0, traffic_density_score: tVal || 4.8, terrain_slope_index: 4.2 } },
-          alternate_route: { name: 'Alternate Haflong Hill Bypass', distance_km: 268.4, base_eta_hours: 7.9, terrain: 'Stable Plateau Ridge', waypoints: [[25.5788,91.8933],[25.8000,92.5000],[25.1667,93.0167],[24.8333,92.7789]], simulated_conditions: { rainfall_mm_hr: 25, recent_incidents: 0, road_condition_score: 7.5, traffic_density_score: 1.8, terrain_slope_index: 2.1 } }
+          id: 'shillong_silchar', name: 'Shillong ➔ Silchar Corridor', state_pair: 'Meghalaya ➔ Assam (Barak Valley)', highway: 'NH-6 via Sonapur Tunnel & Jowai',
+          primary_route: { id: 'primary_ss', name: 'Primary NH-6 East Jaintia Hills Route', distance_km: 215.8, base_eta_hours: 6.2, terrain: 'Karst Limestone Ridge', waypoints: [[25.5788,91.8933],[25.4500,92.2000],[25.1150,92.3680],[24.8333,92.7789]], simulated_conditions: { rainfall_mm_hr: payload.rainfall_override || 98, recent_incidents: 3, road_condition_score: 4.0, traffic_density_score: payload.traffic_override || 4.8, terrain_slope_index: 4.2 } },
+          alternate_route: { id: 'alternate_ss', name: 'Alternate Haflong Hill Route (NH-27)', distance_km: 268.4, base_eta_hours: 7.9, terrain: 'Stable Plateau Ridge', waypoints: [[25.5788,91.8933],[25.8000,92.5000],[25.1667,93.0167],[24.8333,92.7789]], simulated_conditions: { rainfall_mm_hr: 25, recent_incidents: 0, road_condition_score: 7.5, traffic_density_score: 1.8, terrain_slope_index: 2.1 } }
         },
         'dimapur_kohima': {
-          id: 'dimapur_kohima', name: 'Dimapur ➔ Kohima Corridor', state_pair: 'Nagaland Foothills ➔ Capital Ridge', highway: 'NH-29 Phesama Bypass',
-          primary_route: { name: 'Primary NH-29 Corridor', distance_km: 74.0, base_eta_hours: 2.8, terrain: 'Active Tectonic Subsidence Zone', waypoints: [[25.9060,93.7271],[25.7500,93.9000],[25.6747,94.1100]], simulated_conditions: { rainfall_mm_hr: rVal || 85, recent_incidents: 5, road_condition_score: 2.8, traffic_density_score: tVal || 3.9, terrain_slope_index: 4.5 } },
-          alternate_route: { name: 'Alternate Peducha Bypass', distance_km: 88.5, base_eta_hours: 3.1, terrain: 'Crest Ridge', waypoints: [[25.9060,93.7271],[25.8200,93.8500],[25.6747,94.1100]], simulated_conditions: { rainfall_mm_hr: 30, recent_incidents: 1, road_condition_score: 7.0, traffic_density_score: 1.5, terrain_slope_index: 2.0 } }
+          id: 'dimapur_kohima', name: 'Dimapur ➔ Kohima Corridor', state_pair: 'Nagaland Foothills ➔ Capital Ridge', highway: 'NH-29 via Phesama Slip Zone',
+          primary_route: { id: 'primary_dk', name: 'Primary NH-29 Bypass Corridor', distance_km: 74.0, base_eta_hours: 2.8, terrain: 'Active Tectonic Subsidence Zone', waypoints: [[25.9060,93.7271],[25.7500,93.9000],[25.6747,94.1100]], simulated_conditions: { rainfall_mm_hr: payload.rainfall_override || 85, recent_incidents: 5, road_condition_score: 2.8, traffic_density_score: payload.traffic_override || 3.9, terrain_slope_index: 4.5 } },
+          alternate_route: { id: 'alternate_dk', name: 'Alternate Peducha-Tsiesema Bypass', distance_km: 88.5, base_eta_hours: 3.1, terrain: 'Stable Crest Road', waypoints: [[25.9060,93.7271],[25.8200,93.8500],[25.6747,94.1100]], simulated_conditions: { rainfall_mm_hr: 30, recent_incidents: 1, road_condition_score: 7.0, traffic_density_score: 1.5, terrain_slope_index: 2.0 } }
+        },
+        'tezpur_itanagar': {
+          id: 'tezpur_itanagar', name: 'Tezpur ➔ Itanagar Corridor', state_pair: 'Assam Valley ➔ Capital Foothills', highway: 'NH-415 via Holongi Highway',
+          primary_route: { id: 'primary_ti', name: 'Primary NH-415 Holongi Corridor', distance_km: 156.4, base_eta_hours: 4.1, terrain: 'Alluvial Plain to River Gorge', waypoints: [[26.6338,92.8000],[26.8500,93.2000],[27.1000,93.6167]], simulated_conditions: { rainfall_mm_hr: payload.rainfall_override || 65, recent_incidents: 2, road_condition_score: 6.5, traffic_density_score: payload.traffic_override || 3.2, terrain_slope_index: 3.1 } },
+          alternate_route: { id: 'alternate_ti', name: 'Alternate Banderdewa Bypass', distance_km: 172.0, base_eta_hours: 4.6, terrain: 'Terrace Ridge', waypoints: [[26.6338,92.8000],[26.9200,93.4000],[27.1000,93.6167]], simulated_conditions: { rainfall_mm_hr: 20, recent_incidents: 0, road_condition_score: 8.0, traffic_density_score: 1.6, terrain_slope_index: 1.8 } }
+        },
+        'siliguri_gangtok': {
+          id: 'siliguri_gangtok', name: 'Siliguri ➔ Gangtok Corridor', state_pair: 'North Bengal ➔ Sikkim Himalaya', highway: 'NH-10 via Teesta River Valley',
+          primary_route: { id: 'primary_sg', name: 'Primary NH-10 Teesta Valley Route', distance_km: 114.0, base_eta_hours: 4.5, terrain: 'Steep River Gorge Slope', waypoints: [[26.7271,88.4353],[26.9800,88.4700],[27.1500,88.5000],[27.3389,88.6138]], simulated_conditions: { rainfall_mm_hr: payload.rainfall_override || 108, recent_incidents: 6, road_condition_score: 2.5, traffic_density_score: payload.traffic_override || 4.9, terrain_slope_index: 4.9 } },
+          alternate_route: { id: 'alternate_sg', name: 'Alternate Lava-Reshi Bypass', distance_km: 148.6, base_eta_hours: 5.8, terrain: 'High Ridge Crest', waypoints: [[26.7271,88.4353],[27.0800,88.6500],[27.2200,88.6200],[27.3389,88.6138]], simulated_conditions: { rainfall_mm_hr: 32, recent_incidents: 1, road_condition_score: 7.2, traffic_density_score: 1.9, terrain_slope_index: 2.8 } }
         }
       };
 
@@ -238,73 +346,25 @@
       const aRisk = calcRisk(curr.alternate_route.simulated_conditions);
 
       const format = (r, risk) => ({
-        ...r, risk_pct: Math.round(risk*10)/10,
+        ...r, risk_score_pct: Math.round(risk*10)/10,
         badge_color: risk < 30 ? '#10b981' : risk <= 60 ? '#f59e0b' : '#ef4444',
         badge_label: risk < 30 ? 'Green (Safe)' : risk <= 60 ? 'Orange (Moderate)' : 'Red (High Risk)',
-        adj_eta: Math.round(r.base_eta_hours * (1 + Math.pow(risk/100, 2.2)*0.85) * 10)/10
+        adjusted_eta_hours: Math.round(r.base_eta_hours * (1 + Math.pow(risk/100, 2.2)*0.85) * 10)/10
       });
 
-      currentData = {
-        corridor_name: curr.name, highway: curr.highway,
-        primary_route: format(curr.primary_route, pRisk),
-        alternate_route: format(curr.alternate_route, aRisk)
+      const pEval = format(curr.primary_route, pRisk);
+      const aEval = format(curr.alternate_route, aRisk);
+
+      return {
+        corridor_id: curr.id,
+        corridor_name: curr.name,
+        state_pair: curr.state_pair,
+        highway: curr.highway,
+        primary_route: pEval,
+        alternate_route: aEval,
+        recommended_route_id: aEval.risk_score_pct < pEval.risk_score_pct ? aEval.id : pEval.id,
+        recommendation_reason: aEval.risk_score_pct < pEval.risk_score_pct ? `Safer alternate route recommended! Reduces risk by ${(pEval.risk_score_pct - aEval.risk_score_pct).toFixed(1)}%.` : 'Primary route verified safe.'
       };
-
-      renderUI(currentData);
-      renderMap(currentData);
-    }
-
-    function renderUI(data) {
-      const p = data.primary_route;
-      const a = data.alternate_route;
-      document.getElementById('telemetryCard').innerHTML = `
-        <div class="space-y-3">
-          <div class="p-3 bg-slate-900 border border-slate-800 rounded-xl space-y-1">
-            <div class="flex justify-between items-center">
-              <span class="text-xs font-bold text-slate-300">Primary Route</span>
-              <span class="px-2 py-0.5 text-[10px] font-black rounded text-white" style="background-color: ${p.badge_color}">${p.risk_pct}% ${p.badge_label}</span>
-            </div>
-            <div class="text-xs text-slate-400">${p.name} • ${p.distance_km} km</div>
-            <div class="text-xs text-amber-400 font-bold">ETA: ${p.adj_eta} hrs (Base ${p.base_eta_hours} hrs)</div>
-          </div>
-
-          <div class="p-3 bg-slate-900 border border-slate-800 rounded-xl space-y-1">
-            <div class="flex justify-between items-center">
-              <span class="text-xs font-bold text-slate-300">Safer Alternate Bypass</span>
-              <span class="px-2 py-0.5 text-[10px] font-black rounded text-white" style="background-color: ${a.badge_color}">${a.risk_pct}% ${a.badge_label}</span>
-            </div>
-            <div class="text-xs text-slate-400">${a.name} • ${a.distance_km} km</div>
-            <div class="text-xs text-emerald-400 font-bold">ETA: ${a.adj_eta} hrs</div>
-          </div>
-
-          <div class="p-2.5 bg-emerald-950/50 border border-emerald-800 rounded-xl text-xs text-emerald-300 font-bold flex items-center gap-1.5">
-            💡 ${a.risk_pct < p.risk_pct ? `Recommending Alternate Bypass! Risk reduced by ${(p.risk_pct - a.risk_pct).toFixed(1)}%.` : 'Primary Route Clear.'}
-          </div>
-        </div>
-      `;
-    }
-
-    function renderMap(data) {
-      if (!map) return;
-      if (primaryPoly) map.removeLayer(primaryPoly);
-      if (alternatePoly) map.removeLayer(alternatePoly);
-      if (markersGroup) markersGroup.clearLayers();
-
-      primaryPoly = L.polyline(data.primary_route.waypoints, { color: data.primary_route.badge_color, weight: 6, opacity: 0.95 }).addTo(map);
-      alternatePoly = L.polyline(data.alternate_route.waypoints, { color: data.alternate_route.badge_color, weight: 5, dashArray: '8, 8', opacity: 0.95 }).addTo(map);
-
-      // Add Start & End Markers
-      const startPt = data.primary_route.waypoints[0];
-      const endPt = data.primary_route.waypoints[data.primary_route.waypoints.length - 1];
-
-      L.circleMarker(startPt, { radius: 8, color: '#ffffff', fillColor: '#3b82f6', fillOpacity: 1 }).bindPopup(`<b>Start Point</b><br>${data.corridor_name.split('➔')[0]}`).addTo(markersGroup);
-      L.circleMarker(endPt, { radius: 8, color: '#ffffff', fillColor: '#ef4444', fillOpacity: 1 }).bindPopup(`<b>Destination Point</b><br>${data.corridor_name.split('➔')[1]}`).addTo(markersGroup);
-
-      // Fit Bounds with padding and invalidate size
-      setTimeout(() => {
-        map.invalidateSize();
-        map.fitBounds(primaryPoly.getBounds().extend(alternatePoly.getBounds()), { padding: [50, 50] });
-      }, 100);
     }
 
     function testVoiceAlert() {
@@ -324,7 +384,7 @@
 
     function openHazardModal() { document.getElementById('hazardModal').classList.remove('hidden'); }
     function closeHazardModal() { document.getElementById('hazardModal').classList.add('hidden'); }
-    function submitDriverHazard() { alert('✅ Hazard reported successfully! Broadcasted to surrounding vehicles via Geofence API.'); closeHazardModal(); }
+    function submitDriverHazard() { alert('✅ Hazard report logged successfully!'); closeHazardModal(); }
     function triggerSOSPanic() { alert('🚨 EMERGENCY SOS SENT! Dispatching BRO & Disaster Management teams.'); }
   </script>
 </body>
