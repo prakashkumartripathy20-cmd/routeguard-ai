@@ -76,9 +76,9 @@
       </div>
       <div>
         <h1 class="font-extrabold text-base md:text-lg tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent flex items-center gap-2">
-          RouteGuard AI <span class="text-[10px] font-semibold uppercase tracking-wider text-emerald-400 px-2 py-0.5 rounded-full bg-emerald-950 border border-emerald-800">OSRM Real Road Snapped Engine</span>
+          RouteGuard AI <span class="text-[10px] font-semibold uppercase tracking-wider text-emerald-400 px-2 py-0.5 rounded-full bg-emerald-950 border border-emerald-800">Dynamic Hazard Bypass Navigation Engine</span>
         </h1>
-        <p class="text-[11px] text-slate-400 hidden sm:block">Exact Road Polyline GIS • OSRM Snapping • Native Indian Highway Safety</p>
+        <p class="text-[11px] text-slate-400 hidden sm:block">Exact Highway Vector Snapping • Hazard Bypass Diversion • Native Indian Driver Safety</p>
       </div>
     </div>
 
@@ -230,7 +230,7 @@
 
           <div class="flex gap-2 pt-2">
             <button onclick="toggleNavSimulation()" id="navSimBtn" class="flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-lg flex items-center justify-center gap-1.5 cursor-pointer">
-              ▶ Start Live Navigation
+              ▶ Start Live Dynamic Navigation
             </button>
             <button onclick="resetSliders()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold py-2.5 px-3 rounded-xl text-xs border border-slate-700 transition cursor-pointer">
               🔄 Reset
@@ -496,7 +496,7 @@
 
     const FACILITIES = {
       fuel: [
-        { name: 'Indian Oil Petrol Pump (Bhalukpong)', lat: 26.9950, lon: 92.6200 },
+        { name: 'Indian Oil Petrol Pump (Tezpur Bridge)', lat: 26.6338, lon: 92.8000 },
         { name: 'HPCL Fuel Station (Shergaon)', lat: 27.1200, lon: 92.2700 },
         { name: 'BPCL Station (Sonapur Tunnel East)', lat: 25.1100, lon: 92.3600 },
         { name: 'Indian Oil Pump (Teesta Valley)', lat: 26.9500, lon: 88.4500 }
@@ -585,7 +585,6 @@
     }
 
     function triggerEmergencySirenAlert() {
-      // Synthesize Emergency Police/Ambulance Siren using Web Audio API
       try {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         const osc = audioCtx.createOscillator();
@@ -672,10 +671,12 @@
       window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
     }
 
-    // Live OSRM (Open Source Routing Machine) Real Road Polyline Snapping Engine
-    async function fetchOSRMRealRoadPolyline(startCoords, endCoords) {
+    // Live OSRM (Open Source Routing Machine) Multi-Waypoint Real Road Polyline Snapping Engine
+    async function fetchOSRMRealRoadPolyline(waypointsList) {
+      if (!waypointsList || waypointsList.length < 2) return null;
       try {
-        const url = `https://router.project-osrm.org/route/v1/driving/${startCoords[1]},${startCoords[0]};${endCoords[1]},${endCoords[0]}?overview=full&geometries=geojson`;
+        const formatted = waypointsList.map(wp => `${wp[1]},${wp[0]}`).join(';');
+        const url = `https://router.project-osrm.org/route/v1/driving/${formatted}?overview=full&geometries=geojson`;
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 4000);
         const res = await fetch(url, { signal: controller.signal });
@@ -683,16 +684,15 @@
         if (!res.ok) return null;
         const json = await res.json();
         if (json.routes && json.routes.length > 0) {
-          // OSRM returns GeoJSON coordinates as [lon, lat]. Convert to Leaflet [lat, lon]
           return json.routes[0].geometry.coordinates.map(coord => [coord[1], coord[0]]);
         }
       } catch (e) {
-        console.warn("OSRM direct snapping fallback active:", e);
+        console.warn("OSRM multi-waypoint snapping fallback active:", e);
       }
       return null;
     }
 
-    // High-Resolution Curved Road Polyline Interpolator (Catmull-Rom Spline Fallback)
+    // High-Resolution Curved Road Polyline Interpolator (Fallback)
     function interpolateRoadPolyline(coarsePoints, numSubdivisions = 25) {
       if (!coarsePoints || coarsePoints.length < 2) return coarsePoints;
       const dense = [];
@@ -715,7 +715,8 @@
       return dense;
     }
 
-    function toggleNavSimulation() {
+    // Dynamic Navigation: Vehicle starts on Main Highway -> Diverts onto Safer Bypass around Hazard Zone -> Rejoins Main Highway to Destination
+    async function toggleNavSimulation() {
       const btn = document.getElementById('navSimBtn');
       const topHud = document.getElementById('gmapsTopHud');
       const bottomHud = document.getElementById('gmapsBottomHud');
@@ -724,7 +725,7 @@
         clearInterval(navInterval);
         navInterval = null;
         if (vehicleMarker) map.removeLayer(vehicleMarker);
-        btn.innerHTML = "▶ Start Live Navigation";
+        btn.innerHTML = "▶ Start Live Dynamic Navigation";
         btn.className = "flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-lg flex items-center justify-center gap-1.5 cursor-pointer";
         topHud.classList.add('hidden');
         bottomHud.classList.add('hidden');
@@ -732,8 +733,20 @@
       }
 
       if (!currentEvaluatedData) return;
-      const targetRoute = currentEvaluatedData.alternate_route.waypoints || currentEvaluatedData.primary_route.waypoints;
-      densePolylineCoordinates = interpolateRoadPolyline(targetRoute, 30);
+
+      // Combine Primary Route -> Alternate Hazard Bypass -> Main Highway Rejoin
+      const pWps = currentEvaluatedData.primary_route.waypoints;
+      const aWps = currentEvaluatedData.alternate_route.waypoints;
+
+      // Start on Main Highway, transition to Bypass at hazard split, rejoin main highway after hazard
+      const combinedRouteWaypoints = [
+        pWps[0], pWps[1],                     // Start on Main Highway (Guwahati -> Tezpur Bridge)
+        aWps[2], aWps[3],                     // Divert onto Kalaktang Safer Bypass around Bhalukpong Landslide
+        pWps[pWps.length-3], pWps[pWps.length-2], pWps[pWps.length-1] // Rejoin Main Highway (Dirang -> Sela Pass -> Tawang)
+      ];
+
+      const osrmNavPoints = await fetchOSRMRealRoadPolyline(combinedRouteWaypoints);
+      densePolylineCoordinates = osrmNavPoints || interpolateRoadPolyline(combinedRouteWaypoints, 30);
       navStepIndex = 0;
 
       const vehicleIcon = L.divIcon({
@@ -753,11 +766,11 @@
       btn.className = "flex-1 bg-red-600 hover:bg-red-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-lg flex items-center justify-center gap-1.5 cursor-pointer";
 
       const hudInstructions = [
-        { icon: '↑', dist: 'In 400 meters', title: 'Proceed straight on NH-13 Foothill Corridor', sub: 'Road cleared • Speed limit 50 km/h' },
-        { icon: '↱', dist: 'In 250 meters', title: 'Turn Right onto Kalaktang Safer Bypass', sub: 'Bypasses Bhalukpong Landslide Gorge (Km 42)' },
-        { icon: '↰', dist: 'In 1.2 km', title: 'Bear Left toward Dirang Hill Climb', sub: 'Caution: Steep 12° elevation grade ahead' },
-        { icon: '⚠️', dist: 'In 800 meters', title: 'Approaching Sela Pass Summit (4,170m)', sub: 'Dense Fog & Rain • Turn on hazard lights' },
-        { icon: '🏁', dist: 'In 100 meters', title: 'Arriving at Destination Hub (Tawang Base)', sub: 'Safe Arrival • BRO Logistics Command' }
+        { icon: '↑', dist: 'In 400 meters', title: 'Driving on NH-13 Primary Highway', sub: 'Tezpur Corridor • Speed limit 50 km/h' },
+        { icon: '↱', dist: 'In 300 meters', title: '🚨 HAZARD AHEAD! Diverting onto Kalaktang Bypass', sub: 'Bypasses Bhalukpong Gorge Landslide Blockade (Km 42)' },
+        { icon: '↰', dist: 'In 1.2 km', title: '🟢 HAZARD CLEARED! Rejoining Main NH-13 Highway', sub: 'Dirang Hill Climb • Proceeding toward Sela Pass' },
+        { icon: '⚠️', dist: 'In 800 meters', title: 'Approaching Sela Pass Summit (4,170m)', sub: 'Dense Fog & Freezing Rain • Turn on hazard lights' },
+        { icon: '🏁', dist: 'In 100 meters', title: 'Arriving at Destination (Tawang Army Logistics Base)', sub: 'Safe Arrival • BRO Command Hub' }
       ];
 
       navInterval = setInterval(() => {
@@ -784,7 +797,7 @@
         document.getElementById('hudRemDistance').textContent = `${remKm} km`;
         document.getElementById('hudRemTime').textContent = `${remMins} min`;
 
-        if (navStepIndex === Math.floor(densePolylineCoordinates.length * 0.3)) {
+        if (navStepIndex === Math.floor(densePolylineCoordinates.length * 0.25)) {
           testVoiceAlert();
         }
       }, 1200);
@@ -885,14 +898,9 @@
       const p = data.primary_route;
       const a = data.alternate_route;
 
-      const pStart = p.waypoints[0];
-      const pEnd = p.waypoints[p.waypoints.length - 1];
-      const aStart = a.waypoints[0];
-      const aEnd = a.waypoints[a.waypoints.length - 1];
-
-      // Try fetching exact real road polylines from live OSRM server snapped to actual highways
-      const osrmPrimary = await fetchOSRMRealRoadPolyline(pStart, pEnd);
-      const osrmAlternate = await fetchOSRMRealRoadPolyline(aStart, aEnd);
+      // Fetch exact real road polylines from live OSRM server snapped to actual highway bridges & road network
+      const osrmPrimary = await fetchOSRMRealRoadPolyline(p.waypoints);
+      const osrmAlternate = await fetchOSRMRealRoadPolyline(a.waypoints);
 
       const densePrimary = osrmPrimary || interpolateRoadPolyline(p.waypoints, 25);
       const denseAlternate = osrmAlternate || interpolateRoadPolyline(a.waypoints, 25);
@@ -976,18 +984,18 @@
       const corridors = {
         'guwahati_tawang': {
           id: 'guwahati_tawang', name: 'Guwahati ➔ Tawang Corridor', state_pair: 'Assam ➔ Arunachal Pradesh', highway: 'NH-13 Sela Pass',
-          primary_route: { id: 'primary_gt', name: 'Primary NH-13 Bhalukpong-Dirang Route', distance_km: 320.5, base_eta_hours: 9.5, terrain: 'High Mountain Alpine Slope', waypoints: [[26.1445,91.7362],[26.4350,92.0300],[26.7500,92.3500],[27.0010,92.6350],[27.0134,92.6416],[27.2645,92.4162],[27.5300,92.1200],[27.5861,91.8594]], simulated_conditions: { rainfall_mm_hr: payload.rainfall_override || 114, recent_incidents: 4, road_condition_score: 3.2, traffic_density_score: payload.traffic_override || 4.1, terrain_slope_index: 4.8 }, explanations: ['Extreme monsoon rainfall exceeds critical slope threshold (>85mm/hr).', 'High slope instability index (0.84) in Bhalukpong-Tipi Gorge.', 'Active mudslide debris at Sela Pass summit (4,170m).'] },
-          alternate_route: { id: 'alternate_gt', name: 'Safer Alternate Kalaktang-Shergaon Bypass', distance_km: 348.2, base_eta_hours: 9.8, terrain: 'Foothill Ridge', waypoints: [[26.1445,91.7362],[26.4000,91.9500],[26.6500,92.1000],[26.9000,92.2000],[27.1000,92.2500],[27.3445,92.4962],[27.5861,91.8594]], simulated_conditions: { rainfall_mm_hr: 38, recent_incidents: 1, road_condition_score: 8.1, traffic_density_score: 2.0, terrain_slope_index: 2.4 }, explanations: ['Gentle slope gradient minimizing landslide vulnerability.', 'Clear drainage channels along foothill ridge.'] }
+          primary_route: { id: 'primary_gt', name: 'Primary NH-13 Bhalukpong-Dirang Route', distance_km: 320.5, base_eta_hours: 9.5, terrain: 'High Mountain Alpine Slope', waypoints: [[26.1445,91.7362],[26.6338,92.8000],[27.0134,92.6416],[27.3570,92.2405],[27.5050,92.1030],[27.5861,91.8594]], simulated_conditions: { rainfall_mm_hr: payload.rainfall_override || 114, recent_incidents: 4, road_condition_score: 3.2, traffic_density_score: payload.traffic_override || 4.1, terrain_slope_index: 4.8 }, explanations: ['Extreme monsoon rainfall exceeds critical slope threshold (>85mm/hr).', 'High slope instability index (0.84) in Bhalukpong-Tipi Gorge.', 'Active mudslide debris at Sela Pass summit (4,170m).'] },
+          alternate_route: { id: 'alternate_gt', name: 'Safer Alternate Kalaktang-Shergaon Bypass', distance_km: 348.2, base_eta_hours: 9.8, terrain: 'Foothill Ridge', waypoints: [[26.1445,91.7362],[26.6338,92.8000],[26.9000,92.1000],[27.1000,92.2500],[27.3570,92.2405],[27.5050,92.1030],[27.5861,91.8594]], simulated_conditions: { rainfall_mm_hr: 38, recent_incidents: 1, road_condition_score: 8.1, traffic_density_score: 2.0, terrain_slope_index: 2.4 }, explanations: ['Gentle slope gradient minimizing landslide vulnerability.', 'Clear drainage channels along foothill ridge.'] }
         },
         'shillong_silchar': {
           id: 'shillong_silchar', name: 'Shillong ➔ Silchar Corridor', state_pair: 'Meghalaya ➔ Assam', highway: 'NH-6 Sonapur Tunnel',
-          primary_route: { id: 'primary_ss', name: 'Primary NH-6 East Jaintia Hills Route', distance_km: 215.8, base_eta_hours: 6.2, terrain: 'Karst Limestone Ridge', waypoints: [[25.5788,91.8933],[25.4500,92.2000],[25.2500,92.3000],[25.1150,92.3680],[24.9800,92.5500],[24.8333,92.7789]], simulated_conditions: { rainfall_mm_hr: payload.rainfall_override || 98, recent_incidents: 3, road_condition_score: 4.0, traffic_density_score: payload.traffic_override || 4.8, terrain_slope_index: 4.2 }, explanations: ['Heavy downpour near Sonapur Tunnel mudslide zone.', 'Flash flood risk in East Jaintia Hills limestone basin.'] },
-          alternate_route: { id: 'alternate_ss', name: 'Alternate Haflong Hill Route (NH-27)', distance_km: 268.4, base_eta_hours: 7.9, terrain: 'Stable Plateau Ridge', waypoints: [[25.5788,91.8933],[25.7000,92.2000],[25.8000,92.5000],[25.5000,92.8000],[25.1667,93.0167],[24.8333,92.7789]], simulated_conditions: { rainfall_mm_hr: 25, recent_incidents: 0, road_condition_score: 7.5, traffic_density_score: 1.8, terrain_slope_index: 2.1 }, explanations: ['Well-maintained pavement and clear drainage channels.'] }
+          primary_route: { id: 'primary_ss', name: 'Primary NH-6 East Jaintia Hills Route', distance_km: 215.8, base_eta_hours: 6.2, terrain: 'Karst Limestone Ridge', waypoints: [[25.5788,91.8933],[25.4500,92.2000],[25.1150,92.3680],[24.9800,92.5500],[24.8333,92.7789]], simulated_conditions: { rainfall_mm_hr: payload.rainfall_override || 98, recent_incidents: 3, road_condition_score: 4.0, traffic_density_score: payload.traffic_override || 4.8, terrain_slope_index: 4.2 }, explanations: ['Heavy downpour near Sonapur Tunnel mudslide zone.', 'Flash flood risk in East Jaintia Hills limestone basin.'] },
+          alternate_route: { id: 'alternate_ss', name: 'Alternate Haflong Hill Route (NH-27)', distance_km: 268.4, base_eta_hours: 7.9, terrain: 'Stable Plateau Ridge', waypoints: [[25.5788,91.8933],[25.8000,92.5000],[25.1667,93.0167],[24.8333,92.7789]], simulated_conditions: { rainfall_mm_hr: 25, recent_incidents: 0, road_condition_score: 7.5, traffic_density_score: 1.8, terrain_slope_index: 2.1 }, explanations: ['Well-maintained pavement and clear drainage channels.'] }
         },
         'dimapur_kohima': {
           id: 'dimapur_kohima', name: 'Dimapur ➔ Kohima Corridor', state_pair: 'Nagaland Foothills ➔ Capital Ridge', highway: 'NH-29 Phesama Slip Zone',
-          primary_route: { id: 'primary_dk', name: 'Primary NH-29 Bypass Corridor', distance_km: 74.0, base_eta_hours: 2.8, terrain: 'Active Tectonic Subsidence Zone', waypoints: [[25.9060,93.7271],[25.8200,93.8000],[25.7500,93.9000],[25.7000,94.0000],[25.6747,94.1100]], simulated_conditions: { rainfall_mm_hr: payload.rainfall_override || 85, recent_incidents: 5, road_condition_score: 2.8, traffic_density_score: payload.traffic_override || 3.9, terrain_slope_index: 4.5 }, explanations: ['Active road sinking logged at Phesama slip zone.'] },
-          alternate_route: { id: 'alternate_dk', name: 'Alternate Peducha-Tsiesema Bypass', distance_km: 88.5, base_eta_hours: 3.1, terrain: 'Stable Crest Road', waypoints: [[25.9060,93.7271],[25.8500,93.7800],[25.8200,93.8500],[25.7500,93.9800],[25.6747,94.1100]], simulated_conditions: { rainfall_mm_hr: 30, recent_incidents: 1, road_condition_score: 7.0, terrain_slope_index: 2.0 }, explanations: ['Low incident history and reinforced retaining walls.'] }
+          primary_route: { id: 'primary_dk', name: 'Primary NH-29 Bypass Corridor', distance_km: 74.0, base_eta_hours: 2.8, terrain: 'Active Tectonic Subsidence Zone', waypoints: [[25.9060,93.7271],[25.7500,93.9000],[25.6747,94.1100]], simulated_conditions: { rainfall_mm_hr: payload.rainfall_override || 85, recent_incidents: 5, road_condition_score: 2.8, traffic_density_score: payload.traffic_override || 3.9, terrain_slope_index: 4.5 }, explanations: ['Active road sinking logged at Phesama slip zone.'] },
+          alternate_route: { id: 'alternate_dk', name: 'Alternate Peducha-Tsiesema Bypass', distance_km: 88.5, base_eta_hours: 3.1, terrain: 'Stable Crest Road', waypoints: [[25.9060,93.7271],[25.8200,93.8500],[25.6747,94.1100]], simulated_conditions: { rainfall_mm_hr: 30, recent_incidents: 1, road_condition_score: 7.0, terrain_slope_index: 2.0 }, explanations: ['Low incident history and reinforced retaining walls.'] }
         }
       };
 
