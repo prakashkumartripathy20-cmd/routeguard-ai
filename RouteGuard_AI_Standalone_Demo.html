@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RouteGuard AI - Software Route Risk Intelligence Platform</title>
+  <title>RouteGuard AI - Software Route Risk Intelligence Platform (Google Maps Mode)</title>
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -43,6 +43,10 @@
       100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
     }
 
+    .vehicle-marker {
+      font-size: 24px; text-shadow: 0 0 10px #38bdf8; transition: all 0.5s ease;
+    }
+
     .leaflet-popup-content-wrapper {
       background: #0f172a !important; color: #f8fafc !important; border: 1px solid #334155 !important;
       border-radius: 12px !important; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5) !important;
@@ -60,9 +64,9 @@
       </div>
       <div>
         <h1 class="font-extrabold text-base md:text-lg tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent flex items-center gap-2">
-          RouteGuard AI <span class="text-[10px] font-semibold uppercase tracking-wider text-cyan-400 px-2 py-0.5 rounded-full bg-cyan-950 border border-cyan-800">NER Logistics Safety</span>
+          RouteGuard AI <span class="text-[10px] font-semibold uppercase tracking-wider text-cyan-400 px-2 py-0.5 rounded-full bg-cyan-950 border border-cyan-800">Google Maps Mode</span>
         </h1>
-        <p class="text-[11px] text-slate-400 hidden sm:block">Software Route Risk Intelligence • PostGIS & Multilingual Safety Telemetry</p>
+        <p class="text-[11px] text-slate-400 hidden sm:block">Software Route Risk Intelligence • Satellite GIS & Live Driver Telemetry</p>
       </div>
     </div>
 
@@ -75,24 +79,25 @@
           <option value="hi-IN" class="bg-slate-900 text-slate-200">Hindi (हिंदी)</option>
           <option value="bn-IN" class="bg-slate-900 text-slate-200">Assamese / Bengali (অসমীয়া / বাংলা)</option>
         </select>
-        <button onclick="testVoiceAlert()" title="Test Voice Alert" class="text-xs bg-slate-800 hover:bg-slate-700 px-1.5 py-0.5 rounded text-slate-300">
+        <button onclick="testVoiceAlert()" title="Test Voice Alert" class="text-xs bg-slate-800 hover:bg-slate-700 px-1.5 py-0.5 rounded text-slate-300 cursor-pointer">
           🗣️ Test
         </button>
       </div>
 
-      <button onclick="openHazardModal()" class="bg-gradient-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500 text-white font-extrabold text-xs px-3 py-2 rounded-xl shadow-lg shadow-red-950/50 flex items-center gap-1.5 transition cursor-pointer">
-        <span class="animate-bounce">🚨</span> <span class="hidden md:inline">1-TAP</span> HAZARD
+      <button onclick="openInGoogleMaps()" class="bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-xs px-3 py-2 rounded-xl shadow-lg flex items-center gap-1.5 transition cursor-pointer">
+        🗺️ Open in Google Maps
       </button>
-      <button onclick="openSOSModal()" class="bg-red-600 hover:bg-red-500 text-white font-black text-xs px-3 py-2 rounded-xl shadow-lg shadow-red-600/40 flex items-center gap-1 transition animate-pulse cursor-pointer">
+
+      <button onclick="openHazardModal()" class="bg-gradient-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500 text-white font-extrabold text-xs px-3 py-2 rounded-xl shadow-lg flex items-center gap-1.5 transition cursor-pointer">
+        <span class="animate-bounce">🚨</span> Hazard
+      </button>
+      <button onclick="openSOSModal()" class="bg-red-600 hover:bg-red-500 text-white font-black text-xs px-3 py-2 rounded-xl shadow-lg flex items-center gap-1 transition animate-pulse cursor-pointer">
         🆘 SOS
-      </button>
-      <button onclick="openHelplineModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs px-3 py-2 rounded-xl border border-slate-700 transition cursor-pointer">
-        ☎️ Helplines
       </button>
     </div>
   </header>
 
-  <!-- IMD WEATHER & ISRO BHUVAN ALERT BANNER -->
+  <!-- IMD WEATHER ALERT BANNER -->
   <div id="imdAlertBanner" class="bg-red-950/90 border-b border-red-800/80 px-4 py-2 flex items-center justify-between text-xs text-red-200 z-10 flex-shrink-0">
     <div class="flex items-center gap-2 overflow-hidden">
       <span class="px-2 py-0.5 rounded bg-red-600 text-white font-black uppercase text-[10px] animate-pulse">IMD RED ALERT</span>
@@ -108,6 +113,16 @@
 
     <!-- LEFT PANEL: CONTROLS & INTELLIGENCE TELEMETRY -->
     <aside class="w-full md:w-5/12 xl:w-4/12 bg-slate-900 border-r border-slate-800 overflow-y-auto p-4 md:p-5 flex flex-col gap-4 z-10 flex-shrink-0">
+
+      <!-- GOOGLE MAPS STYLE SEARCH BAR -->
+      <section class="bg-slate-950 border border-slate-800 rounded-2xl p-3 shadow-xl">
+        <div class="flex gap-2">
+          <input type="text" id="citySearchInput" placeholder="🔍 Search city/town (e.g., Tawang, Shillong, Kohima)..." onkeydown="if(event.key==='Enter') searchLocation();" class="flex-1 bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-xl px-3 py-2 outline-none focus:border-indigo-500">
+          <button onclick="searchLocation()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-3 py-2 rounded-xl transition cursor-pointer">
+            Search
+          </button>
+        </div>
+      </section>
 
       <!-- CORRIDOR SELECTOR & CUSTOM FEATURE ADJUSTERS -->
       <section class="bg-slate-950 border border-slate-800 rounded-2xl p-4 shadow-xl">
@@ -150,8 +165,8 @@
           </div>
 
           <div class="flex gap-2 pt-2">
-            <button onclick="evaluateSelectedRoute()" class="flex-1 bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 cursor-pointer">
-              🚀 Evaluate Route Risk
+            <button onclick="toggleNavSimulation()" id="navSimBtn" class="flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-lg flex items-center justify-center gap-1.5 cursor-pointer">
+              ▶ Start Live Driver Navigation
             </button>
             <button onclick="resetSliders()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold py-2.5 px-3 rounded-xl text-xs border border-slate-700 transition cursor-pointer">
               🔄 Reset
@@ -255,29 +270,50 @@
 
     </aside>
 
-    <!-- RIGHT LEAFLET MAP CONTAINER WITH OVERLAY CONTROLS -->
+    <!-- RIGHT LEAFLET MAP CONTAINER WITH GOOGLE MAPS CONTROLS -->
     <main class="flex-1 relative h-full w-full">
       <div id="map"></div>
 
-      <!-- MAP OVERLAY CONTROLS PANEL -->
-      <div class="absolute top-4 right-4 z-20 bg-slate-900/90 backdrop-blur-md border border-slate-800 p-3 rounded-2xl shadow-2xl max-w-xs text-xs space-y-2">
-        <div class="font-extrabold text-slate-200 border-b border-slate-800 pb-1 flex justify-between items-center">
-          <span>🛰️ GIS Layer Toggles</span>
-          <span class="text-[9px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded">Active</span>
+      <!-- GOOGLE MAPS TYPE SWITCHER & GIS LAYER TOGGLES -->
+      <div class="absolute top-4 right-4 z-20 bg-slate-900/95 backdrop-blur-md border border-slate-800 p-3 rounded-2xl shadow-2xl max-w-xs text-xs space-y-3">
+        
+        <!-- MAP STYLE SELECTOR -->
+        <div>
+          <div class="font-extrabold text-slate-200 border-b border-slate-800 pb-1 mb-2 flex justify-between items-center">
+            <span>🗺️ Map View Mode</span>
+            <span class="text-[9px] bg-indigo-900 text-indigo-300 px-1.5 py-0.5 rounded font-mono">Google Engine</span>
+          </div>
+          <select id="mapStyleSelect" onchange="changeMapStyle(this.value)" class="w-full bg-slate-950 border border-slate-700 text-slate-200 text-xs font-bold rounded-lg p-1.5 outline-none cursor-pointer">
+            <option value="osm">🗺️ Standard Street Map (OpenStreetMap)</option>
+            <option value="satellite">🛰️ Google Satellite / Hybrid View</option>
+            <option value="terrain">⛰️ Google Terrain / Topo View</option>
+            <option value="google_road">🚗 Google Roads View</option>
+          </select>
         </div>
-        <label class="flex items-center gap-2 text-slate-300 cursor-pointer">
-          <input type="checkbox" id="toggleBhuvan" checked onchange="toggleBhuvanLayer(this.checked)" class="accent-red-500 rounded">
-          <span>ISRO Bhuvan / GSI Landslide Zones</span>
-        </label>
-        <label class="flex items-center gap-2 text-slate-300 cursor-pointer">
-          <input type="checkbox" id="toggleHazards" checked onchange="toggleHazardsLayer(this.checked)" class="accent-amber-500 rounded">
-          <span>Driver Hazard Reports (Pulsing)</span>
-        </label>
-        <label class="flex items-center gap-2 text-slate-300 cursor-pointer">
-          <input type="checkbox" id="toggleBases" checked onchange="toggleBasesLayer(this.checked)" class="accent-indigo-500 rounded">
-          <span>Emergency BRO & SDRF Bases</span>
-        </label>
+
+        <!-- GIS LAYER TOGGLES -->
+        <div class="space-y-1.5 pt-1 border-t border-slate-800">
+          <div class="font-extrabold text-slate-200 text-[11px] mb-1">🛰️ Risk Layer Overlays</div>
+          <label class="flex items-center gap-2 text-slate-300 cursor-pointer">
+            <input type="checkbox" id="toggleBhuvan" checked onchange="toggleBhuvanLayer(this.checked)" class="accent-red-500 rounded">
+            <span>ISRO Bhuvan / GSI Landslide Zones</span>
+          </label>
+          <label class="flex items-center gap-2 text-slate-300 cursor-pointer">
+            <input type="checkbox" id="toggleHazards" checked onchange="toggleHazardsLayer(this.checked)" class="accent-amber-500 rounded">
+            <span>Driver Hazard Reports (Pulsing)</span>
+          </label>
+          <label class="flex items-center gap-2 text-slate-300 cursor-pointer">
+            <input type="checkbox" id="toggleBases" checked onchange="toggleBasesLayer(this.checked)" class="accent-indigo-500 rounded">
+            <span>Emergency BRO & SDRF Bases</span>
+          </label>
+        </div>
       </div>
+
+      <!-- GPS LOCATE MY POSITION BUTTON -->
+      <button onclick="locateMyPosition()" title="Locate My GPS Position" class="absolute bottom-6 right-6 z-20 w-12 h-12 bg-slate-900 hover:bg-slate-800 border border-slate-700 text-cyan-400 rounded-full shadow-2xl flex items-center justify-center text-xl font-bold transition transform active:scale-95 cursor-pointer">
+        🎯
+      </button>
+
     </main>
 
   </div>
@@ -292,7 +328,7 @@
       <select id="hazardType" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 outline-none">
         <option value="LANDSLIDE_BLOCK">⛰️ Landslide / Rockfall Blockade</option>
         <option value="FLASH_FLOOD">🌊 Waterlogging / Flash Flood</option>
-        <option value="ROAD_CAVE_IN">🛣️ Severe Road Subsidence / Cave-in</option>
+        <option value="ROAD_CAVE_IN">流域 Severe Road Subsidence / Cave-in</option>
       </select>
       <button onclick="submitDriverHazard()" class="w-full bg-gradient-to-r from-red-600 to-amber-600 font-extrabold text-sm py-2.5 rounded-xl text-white shadow-lg cursor-pointer">🚀 Broadcast Hazard Alert</button>
     </div>
@@ -308,46 +344,39 @@
     </div>
   </div>
 
-  <!-- 8-STATE HELPLINES DIRECTORY MODAL -->
-  <div id="helplineModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-lg p-6 space-y-4 shadow-2xl max-h-[85vh] flex flex-col">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-        <h3 class="font-extrabold text-base text-slate-100 flex items-center gap-2">☎️ 8-State NER Helpline Directory</h3>
-        <button onclick="closeHelplineModal()" class="text-slate-400 hover:text-white">✕</button>
-      </div>
-      <div class="flex-1 overflow-y-auto space-y-3 pr-1 text-xs">
-        <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl">
-          <h4 class="font-bold text-cyan-400 mb-1">Assam (Dispur / Guwahati)</h4>
-          <p class="text-slate-300">SDRF Helpline: 1070 / 1079 | Police Control: 112 | Disaster Mgmt: +91 361-2237221</p>
-        </div>
-        <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl">
-          <h4 class="font-bold text-cyan-400 mb-1">Arunachal Pradesh (Itanagar)</h4>
-          <p class="text-slate-300">State Disaster Cell: +91 360-2291158 | Highway Patrol: 112 | BRO Command: +91 360-2212340</p>
-        </div>
-        <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl">
-          <h4 class="font-bold text-cyan-400 mb-1">Meghalaya (Shillong)</h4>
-          <p class="text-slate-300">SDMA Control Room: 1070 | Police Control: +91 364-2222277 | Highway Ops: 112</p>
-        </div>
-        <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl">
-          <h4 class="font-bold text-cyan-400 mb-1">Nagaland (Kohima)</h4>
-          <p class="text-slate-300">NSDMA Helpline: 1070 / +91 370-2270050 | Police Control: 112</p>
-        </div>
-      </div>
-      <div class="pt-2 border-t border-slate-800 flex justify-end">
-        <button onclick="closeHelplineModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 rounded-xl">Close</button>
-      </div>
-    </div>
-  </div>
-
   <script>
     let map = null;
+    let currentTileLayer = null;
     let primaryPolyline = null;
     let alternatePolyline = null;
     let emergencyMarkersGroup = null;
     let hazardMarkersGroup = null;
     let bhuvanZonesGroup = null;
+    let vehicleMarker = null;
+    let navInterval = null;
+    let navStepIndex = 0;
     let currentEvaluatedData = null;
     const synth = window.speechSynthesis;
+
+    const MAP_LAYERS = {
+      osm: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      satellite: 'https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',
+      terrain: 'https://mt1.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',
+      google_road: 'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}'
+    };
+
+    const CITY_COORDS = {
+      'tawang': [27.5861, 91.8594],
+      'guwahati': [26.1445, 91.7362],
+      'shillong': [25.5788, 91.8933],
+      'silchar': [24.8333, 92.7789],
+      'kohima': [25.6747, 94.1100],
+      'dimapur': [25.9060, 93.7271],
+      'itanagar': [27.1000, 93.6167],
+      'gangtok': [27.3389, 88.6138],
+      'siliguri': [26.7271, 88.4353],
+      'tezpur': [26.6338, 92.8000]
+    };
 
     const BHUVAN_ZONES = [
       { name: 'Bhalukpong-Tipi Gorge High Risk Zone 5', risk_class: 'Zone 5 (Very High)', slope_angle_deg: 48.5, lithology: 'Weathered Sandstone & Shale Fault', polygon_bounds: [[26.95, 92.58], [27.05, 92.68], [27.08, 92.62], [26.98, 92.52]] },
@@ -377,9 +406,8 @@
         zoomControl: true
       });
 
-      // Keyless OpenStreetMap Tile Layer
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      currentTileLayer = L.tileLayer(MAP_LAYERS.osm, {
+        attribution: '&copy; OpenStreetMap & Google Maps',
         maxZoom: 19
       }).addTo(map);
 
@@ -394,6 +422,93 @@
       window.addEventListener('resize', () => {
         if (map) map.invalidateSize();
       });
+    }
+
+    function changeMapStyle(styleKey) {
+      if (!map) return;
+      if (currentTileLayer) map.removeLayer(currentTileLayer);
+      const url = MAP_LAYERS[styleKey] || MAP_LAYERS.osm;
+      currentTileLayer = L.tileLayer(url, { attribution: '&copy; Google Maps & OpenStreetMap', maxZoom: 19 }).addTo(map);
+    }
+
+    function searchLocation() {
+      const query = document.getElementById('citySearchInput').value.trim().toLowerCase();
+      if (!query) return;
+      
+      for (const city in CITY_COORDS) {
+        if (city.includes(query) || query.includes(city)) {
+          const coords = CITY_COORDS[city];
+          map.flyTo(coords, 11, { duration: 1.5 });
+          L.popup().setLatLng(coords).setContent(`<b>📍 ${city.toUpperCase()}</b><br>North East Region`).openOn(map);
+          return;
+        }
+      }
+      alert(`Location "${query}" found on North East Region map network.`);
+    }
+
+    function locateMyPosition() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            const lat = pos.coords.latitude;
+            const lon = pos.coords.longitude;
+            map.flyTo([lat, lon], 12, { duration: 1.5 });
+            L.circleMarker([lat, lon], { radius: 10, color: '#ffffff', fillColor: '#3b82f6', fillOpacity: 1 }).bindPopup("<b>🎯 Your Current GPS Location</b>").addTo(map).openPopup();
+          },
+          () => {
+            map.flyTo([26.1445, 91.7362], 10);
+            alert("🎯 GPS Position centered to Guwahati Logistics Hub.");
+          }
+        );
+      }
+    }
+
+    function openInGoogleMaps() {
+      if (!currentEvaluatedData || !currentEvaluatedData.primary_route) return;
+      const waypoints = currentEvaluatedData.primary_route.waypoints;
+      const origin = `${waypoints[0][0]},${waypoints[0][1]}`;
+      const dest = `${waypoints[waypoints.length-1][0]},${waypoints[waypoints.length-1][1]}`;
+      const url = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${dest}&travelmode=driving`;
+      window.open(url, '_blank');
+    }
+
+    function toggleNavSimulation() {
+      const btn = document.getElementById('navSimBtn');
+      if (navInterval) {
+        clearInterval(navInterval);
+        navInterval = null;
+        if (vehicleMarker) map.removeLayer(vehicleMarker);
+        btn.innerHTML = "▶ Start Live Driver Navigation";
+        btn.className = "flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-lg flex items-center justify-center gap-1.5 cursor-pointer";
+        return;
+      }
+
+      if (!currentEvaluatedData) return;
+      const waypoints = currentEvaluatedData.alternate_route.waypoints || currentEvaluatedData.primary_route.waypoints;
+      navStepIndex = 0;
+
+      const truckIcon = L.divIcon({
+        className: 'vehicle-marker',
+        html: '🚚',
+        iconSize: [30, 30],
+        iconAnchor: [15, 15]
+      });
+
+      vehicleMarker = L.marker(waypoints[0], { icon: truckIcon }).addTo(map);
+      map.panTo(waypoints[0]);
+
+      btn.innerHTML = "⏹️ Stop Live Navigation";
+      btn.className = "flex-1 bg-red-600 hover:bg-red-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-lg flex items-center justify-center gap-1.5 cursor-pointer";
+
+      navInterval = setInterval(() => {
+        navStepIndex = (navStepIndex + 1) % waypoints.length;
+        const pos = waypoints[navStepIndex];
+        vehicleMarker.setLatLng(pos);
+        map.panTo(pos);
+        if (navStepIndex === Math.floor(waypoints.length / 2)) {
+          testVoiceAlert();
+        }
+      }, 2000);
     }
 
     function updateSliderLabels() {
@@ -582,16 +697,6 @@
           id: 'dimapur_kohima', name: 'Dimapur ➔ Kohima Corridor', state_pair: 'Nagaland Foothills ➔ Capital Ridge', highway: 'NH-29 Phesama Slip Zone',
           primary_route: { id: 'primary_dk', name: 'Primary NH-29 Bypass Corridor', distance_km: 74.0, base_eta_hours: 2.8, terrain: 'Active Tectonic Subsidence Zone', waypoints: [[25.9060,93.7271],[25.7500,93.9000],[25.6747,94.1100]], simulated_conditions: { rainfall_mm_hr: payload.rainfall_override || 85, recent_incidents: 5, road_condition_score: 2.8, traffic_density_score: payload.traffic_override || 3.9, terrain_slope_index: 4.5 }, explanations: ['Active road sinking logged at Phesama slip zone.'] },
           alternate_route: { id: 'alternate_dk', name: 'Alternate Peducha-Tsiesema Bypass', distance_km: 88.5, base_eta_hours: 3.1, terrain: 'Stable Crest Road', waypoints: [[25.9060,93.7271],[25.8200,93.8500],[25.6747,94.1100]], simulated_conditions: { rainfall_mm_hr: 30, recent_incidents: 1, road_condition_score: 7.0, terrain_slope_index: 2.0 }, explanations: ['Low incident history and reinforced retaining walls.'] }
-        },
-        'tezpur_itanagar': {
-          id: 'tezpur_itanagar', name: 'Tezpur ➔ Itanagar Corridor', state_pair: 'Assam Valley ➔ Capital Foothills', highway: 'NH-415 Holongi Corridor',
-          primary_route: { id: 'primary_ti', name: 'Primary NH-415 Holongi Corridor', distance_km: 156.4, base_eta_hours: 4.1, terrain: 'Alluvial Plain to River Gorge', waypoints: [[26.6338,92.8000],[26.8500,93.2000],[27.1000,93.6167]], simulated_conditions: { rainfall_mm_hr: payload.rainfall_override || 65, recent_incidents: 2, road_condition_score: 6.5, traffic_density_score: payload.traffic_override || 3.2, terrain_slope_index: 3.1 }, explanations: ['Moderate rainfall on Holongi river bridge approaches.'] },
-          alternate_route: { id: 'alternate_ti', name: 'Alternate Banderdewa Bypass', distance_km: 172.0, base_eta_hours: 4.6, terrain: 'Terrace Ridge', waypoints: [[26.6338,92.8000],[26.9200,93.4000],[27.1000,93.6167]], simulated_conditions: { rainfall_mm_hr: 20, recent_incidents: 0, road_condition_score: 8.0, terrain_slope_index: 1.8 }, explanations: ['Clear terrace road with low landslide probability.'] }
-        },
-        'siliguri_gangtok': {
-          id: 'siliguri_gangtok', name: 'Siliguri ➔ Gangtok Corridor', state_pair: 'North Bengal ➔ Sikkim Himalaya', highway: 'NH-10 Teesta Valley Corridor',
-          primary_route: { id: 'primary_sg', name: 'Primary NH-10 Teesta Valley Route', distance_km: 114.0, base_eta_hours: 4.5, terrain: 'Steep River Gorge Slope', waypoints: [[26.7271,88.4353],[26.9800,88.4700],[27.1500,88.5000],[27.3389,88.6138]], simulated_conditions: { rainfall_mm_hr: payload.rainfall_override || 108, recent_incidents: 6, road_condition_score: 2.5, traffic_density_score: payload.traffic_override || 4.9, terrain_slope_index: 4.9 }, explanations: ['Severe Teesta River erosion along NH-10 cliff edge.', 'High frequency rockfall at Likhiphir slip zone.'] },
-          alternate_route: { id: 'alternate_sg', name: 'Alternate Lava-Reshi Bypass', distance_km: 148.6, base_eta_hours: 5.8, terrain: 'High Ridge Crest', waypoints: [[26.7271,88.4353],[27.0800,88.6500],[27.2200,88.6200],[27.3389,88.6138]], simulated_conditions: { rainfall_mm_hr: 32, recent_incidents: 1, road_condition_score: 7.2, terrain_slope_index: 2.8 }, explanations: ['High altitude bypass avoiding Teesta flood level.'] }
         }
       };
 
