@@ -31,20 +31,21 @@
     ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #475569; }
 
-    #map { width: 100%; height: 100%; min-height: 500px; background: #090d16; }
+    #map { width: 100%; height: 100%; min-height: 500px; background: #090d16; transition: filter 0.5s ease; }
+    .night-fog-mode #map { filter: brightness(0.65) contrast(1.2) hue-rotate(190deg); }
 
     .pulse-marker-red {
-      background-color: #ef4444; width: 18px; height: 18px; border-radius: 50%; border: 3px solid #ffffff;
-      box-shadow: 0 0 16px #ef4444; animation: pulse-red 1.5s infinite;
+      background-color: #ef4444; width: 20px; height: 20px; border-radius: 50%; border: 3px solid #ffffff;
+      box-shadow: 0 0 18px #ef4444; animation: pulse-red 1.4s infinite;
     }
     @keyframes pulse-red {
-      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-      70% { transform: scale(1.2); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.8); }
+      70% { transform: scale(1.3); box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); }
       100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
     }
 
     .vehicle-marker {
-      font-size: 28px; filter: drop-shadow(0 0 12px #38bdf8); transition: all 0.4s ease;
+      font-size: 32px; filter: drop-shadow(0 0 14px #38bdf8); transition: all 0.3s ease;
     }
 
     .leaflet-popup-content-wrapper {
@@ -53,28 +54,22 @@
     }
     .leaflet-popup-tip { background: #0f172a !important; }
 
-    /* Floating Google Maps Turn HUD Styles */
-    .gmaps-top-hud {
-      animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    @keyframes slideDown {
-      from { transform: translateY(-100%); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
+    /* Floating Google Maps Turn HUD Animations */
+    .gmaps-top-hud { animation: slideDown 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    @keyframes slideDown { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-    .gmaps-bottom-hud {
-      animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    @keyframes slideUp {
-      from { transform: translateY(100%); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
+    .gmaps-bottom-hud { animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    @keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    /* Glowing Altitude Bar Animation */
+    .alt-sparkline { stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: dash 3s ease-in-out forwards; }
+    @keyframes dash { to { stroke-dashoffset: 0; } }
   </style>
 </head>
-<body class="h-full flex flex-col font-sans text-slate-100 overflow-hidden bg-slate-950">
+<body id="bodyRoot" class="h-full flex flex-col font-sans text-slate-100 overflow-hidden bg-slate-950">
 
   <!-- TOP NAVIGATION BAR -->
-  <header class="h-16 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-4 md:px-6 z-30 flex-shrink-0 shadow-lg">
+  <header class="h-16 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-4 md:px-6 z-30 flex-shrink-0 shadow-xl">
     <div class="flex items-center gap-3">
       <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 via-blue-600 to-cyan-500 flex items-center justify-center font-black text-xl text-white shadow-lg shadow-indigo-500/20">
         🛡️
@@ -83,13 +78,18 @@
         <h1 class="font-extrabold text-base md:text-lg tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent flex items-center gap-2">
           RouteGuard AI <span class="text-[10px] font-semibold uppercase tracking-wider text-emerald-400 px-2 py-0.5 rounded-full bg-emerald-950 border border-emerald-800">Google Maps Navigation Engine</span>
         </h1>
-        <p class="text-[11px] text-slate-400 hidden sm:block">Real Road Polyline GIS • Turn-by-Turn Guidance • Native Indian Highway Safety</p>
+        <p class="text-[11px] text-slate-400 hidden sm:block">Real Road Polyline GIS • Altitude Telemetry • Native Indian Highway Safety</p>
       </div>
     </div>
 
     <!-- VOICE CONTROLS & ACTION BUTTONS -->
     <div class="flex items-center gap-2">
-      <div class="hidden sm:flex items-center gap-1.5 bg-slate-950 border border-slate-800 rounded-xl px-2.5 py-1">
+      <!-- NIGHT / FOG MODE TOGGLE -->
+      <button onclick="toggleNightFogMode()" id="nightFogBtn" class="bg-slate-800 hover:bg-slate-700 text-amber-300 font-extrabold text-xs px-3 py-2 rounded-xl border border-slate-700 shadow flex items-center gap-1.5 transition cursor-pointer" title="Toggle Night & Mountain Fog Headlight Mode">
+        🌙 Night/Fog Mode
+      </button>
+
+      <div class="hidden lg:flex items-center gap-1.5 bg-slate-950 border border-slate-800 rounded-xl px-2.5 py-1">
         <span class="text-xs">🗣️ Native Voice:</span>
         <select id="voiceLangSelect" class="bg-transparent text-xs font-bold text-cyan-400 outline-none cursor-pointer">
           <option value="en-US" class="bg-slate-900 text-slate-200">English (EN)</option>
@@ -103,18 +103,18 @@
       </div>
 
       <button onclick="openInGoogleMaps()" class="bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-xs px-3 py-2 rounded-xl shadow-lg flex items-center gap-1.5 transition cursor-pointer">
-        🗺️ Open Google Maps App
+        🗺️ Google Maps App
       </button>
 
       <button onclick="triggerWhatsAppSOS()" class="bg-emerald-700 hover:bg-emerald-600 text-white font-extrabold text-xs px-3 py-2 rounded-xl shadow-lg flex items-center gap-1.5 transition cursor-pointer" title="Send GPS Location via WhatsApp">
-        💬 SOS WhatsApp
+        💬 WhatsApp SOS
       </button>
 
       <button onclick="openHazardModal()" class="bg-gradient-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500 text-white font-extrabold text-xs px-3 py-2 rounded-xl shadow-lg flex items-center gap-1.5 transition cursor-pointer">
         <span class="animate-bounce">🚨</span> Hazard
       </button>
-      <button onclick="openSOSModal()" class="bg-red-600 hover:bg-red-500 text-white font-black text-xs px-3 py-2 rounded-xl shadow-lg flex items-center gap-1 transition animate-pulse cursor-pointer">
-        🆘 Emergency SOS
+      <button onclick="triggerEmergencySirenAlert()" class="bg-red-600 hover:bg-red-500 text-white font-black text-xs px-3 py-2 rounded-xl shadow-lg flex items-center gap-1 transition animate-pulse cursor-pointer">
+        🆘 SOS Alert
       </button>
     </div>
   </header>
@@ -124,7 +124,7 @@
     <div class="flex items-center gap-2 overflow-hidden">
       <span class="px-2 py-0.5 rounded bg-red-600 text-white font-black uppercase text-[10px] animate-pulse">IMD RED ALERT</span>
       <span id="imdAlertText" class="truncate font-semibold">
-        📡 Live IMD Warning: Heavy Rain (114mm/hr) & Dense Fog on NH-13 Sela Pass (4,170m) & Sonapur Tunnel. Landslide Hazard Active.
+        📡 Live IMD Warning: Heavy Rain (114mm/hr) & Freezing Fog on NH-13 Sela Pass Summit (4,170m). Landslide Risk Active.
       </span>
     </div>
     <button onclick="document.getElementById('imdAlertBanner').remove()" class="text-red-400 hover:text-white text-sm px-2 cursor-pointer">✕</button>
@@ -136,7 +136,7 @@
     <!-- LEFT PANEL: CONTROLS & INTELLIGENCE TELEMETRY -->
     <aside class="w-full md:w-5/12 xl:w-4/12 bg-slate-900 border-r border-slate-800 overflow-y-auto p-4 md:p-5 flex flex-col gap-4 z-20 flex-shrink-0">
 
-      <!-- GOOGLE MAPS STYLE SEARCH BAR -->
+      <!-- GOOGLE MAPS STYLE SEARCH BAR & QUICK CHIPS -->
       <section class="bg-slate-950 border border-slate-800 rounded-2xl p-3 shadow-xl">
         <div class="flex gap-2 mb-2">
           <input type="text" id="citySearchInput" placeholder="🔍 Search location (e.g., Tawang, Shillong, Kohima, Gangtok)..." onkeydown="if(event.key==='Enter') searchLocation();" class="flex-1 bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-xl px-3 py-2 outline-none focus:border-indigo-500">
@@ -162,13 +162,39 @@
         </div>
       </section>
 
+      <!-- VEHICLE CLASS SELECTOR -->
+      <section class="bg-slate-950 border border-slate-800 rounded-2xl p-3 shadow-xl">
+        <div class="text-xs font-bold text-slate-300 mb-2 flex items-center justify-between">
+          <span>🚛 Select Vehicle Type:</span>
+          <span id="vehicleTypeBadge" class="text-[10px] bg-cyan-950 text-cyan-400 px-2 py-0.5 rounded border border-cyan-800 font-mono">Truck (Convoy Mode)</span>
+        </div>
+        <div class="grid grid-cols-4 gap-1.5 text-xs">
+          <button onclick="selectVehicle('truck', '🚚 Heavy Truck', '35 km/h')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-center flex flex-col items-center gap-1 cursor-pointer">
+            <span class="text-lg">🚚</span>
+            <span class="text-[10px] text-slate-300 font-semibold">Truck</span>
+          </button>
+          <button onclick="selectVehicle('thar', '🚗 Mountain 4x4 Thar', '55 km/h')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-center flex flex-col items-center gap-1 cursor-pointer">
+            <span class="text-lg">🚗</span>
+            <span class="text-[10px] text-slate-300 font-semibold">4x4 SUV</span>
+          </button>
+          <button onclick="selectVehicle('ambulance', '🚑 BRO Ambulance', '65 km/h')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-center flex flex-col items-center gap-1 cursor-pointer">
+            <span class="text-lg">🚑</span>
+            <span class="text-[10px] text-slate-300 font-semibold">Ambulance</span>
+          </button>
+          <button onclick="selectVehicle('bike', '🛵 Patrol Bike', '50 km/h')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-center flex flex-col items-center gap-1 cursor-pointer">
+            <span class="text-lg">🛵</span>
+            <span class="text-[10px] text-slate-300 font-semibold">Patrol Bike</span>
+          </button>
+        </div>
+      </section>
+
       <!-- CORRIDOR SELECTOR & CUSTOM FEATURE ADJUSTERS -->
       <section class="bg-slate-950 border border-slate-800 rounded-2xl p-4 shadow-xl">
         <div class="flex items-center justify-between mb-3 border-b border-slate-800 pb-2">
           <h2 class="text-sm font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
             <span>⚙️ Route Corridors & Dynamic Hazards</span>
           </h2>
-          <span class="text-xs text-slate-400 font-mono">Real Road Geometry</span>
+          <span class="text-xs text-slate-400 font-mono">Real Geometry</span>
         </div>
 
         <div class="flex flex-col gap-3">
@@ -204,7 +230,7 @@
 
           <div class="flex gap-2 pt-2">
             <button onclick="toggleNavSimulation()" id="navSimBtn" class="flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-lg flex items-center justify-center gap-1.5 cursor-pointer">
-              ▶ Start Live Turn-by-Turn Navigation
+              ▶ Start Live Navigation
             </button>
             <button onclick="resetSliders()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold py-2.5 px-3 rounded-xl text-xs border border-slate-700 transition cursor-pointer">
               🔄 Reset
@@ -213,25 +239,36 @@
         </div>
       </section>
 
-      <!-- CROWD-SOURCED HAZARD VERIFICATION CARD -->
-      <section id="crowdVerifyCard" class="bg-slate-950 border border-amber-500/40 rounded-2xl p-4 shadow-xl">
+      <!-- 3D ALTITUDE & ELEVATION PROFILE GRAPH CARD -->
+      <section class="bg-slate-950 border border-slate-800 rounded-2xl p-4 shadow-xl">
         <div class="flex justify-between items-center mb-2">
-          <span class="text-[10px] font-black uppercase tracking-wider text-amber-400 bg-amber-950 px-2 py-0.5 rounded border border-amber-800">
-            👥 Driver Hazard Verification
-          </span>
-          <span class="text-[10px] text-slate-400 font-mono">Live Driver Network</span>
+          <h3 class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
+            <span>⛰️ Mountain Altitude Profile</span>
+          </h3>
+          <span class="text-[10px] text-cyan-400 font-mono font-bold" id="maxAltDisplay">Peak: 4,170m</span>
         </div>
-        <div id="verifyReportBox" class="text-xs text-slate-200">
-          <p class="font-semibold text-slate-100 mb-1" id="verifyHazardTitle">Driver #402 reported Landslide at Bhalukpong Gorge (Km 42).</p>
-          <p class="text-slate-400 mb-3" id="verifyHazardSub">Confidence: 92% | Is this road blockage still active?</p>
-          <div class="flex gap-2">
-            <button onclick="submitCrowdVerification(true)" class="flex-1 bg-red-950 hover:bg-red-900 border border-red-700 text-red-200 font-bold py-1.5 px-2 rounded-lg transition text-center cursor-pointer">
-              ❌ Yes, Still Blocked
-            </button>
-            <button onclick="submitCrowdVerification(false)" class="flex-1 bg-emerald-950 hover:bg-emerald-900 border border-emerald-700 text-emerald-200 font-bold py-1.5 px-2 rounded-lg transition text-center cursor-pointer">
-              🟢 No, Road Cleared
-            </button>
-          </div>
+        <p class="text-[11px] text-slate-400 mb-2">Live topographic elevation chart along corridor:</p>
+
+        <!-- SVG SPARKLINE ELEVATION GRAPH -->
+        <div class="w-full h-24 bg-slate-900/90 rounded-xl p-2 border border-slate-800 relative overflow-hidden flex items-end">
+          <svg viewBox="0 0 300 80" class="w-full h-full">
+            <defs>
+              <linearGradient id="altGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.8"/>
+                <stop offset="100%" stop-color="#0284c7" stop-opacity="0.0"/>
+              </linearGradient>
+            </defs>
+            <polygon points="0,75 20,70 80,60 140,40 200,10 240,30 300,35 300,80 0,80" fill="url(#altGrad)" />
+            <path d="M 0 75 Q 40 65, 80 60 T 140 40 T 200 10 T 240 30 T 300 35" fill="none" stroke="#38bdf8" stroke-width="3" class="alt-sparkline" />
+            <!-- Peak Altitude Dot -->
+            <circle cx="200" cy="10" r="4" fill="#ef4444" />
+            <text x="180" y="8" fill="#ef4444" font-size="8" font-weight="bold">Sela Pass 4,170m</text>
+          </svg>
+        </div>
+        <div class="flex justify-between text-[9px] text-slate-400 font-mono mt-1">
+          <span>Guwahati (55m)</span>
+          <span>Dirang (1,560m)</span>
+          <span>Tawang (3,048m)</span>
         </div>
       </section>
 
@@ -312,7 +349,7 @@
     <main class="flex-1 relative h-full w-full">
       <div id="map"></div>
 
-      <!-- FLOATING GOOGLE MAPS TURN-BY-TURN TOP HUD (Hidden by default, shown during Navigation) -->
+      <!-- FLOATING GOOGLE MAPS TURN-BY-TURN TOP HUD -->
       <div id="gmapsTopHud" class="hidden absolute top-4 left-4 right-16 md:right-72 z-30 bg-slate-900/95 backdrop-blur-md border border-slate-700 p-3.5 rounded-2xl shadow-2xl gmaps-top-hud">
         <div class="flex items-center gap-3.5">
           <div id="hudTurnIcon" class="w-12 h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-black text-2xl shadow-lg flex-shrink-0">
@@ -418,23 +455,6 @@
     </div>
   </div>
 
-  <!-- SOS PANIC MODAL -->
-  <div id="sosModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-red-800 rounded-2xl w-full max-w-md p-6 space-y-4 shadow-2xl text-center">
-      <div class="text-4xl animate-bounce">🚨</div>
-      <h3 class="font-extrabold text-lg text-red-400">EMERGENCY SOS DISPATCH TRIGGERED</h3>
-      <p class="text-xs text-slate-300">Broadcasting vehicle GPS coordinates to nearest BRO Base, NDRF Cell & SDRF Disaster Control Room.</p>
-      <div class="flex gap-2">
-        <button onclick="triggerWhatsAppSOS()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 font-extrabold text-xs py-2.5 rounded-xl text-white shadow-lg cursor-pointer">
-          💬 Send WhatsApp SOS
-        </button>
-        <button onclick="closeSOSModal()" class="flex-1 bg-red-600 hover:bg-red-500 font-extrabold text-xs py-2.5 rounded-xl text-white shadow-lg cursor-pointer">
-          Close Alert
-        </button>
-      </div>
-    </div>
-  </div>
-
   <script>
     let map = null;
     let currentTileLayer = null;
@@ -449,6 +469,8 @@
     let navStepIndex = 0;
     let currentEvaluatedData = null;
     let densePolylineCoordinates = [];
+    let selectedVehicleIcon = '🚚';
+    let selectedVehicleSpeed = '48 km/h';
     const synth = window.speechSynthesis;
 
     const MAP_LAYERS = {
@@ -539,6 +561,47 @@
       window.addEventListener('resize', () => {
         if (map) map.invalidateSize();
       });
+    }
+
+    function toggleNightFogMode() {
+      const body = document.getElementById('bodyRoot');
+      const btn = document.getElementById('nightFogBtn');
+      body.classList.toggle('night-fog-mode');
+      if (body.classList.contains('night-fog-mode')) {
+        btn.innerHTML = "☀️ Daylight Mode";
+        btn.className = "bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs px-3 py-2 rounded-xl shadow flex items-center gap-1.5 transition cursor-pointer";
+      } else {
+        btn.innerHTML = "🌙 Night/Fog Mode";
+        btn.className = "bg-slate-800 hover:bg-slate-700 text-amber-300 font-extrabold text-xs px-3 py-2 rounded-xl border border-slate-700 shadow flex items-center gap-1.5 transition cursor-pointer";
+      }
+    }
+
+    function selectVehicle(type, label, speed) {
+      const icons = { truck: '🚚', thar: '🚗', ambulance: '🚑', bike: '🛵' };
+      selectedVehicleIcon = icons[type] || '🚚';
+      selectedVehicleSpeed = speed;
+      document.getElementById('vehicleTypeBadge').textContent = label;
+      alert(`Vehicle updated to ${label} (${speed} target speed). Navigation telemetry adjusted.`);
+    }
+
+    function triggerEmergencySirenAlert() {
+      // Synthesize Emergency Police/Ambulance Siren using Web Audio API
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.5);
+        osc.frequency.exponentialRampToValueAtTime(440, audioCtx.currentTime + 1.0);
+        gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 1.2);
+      } catch (e) {}
+
+      triggerWhatsAppSOS();
     }
 
     function changeMapStyle(styleKey) {
@@ -641,7 +704,7 @@
         clearInterval(navInterval);
         navInterval = null;
         if (vehicleMarker) map.removeLayer(vehicleMarker);
-        btn.innerHTML = "▶ Start Live Turn-by-Turn Navigation";
+        btn.innerHTML = "▶ Start Live Navigation";
         btn.className = "flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-lg flex items-center justify-center gap-1.5 cursor-pointer";
         topHud.classList.add('hidden');
         bottomHud.classList.add('hidden');
@@ -653,14 +716,14 @@
       densePolylineCoordinates = interpolateRoadPolyline(targetRoute, 30);
       navStepIndex = 0;
 
-      const truckIcon = L.divIcon({
+      const vehicleIcon = L.divIcon({
         className: 'vehicle-marker',
-        html: '🚚',
-        iconSize: [32, 32],
-        iconAnchor: [16, 16]
+        html: selectedVehicleIcon,
+        iconSize: [36, 36],
+        iconAnchor: [18, 18]
       });
 
-      vehicleMarker = L.marker(densePolylineCoordinates[0], { icon: truckIcon }).addTo(map);
+      vehicleMarker = L.marker(densePolylineCoordinates[0], { icon: vehicleIcon }).addTo(map);
       map.flyTo(densePolylineCoordinates[0], 13, { duration: 1.0 });
 
       topHud.classList.remove('hidden');
@@ -695,7 +758,7 @@
 
         const remKm = (currentEvaluatedData.alternate_route.distance_km * (1 - progressPct)).toFixed(1);
         const remMins = Math.round(currentEvaluatedData.alternate_route.adjusted_eta_hours * 60 * (1 - progressPct));
-        const simSpeed = Math.round(42 + Math.sin(navStepIndex) * 8);
+        const simSpeed = Math.round(44 + Math.sin(navStepIndex) * 6);
 
         document.getElementById('hudSpeed').textContent = `${simSpeed} km/h`;
         document.getElementById('hudRemDistance').textContent = `${remKm} km`;
@@ -830,8 +893,8 @@
       DRIVER_HAZARDS.forEach(haz => {
         const pulsingIcon = L.divIcon({
           className: 'pulse-marker-red',
-          iconSize: [18, 18],
-          iconAnchor: [9, 9]
+          iconSize: [20, 20],
+          iconAnchor: [10, 10]
         });
         const marker = L.marker([haz.lat, haz.lon], { icon: pulsingIcon }).bindPopup(`
           <div style="font-family:system-ui; padding:4px;">
