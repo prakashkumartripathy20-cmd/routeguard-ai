@@ -44,8 +44,16 @@
       100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
     }
 
-    .vehicle-marker {
-      font-size: 32px; filter: drop-shadow(0 0 14px #38bdf8); transition: all 0.3s ease;
+    /* Ultra-Smooth Vehicle Marker Gliding Animation (Zero Screen Shake) */
+    .vehicle-marker-smooth {
+      font-size: 34px; filter: drop-shadow(0 0 16px #38bdf8);
+      transition: transform 0.8s linear, left 0.8s linear, top 0.8s linear;
+    }
+
+    .milestone-badge {
+      background: #0f172a; color: #f8fafc; border: 2px solid #38bdf8; border-radius: 8px;
+      padding: 3px 8px; font-size: 11px; font-weight: 800; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5);
+      white-space: nowrap;
     }
 
     .leaflet-popup-content-wrapper {
@@ -54,7 +62,7 @@
     }
     .leaflet-popup-tip { background: #0f172a !important; }
 
-    /* Floating Google Maps Turn HUD Animations */
+    /* Floating Navigation HUD Animations */
     .gmaps-top-hud { animation: slideDown 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
     @keyframes slideDown { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
@@ -76,9 +84,9 @@
       </div>
       <div>
         <h1 class="font-extrabold text-base md:text-lg tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent flex items-center gap-2">
-          RouteGuard AI <span class="text-[10px] font-semibold uppercase tracking-wider text-emerald-400 px-2 py-0.5 rounded-full bg-emerald-950 border border-emerald-800">Dynamic Hazard Bypass Navigation Engine</span>
+          RouteGuard AI <span class="text-[10px] font-semibold uppercase tracking-wider text-emerald-400 px-2 py-0.5 rounded-full bg-emerald-950 border border-emerald-800">Clear Smooth Navigation Engine</span>
         </h1>
-        <p class="text-[11px] text-slate-400 hidden sm:block">Exact Highway Vector Snapping • Hazard Bypass Diversion • Native Indian Driver Safety</p>
+        <p class="text-[11px] text-slate-400 hidden sm:block">Stable Fixed Camera GIS • Smooth Glide Telemetry • Native Indian Highway Safety</p>
       </div>
     </div>
 
@@ -230,7 +238,7 @@
 
           <div class="flex gap-2 pt-2">
             <button onclick="toggleNavSimulation()" id="navSimBtn" class="flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-lg flex items-center justify-center gap-1.5 cursor-pointer">
-              ▶ Start Live Dynamic Navigation
+              ▶ Start Smooth Vehicle Navigation
             </button>
             <button onclick="resetSliders()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold py-2.5 px-3 rounded-xl text-xs border border-slate-700 transition cursor-pointer">
               🔄 Reset
@@ -464,6 +472,7 @@
     let hazardMarkersGroup = null;
     let bhuvanZonesGroup = null;
     let facilitiesMarkersGroup = null;
+    let milestonesMarkersGroup = null;
     let vehicleMarker = null;
     let navInterval = null;
     let navStepIndex = 0;
@@ -553,6 +562,7 @@
       hazardMarkersGroup = L.layerGroup().addTo(map);
       bhuvanZonesGroup = L.layerGroup().addTo(map);
       facilitiesMarkersGroup = L.layerGroup().addTo(map);
+      milestonesMarkersGroup = L.layerGroup().addTo(map);
 
       setTimeout(() => {
         if (map) map.invalidateSize();
@@ -715,7 +725,7 @@
       return dense;
     }
 
-    // Dynamic Navigation: Vehicle starts on Main Highway -> Diverts onto Safer Bypass around Hazard Zone -> Rejoins Main Highway to Destination
+    // Ultra-Smooth Fixed-Camera Navigation Simulation
     async function toggleNavSimulation() {
       const btn = document.getElementById('navSimBtn');
       const topHud = document.getElementById('gmapsTopHud');
@@ -725,7 +735,7 @@
         clearInterval(navInterval);
         navInterval = null;
         if (vehicleMarker) map.removeLayer(vehicleMarker);
-        btn.innerHTML = "▶ Start Live Dynamic Navigation";
+        btn.innerHTML = "▶ Start Smooth Vehicle Navigation";
         btn.className = "flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-lg flex items-center justify-center gap-1.5 cursor-pointer";
         topHud.classList.add('hidden');
         bottomHud.classList.add('hidden');
@@ -734,11 +744,9 @@
 
       if (!currentEvaluatedData) return;
 
-      // Combine Primary Route -> Alternate Hazard Bypass -> Main Highway Rejoin
       const pWps = currentEvaluatedData.primary_route.waypoints;
       const aWps = currentEvaluatedData.alternate_route.waypoints;
 
-      // Start on Main Highway, transition to Bypass at hazard split, rejoin main highway after hazard
       const combinedRouteWaypoints = [
         pWps[0], pWps[1],                     // Start on Main Highway (Guwahati -> Tezpur Bridge)
         aWps[2], aWps[3],                     // Divert onto Kalaktang Safer Bypass around Bhalukpong Landslide
@@ -746,27 +754,29 @@
       ];
 
       const osrmNavPoints = await fetchOSRMRealRoadPolyline(combinedRouteWaypoints);
-      densePolylineCoordinates = osrmNavPoints || interpolateRoadPolyline(combinedRouteWaypoints, 30);
+      densePolylineCoordinates = osrmNavPoints || interpolateRoadPolyline(combinedRouteWaypoints, 25);
       navStepIndex = 0;
 
+      // Keep map view FIXED & STABLE over the route bounds (no screen shaking or rapid zooming)
+      map.fitBounds(L.polyline(densePolylineCoordinates).getBounds(), { padding: [60, 60] });
+
       const vehicleIcon = L.divIcon({
-        className: 'vehicle-marker',
+        className: 'vehicle-marker-smooth',
         html: selectedVehicleIcon,
-        iconSize: [36, 36],
-        iconAnchor: [18, 18]
+        iconSize: [38, 38],
+        iconAnchor: [19, 19]
       });
 
       vehicleMarker = L.marker(densePolylineCoordinates[0], { icon: vehicleIcon }).addTo(map);
-      map.flyTo(densePolylineCoordinates[0], 13, { duration: 1.0 });
 
       topHud.classList.remove('hidden');
       bottomHud.classList.remove('hidden');
 
-      btn.innerHTML = "⏹️ Exit Live Navigation";
+      btn.innerHTML = "⏹️ Exit Navigation";
       btn.className = "flex-1 bg-red-600 hover:bg-red-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-lg flex items-center justify-center gap-1.5 cursor-pointer";
 
       const hudInstructions = [
-        { icon: '↑', dist: 'In 400 meters', title: 'Driving on NH-13 Primary Highway', sub: 'Tezpur Corridor • Speed limit 50 km/h' },
+        { icon: '↑', dist: 'In 400 meters', title: 'Driving on NH-13 Main Highway', sub: 'Tezpur Bridge Corridor • Speed 50 km/h' },
         { icon: '↱', dist: 'In 300 meters', title: '🚨 HAZARD AHEAD! Diverting onto Kalaktang Bypass', sub: 'Bypasses Bhalukpong Gorge Landslide Blockade (Km 42)' },
         { icon: '↰', dist: 'In 1.2 km', title: '🟢 HAZARD CLEARED! Rejoining Main NH-13 Highway', sub: 'Dirang Hill Climb • Proceeding toward Sela Pass' },
         { icon: '⚠️', dist: 'In 800 meters', title: 'Approaching Sela Pass Summit (4,170m)', sub: 'Dense Fog & Freezing Rain • Turn on hazard lights' },
@@ -776,10 +786,11 @@
       navInterval = setInterval(() => {
         navStepIndex = (navStepIndex + 1) % densePolylineCoordinates.length;
         const pos = densePolylineCoordinates[navStepIndex];
+        
+        // Smoothly glide marker along route WITHOUT shaking map camera
         vehicleMarker.setLatLng(pos);
-        map.panTo(pos);
 
-        // Update HUD Telemetry
+        // Update HUD Telemetry cleanly
         const progressPct = navStepIndex / densePolylineCoordinates.length;
         const instIndex = Math.min(hudInstructions.length - 1, Math.floor(progressPct * hudInstructions.length));
         const currentInst = hudInstructions[instIndex];
@@ -791,7 +802,7 @@
 
         const remKm = (currentEvaluatedData.alternate_route.distance_km * (1 - progressPct)).toFixed(1);
         const remMins = Math.round(currentEvaluatedData.alternate_route.adjusted_eta_hours * 60 * (1 - progressPct));
-        const simSpeed = Math.round(44 + Math.sin(navStepIndex) * 6);
+        const simSpeed = Math.round(44 + Math.sin(navStepIndex) * 4);
 
         document.getElementById('hudSpeed').textContent = `${simSpeed} km/h`;
         document.getElementById('hudRemDistance').textContent = `${remKm} km`;
@@ -800,7 +811,7 @@
         if (navStepIndex === Math.floor(densePolylineCoordinates.length * 0.25)) {
           testVoiceAlert();
         }
-      }, 1200);
+      }, 900);
     }
 
     function updateSliderLabels() {
@@ -894,6 +905,7 @@
       if (alternatePolyline) map.removeLayer(alternatePolyline);
       if (emergencyMarkersGroup) emergencyMarkersGroup.clearLayers();
       if (hazardMarkersGroup) hazardMarkersGroup.clearLayers();
+      if (milestonesMarkersGroup) milestonesMarkersGroup.clearLayers();
 
       const p = data.primary_route;
       const a = data.alternate_route;
@@ -917,6 +929,24 @@
         dashArray: '8, 8',
         opacity: 0.95
       }).addTo(map);
+
+      // Render Clear Milestone Badges along Highway Route
+      const milestones = [
+        { label: '🟢 [1] START: Guwahati Hub', pos: p.waypoints[0] },
+        { label: '🚨 [2] HAZARD: Bhalukpong Landslide (Blocked)', pos: [27.0134, 92.6416] },
+        { label: '↪️ [3] BYPASS: Kalaktang Highway', pos: [27.1000, 92.2500] },
+        { label: '🏁 [4] DESTINATION: Tawang Command', pos: p.waypoints[p.waypoints.length - 1] }
+      ];
+
+      milestones.forEach(ms => {
+        const icon = L.divIcon({
+          className: '',
+          html: `<div class="milestone-badge">${ms.label}</div>`,
+          iconAnchor: [60, 15]
+        });
+        const marker = L.marker(ms.pos, { icon }).bindPopup(`<b>${ms.label}</b>`);
+        milestonesMarkersGroup.addLayer(marker);
+      });
 
       // Draw Emergency BRO Bases & Anchors
       (data.emergency_anchors || [{ name: 'Border Roads Task Force Base (761 BRTF)', lat: 26.85, lon: 92.15, type: 'BRO Base' }]).forEach(anchor => {

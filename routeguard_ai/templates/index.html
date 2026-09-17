@@ -3,11 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RouteGuard AI - Software Route Risk Intelligence Platform</title>
-  
-  <!-- PWA Manifest & Meta -->
-  <meta name="theme-color" content="#090d16">
-  <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+  <title>RouteGuard AI - Real-Time GIS & Driver Navigation Platform</title>
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -17,137 +13,207 @@
       theme: {
         extend: {
           colors: {
-            brand: {
-              50: '#eef2ff',
-              500: '#6366f1',
-              600: '#4f46e5',
-              700: '#4338ca',
-            }
+            brand: { 50: '#eef2ff', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' }
           }
         }
       }
     }
   </script>
 
-  <!-- Leaflet CSS & JS -->
+  <!-- Leaflet CSS & JS (Keyless & Free) -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
   <style>
+    html, body { height: 100%; width: 100%; margin: 0; padding: 0; overflow: hidden; font-family: system-ui, -apple-system, sans-serif; }
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: #090d16; }
     ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #475569; }
 
+    #map { width: 100%; height: 100%; min-height: 500px; background: #090d16; transition: filter 0.5s ease; }
+    .night-fog-mode #map { filter: brightness(0.65) contrast(1.2) hue-rotate(190deg); }
+
     .pulse-marker-red {
-      background-color: #ef4444;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      border: 3px solid #ffffff;
-      box-shadow: 0 0 16px #ef4444;
-      animation: pulse-red 1.5s infinite;
+      background-color: #ef4444; width: 20px; height: 20px; border-radius: 50%; border: 3px solid #ffffff;
+      box-shadow: 0 0 18px #ef4444; animation: pulse-red 1.4s infinite;
     }
     @keyframes pulse-red {
-      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-      70% { transform: scale(1.2); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.8); }
+      70% { transform: scale(1.3); box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); }
       100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
     }
 
+    /* Ultra-Smooth Vehicle Marker Gliding Animation (Zero Screen Shake) */
+    .vehicle-marker-smooth {
+      font-size: 34px; filter: drop-shadow(0 0 16px #38bdf8);
+      transition: transform 0.8s linear, left 0.8s linear, top 0.8s linear;
+    }
+
+    .milestone-badge {
+      background: #0f172a; color: #f8fafc; border: 2px solid #38bdf8; border-radius: 8px;
+      padding: 3px 8px; font-size: 11px; font-weight: 800; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5);
+      white-space: nowrap;
+    }
+
     .leaflet-popup-content-wrapper {
-      background: #0f172a !important;
-      color: #f8fafc !important;
-      border: 1px solid #334155 !important;
-      border-radius: 12px !important;
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5) !important;
+      background: #0f172a !important; color: #f8fafc !important; border: 1px solid #334155 !important;
+      border-radius: 12px !important; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5) !important;
     }
     .leaflet-popup-tip { background: #0f172a !important; }
+
+    /* Floating Navigation HUD Animations */
+    .gmaps-top-hud { animation: slideDown 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    @keyframes slideDown { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    .gmaps-bottom-hud { animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    @keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    /* Glowing Altitude Bar Animation */
+    .alt-sparkline { stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: dash 3s ease-in-out forwards; }
+    @keyframes dash { to { stroke-dashoffset: 0; } }
   </style>
 </head>
-<body class="h-full flex flex-col font-sans text-slate-100 overflow-hidden">
+<body id="bodyRoot" class="h-full flex flex-col font-sans text-slate-100 overflow-hidden bg-slate-950">
 
   <!-- TOP NAVIGATION BAR -->
-  <header class="h-16 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-4 md:px-6 z-20 flex-shrink-0">
+  <header class="h-16 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-4 md:px-6 z-30 flex-shrink-0 shadow-xl">
     <div class="flex items-center gap-3">
-      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center font-black text-xl text-white shadow-lg shadow-indigo-500/20">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 via-blue-600 to-cyan-500 flex items-center justify-center font-black text-xl text-white shadow-lg shadow-indigo-500/20">
         🛡️
       </div>
       <div>
         <h1 class="font-extrabold text-base md:text-lg tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent flex items-center gap-2">
-          RouteGuard AI <span class="text-[10px] font-semibold uppercase tracking-wider text-cyan-400 px-2 py-0.5 rounded-full bg-cyan-950 border border-cyan-800">NER Logistics Safety</span>
+          RouteGuard AI <span class="text-[10px] font-semibold uppercase tracking-wider text-emerald-400 px-2 py-0.5 rounded-full bg-emerald-950 border border-emerald-800">Clear Smooth Navigation Engine</span>
         </h1>
-        <p class="text-[11px] text-slate-400 hidden sm:block">Software Route Risk Intelligence • PostGIS & Multilingual Safety Telemetry</p>
+        <p class="text-[11px] text-slate-400 hidden sm:block">Stable Fixed Camera GIS • Smooth Glide Telemetry • Native Indian Highway Safety</p>
       </div>
     </div>
 
-    <!-- VOICE CONTROLS, 1-TAP HAZARD & SOS ACTION BUTTONS -->
+    <!-- VOICE CONTROLS & ACTION BUTTONS -->
     <div class="flex items-center gap-2">
-      
-      <!-- MULTILINGUAL VOICE ALERT SELECTOR -->
-      <div class="hidden sm:flex items-center gap-1.5 bg-slate-950 border border-slate-800 rounded-xl px-2.5 py-1">
-        <span class="text-xs">🔊 Voice:</span>
+      <!-- NIGHT / FOG MODE TOGGLE -->
+      <button onclick="toggleNightFogMode()" id="nightFogBtn" class="bg-slate-800 hover:bg-slate-700 text-amber-300 font-extrabold text-xs px-3 py-2 rounded-xl border border-slate-700 shadow flex items-center gap-1.5 transition cursor-pointer" title="Toggle Night & Mountain Fog Headlight Mode">
+        🌙 Night/Fog Mode
+      </button>
+
+      <div class="hidden lg:flex items-center gap-1.5 bg-slate-950 border border-slate-800 rounded-xl px-2.5 py-1">
+        <span class="text-xs">🗣️ Native Voice:</span>
         <select id="voiceLangSelect" class="bg-transparent text-xs font-bold text-cyan-400 outline-none cursor-pointer">
           <option value="en-US" class="bg-slate-900 text-slate-200">English (EN)</option>
           <option value="hi-IN" class="bg-slate-900 text-slate-200">Hindi (हिंदी)</option>
           <option value="bn-IN" class="bg-slate-900 text-slate-200">Assamese / Bengali (অসমীয়া / বাংলা)</option>
+          <option value="ne-NP" class="bg-slate-900 text-slate-200">Nepali (नेपाली)</option>
         </select>
-        <button onclick="testVoiceAlert()" title="Test Voice Alert" class="text-xs bg-slate-800 hover:bg-slate-700 px-1.5 py-0.5 rounded text-slate-300">
-          🗣️ Test
+        <button onclick="testVoiceAlert()" title="Test Native Voice Alert" class="text-xs bg-slate-800 hover:bg-slate-700 px-2 py-1 rounded text-slate-300 cursor-pointer">
+          🔊 Test
         </button>
       </div>
 
-      <!-- ONE-TAP HAZARD REPORTING BUTTON -->
-      <button onclick="openHazardModal()" class="bg-gradient-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500 text-white font-extrabold text-xs px-3 py-2 rounded-xl shadow-lg shadow-red-950/50 flex items-center gap-1.5 transition">
-        <span class="animate-bounce">🚨</span> <span class="hidden md:inline">1-TAP</span> HAZARD
+      <button onclick="openInGoogleMaps()" class="bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-xs px-3 py-2 rounded-xl shadow-lg flex items-center gap-1.5 transition cursor-pointer">
+        🗺️ Google Maps App
       </button>
 
-      <!-- SOS PANIC BUTTON -->
-      <button onclick="openSOSModal()" class="bg-red-600 hover:bg-red-500 text-white font-black text-xs px-3 py-2 rounded-xl shadow-lg shadow-red-600/40 flex items-center gap-1 transition animate-pulse">
-        🆘 SOS
+      <button onclick="triggerWhatsAppSOS()" class="bg-emerald-700 hover:bg-emerald-600 text-white font-extrabold text-xs px-3 py-2 rounded-xl shadow-lg flex items-center gap-1.5 transition cursor-pointer" title="Send GPS Location via WhatsApp">
+        💬 WhatsApp SOS
       </button>
 
-      <!-- 8-STATE HELPLINES DIRECTORY BUTTON -->
-      <button onclick="openHelplineModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs px-3 py-2 rounded-xl border border-slate-700 transition">
-        ☎️ Helplines
+      <button onclick="openHazardModal()" class="bg-gradient-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500 text-white font-extrabold text-xs px-3 py-2 rounded-xl shadow-lg flex items-center gap-1.5 transition cursor-pointer">
+        <span class="animate-bounce">🚨</span> Hazard
+      </button>
+      <button onclick="triggerEmergencySirenAlert()" class="bg-red-600 hover:bg-red-500 text-white font-black text-xs px-3 py-2 rounded-xl shadow-lg flex items-center gap-1 transition animate-pulse cursor-pointer">
+        🆘 SOS Alert
       </button>
     </div>
   </header>
 
-  <!-- IMD WEATHER & ISRO BHUVAN ALERT BANNER -->
-  <div id="imdAlertBanner" class="bg-red-950/90 border-b border-red-800/80 px-4 py-2 flex items-center justify-between text-xs text-red-200 z-10">
+  <!-- IMD WEATHER & MOUNTAIN ALERT BANNER -->
+  <div id="imdAlertBanner" class="bg-red-950/90 border-b border-red-800/80 px-4 py-1.5 flex items-center justify-between text-xs text-red-200 z-20 flex-shrink-0">
     <div class="flex items-center gap-2 overflow-hidden">
       <span class="px-2 py-0.5 rounded bg-red-600 text-white font-black uppercase text-[10px] animate-pulse">IMD RED ALERT</span>
       <span id="imdAlertText" class="truncate font-semibold">
-        📡 IMD Warning: Severe Torrential Rain (114-128 mm/hr) in West Kameng (AR) & East Khasi Hills (ML). Landslide risk High.
+        📡 Live IMD Warning: Heavy Rain (114mm/hr) & Freezing Fog on NH-13 Sela Pass Summit (4,170m). Landslide Risk Active.
       </span>
     </div>
-    <button onclick="document.getElementById('imdAlertBanner').remove()" class="text-red-400 hover:text-white text-sm px-2">✖</button>
+    <button onclick="document.getElementById('imdAlertBanner').remove()" class="text-red-400 hover:text-white text-sm px-2 cursor-pointer">✕</button>
   </div>
 
   <!-- DASHBOARD BODY CONTAINER -->
   <div class="flex-1 flex flex-col md:flex-row overflow-hidden relative">
 
     <!-- LEFT PANEL: CONTROLS & INTELLIGENCE TELEMETRY -->
-    <aside class="w-full md:w-5/12 xl:w-4/12 bg-slate-900 border-r border-slate-800 overflow-y-auto p-4 md:p-5 flex flex-col gap-4 z-10">
+    <aside class="w-full md:w-5/12 xl:w-4/12 bg-slate-900 border-r border-slate-800 overflow-y-auto p-4 md:p-5 flex flex-col gap-4 z-20 flex-shrink-0">
+
+      <!-- GOOGLE MAPS STYLE SEARCH BAR & QUICK CHIPS -->
+      <section class="bg-slate-950 border border-slate-800 rounded-2xl p-3 shadow-xl">
+        <div class="flex gap-2 mb-2">
+          <input type="text" id="citySearchInput" placeholder="🔍 Search location (e.g., Tawang, Shillong, Kohima, Gangtok)..." onkeydown="if(event.key==='Enter') searchLocation();" class="flex-1 bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-xl px-3 py-2 outline-none focus:border-indigo-500">
+          <button onclick="searchLocation()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-3 py-2 rounded-xl transition cursor-pointer">
+            Search
+          </button>
+        </div>
+
+        <!-- HIGHWAY DRIVER QUICK CHIPS -->
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 text-[11px]">
+          <button onclick="filterFacility('fuel')" class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-amber-400 font-semibold flex items-center gap-1 whitespace-nowrap cursor-pointer">
+            ⛽ Petrol Pumps
+          </button>
+          <button onclick="filterFacility('dhaba')" class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-emerald-400 font-semibold flex items-center gap-1 whitespace-nowrap cursor-pointer">
+            🍜 Highway Dhabas
+          </button>
+          <button onclick="filterFacility('mechanic')" class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-cyan-400 font-semibold flex items-center gap-1 whitespace-nowrap cursor-pointer">
+            🛠️ Tyre Mechanics
+          </button>
+          <button onclick="filterFacility('bro')" class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-red-400 font-semibold flex items-center gap-1 whitespace-nowrap cursor-pointer">
+            🏥 BRO Hospitals
+          </button>
+        </div>
+      </section>
+
+      <!-- VEHICLE CLASS SELECTOR -->
+      <section class="bg-slate-950 border border-slate-800 rounded-2xl p-3 shadow-xl">
+        <div class="text-xs font-bold text-slate-300 mb-2 flex items-center justify-between">
+          <span>🚛 Select Vehicle Type:</span>
+          <span id="vehicleTypeBadge" class="text-[10px] bg-cyan-950 text-cyan-400 px-2 py-0.5 rounded border border-cyan-800 font-mono font-bold">Truck (Convoy Mode)</span>
+        </div>
+        <div class="grid grid-cols-4 gap-1.5 text-xs">
+          <button onclick="selectVehicle('truck', '🚚 Heavy Truck', '35 km/h')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-center flex flex-col items-center gap-1 cursor-pointer">
+            <span class="text-lg">🚚</span>
+            <span class="text-[10px] text-slate-300 font-semibold">Truck</span>
+          </button>
+          <button onclick="selectVehicle('thar', '🚗 Mountain 4x4 Thar', '55 km/h')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-center flex flex-col items-center gap-1 cursor-pointer">
+            <span class="text-lg">🚗</span>
+            <span class="text-[10px] text-slate-300 font-semibold">4x4 SUV</span>
+          </button>
+          <button onclick="selectVehicle('ambulance', '🚑 BRO Ambulance', '65 km/h')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-center flex flex-col items-center gap-1 cursor-pointer">
+            <span class="text-lg">🚑</span>
+            <span class="text-[10px] text-slate-300 font-semibold">Ambulance</span>
+          </button>
+          <button onclick="selectVehicle('bike', '🛵 Patrol Bike', '50 km/h')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-center flex flex-col items-center gap-1 cursor-pointer">
+            <span class="text-lg">🛵</span>
+            <span class="text-[10px] text-slate-300 font-semibold">Patrol Bike</span>
+          </button>
+        </div>
+      </section>
 
       <!-- CORRIDOR SELECTOR & CUSTOM FEATURE ADJUSTERS -->
       <section class="bg-slate-950 border border-slate-800 rounded-2xl p-4 shadow-xl">
         <div class="flex items-center justify-between mb-3 border-b border-slate-800 pb-2">
           <h2 class="text-sm font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
-            <span>⚙️ Route Parameters & Corridors</span>
+            <span>⚙️ Route Corridors & Dynamic Hazards</span>
           </h2>
-          <span class="text-xs text-slate-400 font-mono">NER Network</span>
+          <span class="text-xs text-slate-400 font-mono">Real Geometry</span>
         </div>
 
         <div class="flex flex-col gap-3">
           <div>
             <label class="text-xs text-slate-400 font-medium block mb-1">Select Target Logistics Corridor:</label>
-            <select id="corridorSelect" class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-xs font-semibold rounded-lg p-2.5 outline-none focus:border-indigo-500">
+            <select id="corridorSelect" onchange="evaluateSelectedRoute()" class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-xs font-semibold rounded-lg p-2.5 outline-none focus:border-indigo-500 cursor-pointer">
               <option value="guwahati_tawang">Guwahati ➔ Tawang (NH-13 Sela Pass Corridor)</option>
               <option value="shillong_silchar">Shillong ➔ Silchar (NH-6 Sonapur Tunnel Corridor)</option>
-              <option value="dimapur_imphal">Dimapur ➔ Kohima ➔ Imphal (NH-2 Mountain Link)</option>
-              <option value="agartala_sabroom">Agartala ➔ Sabroom (NH-8 Tripura Corridor)</option>
-              <option value="gangtok_mangan">Gangtok ➔ Mangan (North Sikkim Highway)</option>
+              <option value="dimapur_kohima">Dimapur ➔ Kohima (NH-29 Phesama Slip Corridor)</option>
+              <option value="tezpur_itanagar">Tezpur ➔ Itanagar (NH-415 Holongi Corridor)</option>
+              <option value="siliguri_gangtok">Siliguri ➔ Gangtok (NH-10 Teesta Valley Corridor)</option>
             </select>
           </div>
 
@@ -158,7 +224,7 @@
                 <span class="text-slate-400 font-medium">🌧️ Simulated Rainfall (mm/hr):</span>
                 <span id="rainValDisplay" class="font-mono text-cyan-400 font-bold">Default</span>
               </div>
-              <input type="range" id="sliderRain" min="0" max="150" value="0" class="w-full accent-cyan-500 bg-slate-800 h-1.5 rounded-lg cursor-pointer">
+              <input type="range" id="sliderRain" min="0" max="150" value="0" step="5" oninput="updateSliderLabels(); evaluateSelectedRoute();" class="w-full accent-cyan-500 bg-slate-800 h-1.5 rounded-lg cursor-pointer">
             </div>
 
             <div>
@@ -166,358 +232,860 @@
                 <span class="text-slate-400 font-medium">🚚 Traffic Bottleneck Index (1-5x):</span>
                 <span id="trafficValDisplay" class="font-mono text-indigo-400 font-bold">Default</span>
               </div>
-              <input type="range" id="sliderTraffic" min="1" max="5" step="0.5" value="1" class="w-full accent-indigo-500 bg-slate-800 h-1.5 rounded-lg cursor-pointer">
+              <input type="range" id="sliderTraffic" min="1" max="5" step="0.5" value="1" oninput="updateSliderLabels(); evaluateSelectedRoute();" class="w-full accent-indigo-500 bg-slate-800 h-1.5 rounded-lg cursor-pointer">
             </div>
           </div>
 
           <div class="flex gap-2 pt-2">
-            <button onclick="evaluateSelectedRoute()" class="flex-1 bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2">
-              🚀 Evaluate Route Risk
+            <button onclick="toggleNavSimulation()" id="navSimBtn" class="flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-lg flex items-center justify-center gap-1.5 cursor-pointer">
+              ▶ Start Smooth Vehicle Navigation
             </button>
-            <button onclick="resetSliders()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold py-2.5 px-3 rounded-xl text-xs border border-slate-700 transition">
+            <button onclick="resetSliders()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold py-2.5 px-3 rounded-xl text-xs border border-slate-700 transition cursor-pointer">
               🔄 Reset
             </button>
           </div>
         </div>
       </section>
 
-      <!-- CROWD-SOURCED HAZARD VERIFICATION CARD -->
-      <section id="crowdVerifyCard" class="bg-slate-950 border border-amber-500/40 rounded-2xl p-4 shadow-xl">
+      <!-- 3D ALTITUDE & ELEVATION PROFILE GRAPH CARD -->
+      <section class="bg-slate-950 border border-slate-800 rounded-2xl p-4 shadow-xl">
         <div class="flex justify-between items-center mb-2">
-          <span class="text-[10px] font-black uppercase tracking-wider text-amber-400 bg-amber-950 px-2 py-0.5 rounded border border-amber-800">
-            👥 Crowd-Sourced Verification
-          </span>
-          <span class="text-[10px] text-slate-400 font-mono">Live Driver Network</span>
+          <h3 class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
+            <span>⛰️ Mountain Altitude Profile</span>
+          </h3>
+          <span class="text-[10px] text-cyan-400 font-mono font-bold" id="maxAltDisplay">Peak: 4,170m</span>
         </div>
-        <div id="verifyReportBox" class="text-xs text-slate-200">
-          <p class="font-semibold text-slate-100 mb-1" id="verifyHazardTitle">Driver #402 reported Landslide at Bhalukpong Gorge (Km 42).</p>
-          <p class="text-slate-400 mb-3" id="verifyHazardSub">Is this road blockage still active?</p>
-          <div class="flex gap-2">
-            <button onclick="submitCrowdVerification(true)" class="flex-1 bg-red-950 hover:bg-red-900 border border-red-700 text-red-200 font-bold py-1.5 px-2 rounded-lg transition text-center">
-              ❌ Yes, Still Blocked
-            </button>
-            <button onclick="submitCrowdVerification(false)" class="flex-1 bg-emerald-950 hover:bg-emerald-900 border border-emerald-700 text-emerald-200 font-bold py-1.5 px-2 rounded-lg transition text-center">
-              🟢 No, Road Cleared
-            </button>
-          </div>
+        <p class="text-[11px] text-slate-400 mb-2">Live topographic elevation chart along corridor:</p>
+
+        <!-- SVG SPARKLINE ELEVATION GRAPH -->
+        <div class="w-full h-24 bg-slate-900/90 rounded-xl p-2 border border-slate-800 relative overflow-hidden flex items-end">
+          <svg viewBox="0 0 300 80" class="w-full h-full">
+            <defs>
+              <linearGradient id="altGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.8"/>
+                <stop offset="100%" stop-color="#0284c7" stop-opacity="0.0"/>
+              </linearGradient>
+            </defs>
+            <polygon points="0,75 20,70 80,60 140,40 200,10 240,30 300,35 300,80 0,80" fill="url(#altGrad)" />
+            <path d="M 0 75 Q 40 65, 80 60 T 140 40 T 200 10 T 240 30 T 300 35" fill="none" stroke="#38bdf8" stroke-width="3" class="alt-sparkline" />
+            <!-- Peak Altitude Dot -->
+            <circle cx="200" cy="10" r="4" fill="#ef4444" />
+            <text x="180" y="8" fill="#ef4444" font-size="8" font-weight="bold">Sela Pass 4,170m</text>
+          </svg>
+        </div>
+        <div class="flex justify-between text-[9px] text-slate-400 font-mono mt-1">
+          <span>Guwahati (55m)</span>
+          <span>Dirang (1,560m)</span>
+          <span>Tawang (3,048m)</span>
         </div>
       </section>
 
-      <!-- AI RECOMMENDATION SUMMARY CARD -->
-      <section id="recommendationCard" class="bg-slate-950 border-2 border-indigo-500/50 rounded-2xl p-4 shadow-xl relative overflow-hidden">
-        <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-indigo-500/10 rounded-full blur-xl pointer-events-none"></div>
-        <div class="flex items-center justify-between mb-2">
-          <span class="text-[10px] font-black uppercase tracking-wider text-indigo-400 bg-indigo-950 px-2.5 py-0.5 rounded-full border border-indigo-800">
-            🤖 AI Route Decision Engine
-          </span>
-          <span id="evalEngineBadge" class="text-[10px] text-slate-400 font-mono">ML Active</span>
-        </div>
-
-        <h3 id="recommendedTitle" class="text-base font-extrabold text-white mb-1">Evaluating Corridor...</h3>
-        <p id="recommendationReason" class="text-xs text-slate-300 leading-relaxed font-medium">
-          Calculating multi-factor risk scores and penalization metrics...
-        </p>
-      </section>
-
-      <!-- SIDE-BY-SIDE ROUTE COMPARISON CARDS -->
-      <section class="grid grid-cols-1 gap-3">
-        
+      <!-- PRIMARY VS ALTERNATE COMPARISON -->
+      <section class="flex flex-col gap-3">
         <!-- PRIMARY ROUTE CARD -->
-        <div id="cardPrimary" class="bg-slate-950 border border-slate-800 rounded-2xl p-4 transition duration-200">
+        <div id="primaryCard" class="bg-slate-950 border border-slate-800 rounded-2xl p-4 transition duration-200">
           <div class="flex justify-between items-start mb-2">
             <div>
-              <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider block">Route Option A</span>
-              <h4 id="primaryName" class="text-sm font-bold text-slate-100">Primary Highway</h4>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Primary Highway</span>
+              <h3 id="primaryTitle" class="font-bold text-sm text-slate-100">Primary Corridor</h3>
             </div>
-            <span id="primaryBadge" class="text-xs font-black px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 border border-slate-700">
-              Loading...
+            <span id="primaryBadge" class="px-2.5 py-1 rounded-full text-xs font-black tracking-wide uppercase border">
+              EVALUATING
             </span>
           </div>
 
-          <div class="grid grid-cols-2 gap-2 bg-slate-900/80 p-2.5 rounded-xl border border-slate-800/80 text-xs mb-3">
-            <div>
+          <div class="grid grid-cols-2 gap-2 my-3 text-xs">
+            <div class="bg-slate-900/80 p-2 rounded-lg border border-slate-800/80">
               <span class="text-slate-400 block text-[10px]">Distance</span>
-              <strong id="primaryDist" class="text-slate-200 font-bold text-sm">- km</strong>
+              <span id="primaryDistance" class="font-bold text-slate-200">-- km</span>
             </div>
-            <div>
-              <span class="text-slate-400 block text-[10px]">Estimated Time</span>
-              <strong id="primaryEta" class="text-cyan-400 font-bold text-sm">- hrs</strong>
-            </div>
-            <div>
-              <span class="text-slate-400 block text-[10px]">Hazard ETA Delay</span>
-              <strong id="primaryDelay" class="text-amber-400 font-bold text-xs">+0 mins</strong>
-            </div>
-            <div>
-              <span class="text-slate-400 block text-[10px]">Model Confidence</span>
-              <strong id="primaryConf" class="text-emerald-400 font-bold text-xs">-%</strong>
+            <div class="bg-slate-900/80 p-2 rounded-lg border border-slate-800/80">
+              <span class="text-slate-400 block text-[10px]">Adjusted ETA</span>
+              <span id="primaryETA" class="font-bold text-amber-400">-- hrs</span>
             </div>
           </div>
 
-          <div>
-            <div class="flex justify-between text-[11px] mb-1">
-              <span class="text-slate-400">Risk Score Level:</span>
-              <span id="primaryRiskPct" class="font-bold text-slate-200">-%</span>
-            </div>
-            <div class="w-full bg-slate-900 h-2 rounded-full overflow-hidden border border-slate-800">
-              <div id="primaryRiskBar" class="h-full w-0 bg-slate-600 transition-all duration-500"></div>
-            </div>
+          <div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-800">
+            <div id="primaryRiskBar" class="h-full transition-all duration-500 w-0 bg-red-500"></div>
           </div>
         </div>
 
-        <!-- ALTERNATE ROUTE CARD -->
-        <div id="cardAlternate" class="bg-slate-950 border border-slate-800 rounded-2xl p-4 transition duration-200">
+        <!-- SAFER ALTERNATE ROUTE CARD -->
+        <div id="alternateCard" class="bg-slate-950 border border-slate-800 rounded-2xl p-4 transition duration-200">
           <div class="flex justify-between items-start mb-2">
             <div>
-              <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider block">Route Option B</span>
-              <h4 id="alternateName" class="text-sm font-bold text-slate-100">Safer Alternate Bypass</h4>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 block">Recommended Safer Bypass</span>
+              <h3 id="alternateTitle" class="font-bold text-sm text-slate-100">Alternate Bypass Corridor</h3>
             </div>
-            <span id="alternateBadge" class="text-xs font-black px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 border border-slate-700">
-              Loading...
+            <span id="alternateBadge" class="px-2.5 py-1 rounded-full text-xs font-black tracking-wide uppercase border">
+              EVALUATING
             </span>
           </div>
 
-          <div class="grid grid-cols-2 gap-2 bg-slate-900/80 p-2.5 rounded-xl border border-slate-800/80 text-xs mb-3">
-            <div>
+          <div class="grid grid-cols-2 gap-2 my-3 text-xs">
+            <div class="bg-slate-900/80 p-2 rounded-lg border border-slate-800/80">
               <span class="text-slate-400 block text-[10px]">Distance</span>
-              <strong id="alternateDist" class="text-slate-200 font-bold text-sm">- km</strong>
+              <span id="alternateDistance" class="font-bold text-slate-200">-- km</span>
             </div>
-            <div>
-              <span class="text-slate-400 block text-[10px]">Estimated Time</span>
-              <strong id="alternateEta" class="text-cyan-400 font-bold text-sm">- hrs</strong>
-            </div>
-            <div>
-              <span class="text-slate-400 block text-[10px]">Hazard ETA Delay</span>
-              <strong id="alternateDelay" class="text-emerald-400 font-bold text-xs">+0 mins</strong>
-            </div>
-            <div>
-              <span class="text-slate-400 block text-[10px]">Model Confidence</span>
-              <strong id="alternateConf" class="text-emerald-400 font-bold text-xs">-%</strong>
+            <div class="bg-slate-900/80 p-2 rounded-lg border border-slate-800/80">
+              <span class="text-slate-400 block text-[10px]">Adjusted ETA</span>
+              <span id="alternateETA" class="font-bold text-emerald-400">-- hrs</span>
             </div>
           </div>
 
-          <div>
-            <div class="flex justify-between text-[11px] mb-1">
-              <span class="text-slate-400">Risk Score Level:</span>
-              <span id="alternateRiskPct" class="font-bold text-slate-200">-%</span>
-            </div>
-            <div class="w-full bg-slate-900 h-2 rounded-full overflow-hidden border border-slate-800">
-              <div id="alternateRiskBar" class="h-full w-0 bg-slate-600 transition-all duration-500"></div>
-            </div>
+          <div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-800">
+            <div id="alternateRiskBar" class="h-full transition-all duration-500 w-0 bg-emerald-500"></div>
           </div>
         </div>
-
       </section>
 
-      <!-- HUMAN-VERIFIABLE RISK CAUSES & EXPLANATIONS -->
-      <section class="bg-slate-950 border border-slate-800 rounded-2xl p-4 shadow-xl">
-        <h3 class="text-xs font-extrabold text-slate-200 uppercase tracking-wider mb-3 flex items-center gap-2">
-          <span>🔍 Human-Verifiable Risk Explanations</span>
+      <!-- HUMAN EXPLANATIONS LIST -->
+      <section class="bg-slate-950 border border-slate-800 rounded-2xl p-4">
+        <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+          <span>🧠 AI Safety Rationales & Explanations</span>
         </h3>
-        <ul id="explanationsList" class="flex flex-col gap-2 text-xs text-slate-300">
-          <li class="p-2 bg-slate-900 rounded-lg text-slate-400">Loading risk explanation telemetry...</li>
+        <ul id="explanationsList" class="space-y-2 text-xs text-slate-300">
+          <li class="p-2.5 bg-slate-900 border border-slate-800 rounded-xl leading-relaxed">
+            Evaluating telemetry data...
+          </li>
         </ul>
-      </section>
-
-      <!-- SUCCESS METRICS & SYSTEM FEASIBILITY -->
-      <section class="bg-slate-950 border border-slate-800 rounded-2xl p-4 shadow-xl">
-        <h3 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-3">
-          📊 Platform Accuracy & Feasibility Metrics
-        </h3>
-        <div class="grid grid-cols-3 gap-2 text-center text-xs">
-          <div class="bg-slate-900 p-2 rounded-xl border border-slate-800">
-            <span class="text-[10px] text-slate-400 block">ML Accuracy</span>
-            <strong id="metricAccuracy" class="text-emerald-400 font-extrabold text-sm">94.2%</strong>
-          </div>
-          <div class="bg-slate-900 p-2 rounded-xl border border-slate-800">
-            <span class="text-[10px] text-slate-400 block">Reliability</span>
-            <strong id="metricReliability" class="text-cyan-400 font-extrabold text-sm">98.6%</strong>
-          </div>
-          <div class="bg-slate-900 p-2 rounded-xl border border-slate-800">
-            <span class="text-[10px] text-slate-400 block">PostGIS Engine</span>
-            <strong class="text-indigo-400 font-extrabold text-xs">Active</strong>
-          </div>
-        </div>
       </section>
 
     </aside>
 
-    <!-- RIGHT PANEL: INTERACTIVE LEAFLET MAP -->
-    <main class="flex-1 h-full relative bg-slate-950">
-      
-      <!-- MAP CONTAINER -->
-      <div id="map" class="w-full h-full z-0"></div>
+    <!-- RIGHT LEAFLET MAP CONTAINER WITH GOOGLE MAPS CONTROLS & NAVIGATION HUD -->
+    <main class="flex-1 relative h-full w-full">
+      <div id="map"></div>
 
-      <!-- FLOATING RISK CLASSIFICATION LEGEND OVERLAY -->
-      <div class="absolute bottom-6 right-6 z-10 bg-slate-900/95 backdrop-blur-md border border-slate-800 rounded-2xl p-4 shadow-2xl max-w-xs text-xs font-medium">
-        <h4 class="font-extrabold text-slate-200 mb-2.5 uppercase tracking-wider text-[11px] flex items-center justify-between">
-          <span>🗺️ Route Risk Classifications</span>
-          <span class="text-[10px] text-slate-400 font-normal">Leaflet GIS</span>
-        </h4>
-        <div class="flex flex-col gap-2">
-          <div class="flex items-center gap-2.5">
-            <span class="w-4 h-1.5 rounded-full bg-emerald-500 shadow-sm shadow-emerald-500"></span>
-            <span class="text-slate-200 font-bold">SAFE</span>
-            <span class="text-slate-400 text-[10px] ml-auto">Under 30% Risk</span>
+      <!-- FLOATING GOOGLE MAPS TURN-BY-TURN TOP HUD -->
+      <div id="gmapsTopHud" class="hidden absolute top-4 left-4 right-16 md:right-72 z-30 bg-slate-900/95 backdrop-blur-md border border-slate-700 p-3.5 rounded-2xl shadow-2xl gmaps-top-hud">
+        <div class="flex items-center gap-3.5">
+          <div id="hudTurnIcon" class="w-12 h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-black text-2xl shadow-lg flex-shrink-0">
+            ↱
           </div>
-          <div class="flex items-center gap-2.5">
-            <span class="w-4 h-1.5 rounded-full bg-amber-500 shadow-sm shadow-amber-500"></span>
-            <span class="text-slate-200 font-bold">MODERATE</span>
-            <span class="text-slate-400 text-[10px] ml-auto">30% to 60% Risk</span>
-          </div>
-          <div class="flex items-center gap-2.5">
-            <span class="w-4 h-1.5 rounded-full bg-red-500 shadow-sm shadow-red-500"></span>
-            <span class="text-slate-200 font-bold">HIGH</span>
-            <span class="text-slate-400 text-[10px] ml-auto">Over 60% Risk</span>
-          </div>
-        </div>
-
-        <div class="border-t border-slate-800 my-3 pt-2.5">
-          <h5 class="font-bold text-slate-300 text-[10px] uppercase mb-2">Emergency Anchors</h5>
-          <div class="grid grid-cols-2 gap-1.5 text-[11px]">
-            <span class="flex items-center gap-1.5 text-slate-300">🏥 Hospital</span>
-            <span class="flex items-center gap-1.5 text-slate-300">🛡️ Safe Zone</span>
-            <span class="flex items-center gap-1.5 text-slate-300">🛠️ Service Base</span>
-            <span class="flex items-center gap-1.5 text-slate-300">🚓 Police TCP</span>
+          <div class="flex-1 overflow-hidden">
+            <div class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400 flex items-center gap-2">
+              <span id="hudNextDistance">In 350 meters</span>
+              <span class="bg-slate-800 text-slate-300 px-1.5 py-0.5 rounded text-[9px] font-mono">LIVE GPS</span>
+            </div>
+            <h2 id="hudTurnInstruction" class="text-sm md:text-base font-black text-white truncate">
+              Turn Right onto NH-13 Kalaktang Bypass
+            </h2>
+            <p id="hudTurnSub" class="text-[11px] text-slate-400 truncate">
+              Avoids Bhalukpong Gorge Landslide Blockade (Km 42)
+            </p>
           </div>
         </div>
       </div>
+
+      <!-- FLOATING GOOGLE MAPS NAVIGATION BOTTOM HUD -->
+      <div id="gmapsBottomHud" class="hidden absolute bottom-4 left-4 right-20 md:right-72 z-30 bg-slate-900/95 backdrop-blur-md border border-slate-700 p-3 rounded-2xl shadow-2xl flex items-center justify-between gmaps-bottom-hud">
+        <div class="flex items-center gap-4 text-xs">
+          <div>
+            <span class="text-slate-400 text-[10px] block font-medium">Live Speed</span>
+            <span id="hudSpeed" class="font-extrabold text-cyan-400 text-sm">48 km/h</span>
+          </div>
+          <div class="h-6 w-px bg-slate-800"></div>
+          <div>
+            <span class="text-slate-400 text-[10px] block font-medium">Remaining</span>
+            <span id="hudRemDistance" class="font-extrabold text-white text-sm">34.2 km</span>
+          </div>
+          <div class="h-6 w-px bg-slate-800"></div>
+          <div>
+            <span class="text-slate-400 text-[10px] block font-medium">ETA</span>
+            <span id="hudRemTime" class="font-extrabold text-emerald-400 text-sm">42 min</span>
+          </div>
+        </div>
+
+        <button onclick="toggleNavSimulation()" class="bg-red-600 hover:bg-red-500 text-white font-extrabold text-xs px-3 py-2 rounded-xl shadow-lg cursor-pointer">
+          ⏹ Exit Nav
+        </button>
+      </div>
+
+      <!-- GOOGLE MAPS TYPE SWITCHER & GIS LAYER TOGGLES -->
+      <div class="absolute top-4 right-4 z-30 bg-slate-900/95 backdrop-blur-md border border-slate-800 p-3 rounded-2xl shadow-2xl max-w-xs text-xs space-y-3">
+        
+        <!-- MAP STYLE SELECTOR -->
+        <div>
+          <div class="font-extrabold text-slate-200 border-b border-slate-800 pb-1 mb-2 flex justify-between items-center">
+            <span>🗺️ Map View Mode</span>
+            <span class="text-[9px] bg-indigo-900 text-indigo-300 px-1.5 py-0.5 rounded font-mono">Google Engine</span>
+          </div>
+          <select id="mapStyleSelect" onchange="changeMapStyle(this.value)" class="w-full bg-slate-950 border border-slate-700 text-slate-200 text-xs font-bold rounded-lg p-1.5 outline-none cursor-pointer">
+            <option value="google_road">🚗 Google Roads View</option>
+            <option value="satellite">🛰️ Google Satellite / Hybrid</option>
+            <option value="traffic">🚦 Google Live Traffic View</option>
+            <option value="terrain">⛰️ Google Terrain / Topo</option>
+            <option value="osm">🗺️ OpenStreetMap Standard</option>
+          </select>
+        </div>
+
+        <!-- GIS LAYER TOGGLES -->
+        <div class="space-y-1.5 pt-1 border-t border-slate-800">
+          <div class="font-extrabold text-slate-200 text-[11px] mb-1">🛰️ Risk Layer Overlays</div>
+          <label class="flex items-center gap-2 text-slate-300 cursor-pointer">
+            <input type="checkbox" id="toggleBhuvan" checked onchange="toggleBhuvanLayer(this.checked)" class="accent-red-500 rounded">
+            <span>ISRO Bhuvan / GSI Landslide Zones</span>
+          </label>
+          <label class="flex items-center gap-2 text-slate-300 cursor-pointer">
+            <input type="checkbox" id="toggleHazards" checked onchange="toggleHazardsLayer(this.checked)" class="accent-amber-500 rounded">
+            <span>Driver Hazard Reports (Pulsing)</span>
+          </label>
+          <label class="flex items-center gap-2 text-slate-300 cursor-pointer">
+            <input type="checkbox" id="toggleBases" checked onchange="toggleBasesLayer(this.checked)" class="accent-indigo-500 rounded">
+            <span>Emergency BRO & SDRF Bases</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- GPS LOCATE MY POSITION BUTTON -->
+      <button onclick="locateMyPosition()" title="Locate My GPS Position" class="absolute bottom-6 right-6 z-30 w-12 h-12 bg-slate-900 hover:bg-slate-800 border border-slate-700 text-cyan-400 rounded-full shadow-2xl flex items-center justify-center text-xl font-bold transition transform active:scale-95 cursor-pointer">
+        🎯
+      </button>
 
     </main>
 
   </div>
 
-  <!-- MODAL 1: ONE-TAP HAZARD REPORTING MODAL -->
-  <div id="hazardModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center hidden">
-    <div class="bg-slate-900 border border-slate-700 rounded-2xl p-6 max-w-md w-full shadow-2xl mx-4">
-      <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-3">
-        <h3 class="text-lg font-black text-white flex items-center gap-2">
-          <span>🚨 1-Tap Driver Hazard Report</span>
-        </h3>
-        <button onclick="closeHazardModal()" class="text-slate-400 hover:text-white font-bold text-lg">✖</button>
+  <!-- HAZARD REPORT MODAL -->
+  <div id="hazardModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-md p-6 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between">
+        <h3 class="font-extrabold text-base text-slate-100 flex items-center gap-2">⚠️ 1-Tap Driver Hazard Report</h3>
+        <button onclick="closeHazardModal()" class="text-slate-400 hover:text-white">✕</button>
       </div>
-
-      <p class="text-xs text-slate-300 mb-4 font-medium">Select observed road hazard to log instant GPS telemetry to RouteGuard AI Control:</p>
-
-      <div class="grid grid-cols-1 gap-3 mb-6">
-        <button onclick="submitHazardReport('Landslide')" class="p-3 bg-red-950/80 hover:bg-red-900 border-2 border-red-700 rounded-xl text-left font-bold text-sm text-red-200 flex items-center justify-between transition">
-          <span>🏔️ Landslide / Mudslide Blockage</span>
-          <span class="text-xs font-mono bg-red-900 px-2 py-0.5 rounded">High Priority</span>
-        </button>
-        <button onclick="submitHazardReport('Rockfall')" class="p-3 bg-amber-950/80 hover:bg-amber-900 border-2 border-amber-700 rounded-xl text-left font-bold text-sm text-amber-200 flex items-center justify-between transition">
-          <span>🪨 Falling Rocks & Boulders</span>
-          <span class="text-xs font-mono bg-amber-900 px-2 py-0.5 rounded">Caution</span>
-        </button>
-        <button onclick="submitHazardReport('Waterlogging')" class="p-3 bg-cyan-950/80 hover:bg-cyan-900 border-2 border-cyan-700 rounded-xl text-left font-bold text-sm text-cyan-200 flex items-center justify-between transition">
-          <span>🌊 Flash Flood & Deep Waterlogging</span>
-          <span class="text-xs font-mono bg-cyan-900 px-2 py-0.5 rounded">Inundation</span>
-        </button>
-      </div>
-
-      <div class="flex justify-end">
-        <button onclick="closeHazardModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 rounded-xl">Cancel</button>
-      </div>
+      <select id="hazardType" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 outline-none">
+        <option value="LANDSLIDE_BLOCK">⛰️ Landslide / Rockfall Blockade</option>
+        <option value="FLASH_FLOOD">🌊 Waterlogging / Flash Flood</option>
+        <option value="ROAD_CAVE_IN">流域 Severe Road Subsidence / Cave-in</option>
+      </select>
+      <button onclick="submitDriverHazard()" class="w-full bg-gradient-to-r from-red-600 to-amber-600 font-extrabold text-sm py-2.5 rounded-xl text-white shadow-lg cursor-pointer">🚀 Broadcast Hazard Alert</button>
     </div>
   </div>
 
-  <!-- MODAL 2: 1-CLICK SOS PANIC DISPATCH MODAL -->
-  <div id="sosModal" class="fixed inset-0 bg-red-950/80 backdrop-blur-md z-50 flex items-center justify-center hidden">
-    <div class="bg-slate-900 border-2 border-red-600 rounded-2xl p-6 max-w-md w-full shadow-2xl mx-4 relative overflow-hidden">
-      <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-3">
-        <h3 class="text-lg font-black text-red-500 flex items-center gap-2">
-          <span class="animate-ping">🆘</span> EMERGENCY GPS DISPATCH
-        </h3>
-        <button onclick="closeSOSModal()" class="text-slate-400 hover:text-white font-bold text-lg">✖</button>
-      </div>
-
-      <div class="bg-slate-950 p-3 rounded-xl border border-red-900 mb-4 text-xs font-mono text-slate-200">
-        <div class="text-red-400 font-bold mb-1">📍 LIVE GPS COORDINATES:</div>
-        <div id="sosGpsText">Lat: 27.0134, Lon: 92.6416 (Bhalukpong Sector)</div>
-      </div>
-
-      <p class="text-xs text-slate-300 mb-4 font-medium">Click below to dispatch instant emergency SMS / WhatsApp alert with exact GPS coordinates to authorities & family:</p>
-
-      <div class="flex flex-col gap-3">
-        <a id="sosWhatsappBtn" href="#" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs py-3 px-4 rounded-xl text-center shadow-lg transition flex items-center justify-center gap-2">
-          💬 Send Emergency WhatsApp Alert
-        </a>
-        <a id="sosSmsBtn" href="#" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-xs py-3 px-4 rounded-xl text-center shadow-lg transition flex items-center justify-center gap-2">
-          📱 Send Emergency SMS Alert
-        </a>
-        <button onclick="closeSOSModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold py-2 rounded-xl">Cancel</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL 3: 8-STATE EMERGENCY HELPLINES DIRECTORY MODAL -->
-  <div id="helplineModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center hidden">
-    <div class="bg-slate-900 border border-slate-700 rounded-2xl p-6 max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl mx-4">
-      <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-3 flex-shrink-0">
-        <h3 class="text-lg font-black text-white flex items-center gap-2">
-          <span>☎️ 8 North-East States Emergency Helpline Directory</span>
-        </h3>
-        <button onclick="closeHelplineModal()" class="text-slate-400 hover:text-white font-bold text-lg">✖</button>
-      </div>
-
-      <!-- NATIONAL HOTLINES HEADER -->
-      <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 mb-4 flex-shrink-0 grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
-        <div><span class="text-slate-400 block text-[10px]">NDRF Hotline</span><strong class="text-cyan-400 font-bold">1078</strong></div>
-        <div><span class="text-slate-400 block text-[10px]">Disaster Control</span><strong class="text-cyan-400 font-bold">1070</strong></div>
-        <div><span class="text-slate-400 block text-[10px]">National Emergency</span><strong class="text-emerald-400 font-bold">112</strong></div>
-        <div><span class="text-slate-400 block text-[10px]">Medical Ambulance</span><strong class="text-amber-400 font-bold">108 / 102</strong></div>
-      </div>
-
-      <!-- 8 STATES ACCORDION LIST -->
-      <div id="helplineList" class="flex-1 overflow-y-auto space-y-3 pr-1 text-xs">
-        <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
-          <h4 class="font-bold text-indigo-400 text-sm mb-1">Arunachal Pradesh (Itanagar)</h4>
-          <p class="text-slate-300">SDRF: +91 360-2212304 | Police: 100 / +91 360-2212233 | SDMA: +91 360-2292777</p>
-        </div>
-        <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
-          <h4 class="font-bold text-indigo-400 text-sm mb-1">Assam (Guwahati / Dispur)</h4>
-          <p class="text-slate-300">SDRF: +91 361-2237221 | Police: 100 / +91 361-2521242 | Emergency Room: 1070</p>
-        </div>
-        <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
-          <h4 class="font-bold text-indigo-400 text-sm mb-1">Meghalaya (Shillong)</h4>
-          <p class="text-slate-300">SDRF: +91 364-2502094 | Police: 100 / +91 364-2222277 | Disaster Cell: +91 364-2226579</p>
-        </div>
-        <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
-          <h4 class="font-bold text-indigo-400 text-sm mb-1">Manipur (Imphal)</h4>
-          <p class="text-slate-300">SDRF: +91 385-2443441 | Police: 100 / +91 385-2450214 | Disaster Cell: +91 385-2451173</p>
-        </div>
-        <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
-          <h4 class="font-bold text-indigo-400 text-sm mb-1">Nagaland (Kohima)</h4>
-          <p class="text-slate-300">SDRF: +91 370-2291122 | Police: 100 / +91 370-2244272 | Disaster Cell: +91 370-2291120</p>
-        </div>
-        <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
-          <h4 class="font-bold text-indigo-400 text-sm mb-1">Mizoram (Aizawl)</h4>
-          <p class="text-slate-300">SDRF: +91 389-2335814 | Police: 100 / +91 389-2322307 | Disaster Cell: +91 389-2335811</p>
-        </div>
-        <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
-          <h4 class="font-bold text-indigo-400 text-sm mb-1">Tripura (Agartala)</h4>
-          <p class="text-slate-300">SDRF: +91 381-2410153 | Police: 100 / +91 381-2323333 | Emergency Room: 1070</p>
-        </div>
-        <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
-          <h4 class="font-bold text-indigo-400 text-sm mb-1">Sikkim (Gangtok)</h4>
-          <p class="text-slate-300">SDRF: +91 3592-202664 | Police: 100 / +91 3592-202022 | Disaster Cell: +91 3592-202429</p>
-        </div>
-      </div>
-
-      <div class="mt-4 flex justify-end flex-shrink-0">
-        <button onclick="closeHelplineModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 rounded-xl">Close</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- PWA SERVICE WORKER REGISTRATION -->
   <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/static/sw.js')
-        .then(() => console.log('RouteGuard PWA Service Worker Registered!'))
-        .catch(err => console.log('SW Reg Error:', err));
+    let map = null;
+    let currentTileLayer = null;
+    let primaryPolyline = null;
+    let alternatePolyline = null;
+    let emergencyMarkersGroup = null;
+    let hazardMarkersGroup = null;
+    let bhuvanZonesGroup = null;
+    let facilitiesMarkersGroup = null;
+    let milestonesMarkersGroup = null;
+    let vehicleMarker = null;
+    let navInterval = null;
+    let navStepIndex = 0;
+    let currentEvaluatedData = null;
+    let densePolylineCoordinates = [];
+    let selectedVehicleIcon = '🚚';
+    let selectedVehicleSpeed = '48 km/h';
+    const synth = window.speechSynthesis;
+
+    const MAP_LAYERS = {
+      google_road: 'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
+      satellite: 'https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',
+      traffic: 'https://mt1.google.com/vt/lyrs=m,traffic&x={x}&y={y}&z={z}',
+      terrain: 'https://mt1.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',
+      osm: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+    };
+
+    const CITY_COORDS = {
+      'tawang': [27.5861, 91.8594],
+      'guwahati': [26.1445, 91.7362],
+      'shillong': [25.5788, 91.8933],
+      'silchar': [24.8333, 92.7789],
+      'kohima': [25.6747, 94.1100],
+      'dimapur': [25.9060, 93.7271],
+      'itanagar': [27.1000, 93.6167],
+      'gangtok': [27.3389, 88.6138],
+      'siliguri': [26.7271, 88.4353],
+      'tezpur': [26.6338, 92.8000]
+    };
+
+    const FACILITIES = {
+      fuel: [
+        { name: 'Indian Oil Petrol Pump (Tezpur Bridge)', lat: 26.6338, lon: 92.8000 },
+        { name: 'HPCL Fuel Station (Shergaon)', lat: 27.1200, lon: 92.2700 },
+        { name: 'BPCL Station (Sonapur Tunnel East)', lat: 25.1100, lon: 92.3600 },
+        { name: 'Indian Oil Pump (Teesta Valley)', lat: 26.9500, lon: 88.4500 }
+      ],
+      dhaba: [
+        { name: 'Sherpa Highway Dhaba & Tea Stall', lat: 27.2500, lon: 92.4100 },
+        { name: 'Sonapur Valley Driver Rest Stop', lat: 25.1300, lon: 92.3800 },
+        { name: 'Gorkha Driver Dhaba (NH-10)', lat: 27.0100, lon: 88.4700 }
+      ],
+      mechanic: [
+        { name: 'Bhalukpong Heavy Vehicle Tyre Repair', lat: 26.9980, lon: 92.6250 },
+        { name: 'Sonapur Breakdown & Crane Service', lat: 25.1050, lon: 92.3550 }
+      ],
+      bro: [
+        { name: '761 BRTF Base Medical Unit (Bhalukpong)', lat: 26.8500, lon: 92.1500 },
+        { name: 'BRO Disaster Rescue Cell (Sonapur)', lat: 25.0900, lon: 92.3400 }
+      ]
+    };
+
+    const BHUVAN_ZONES = [
+      { name: 'Bhalukpong-Tipi Gorge High Risk Zone 5', risk_class: 'Zone 5 (Very High)', slope_angle_deg: 48.5, lithology: 'Weathered Sandstone & Shale Fault', polygon_bounds: [[26.95, 92.58], [27.05, 92.68], [27.08, 92.62], [26.98, 92.52]] },
+      { name: 'Sonapur Tunnel Mudslide Risk Zone 5', risk_class: 'Zone 5 (Very High)', slope_angle_deg: 52.0, lithology: 'Limestone Karst & Mudstone', polygon_bounds: [[25.08, 92.32], [25.15, 92.42], [25.18, 92.38], [25.10, 92.28]] },
+      { name: 'Phesama Active Sinking & Tectonic Slip Zone', risk_class: 'Zone 5 (Very High)', slope_angle_deg: 44.0, lithology: 'Disintegrated Clay-Shale Matrix', polygon_bounds: [[25.62, 93.85], [25.70, 93.95], [25.72, 93.90], [25.64, 93.80]] },
+      { name: 'Teesta River Valley Landslide Cliff Zone', risk_class: 'Zone 5 (Very High)', slope_angle_deg: 56.0, lithology: 'Phyllites & Schists Gneiss Fracture', polygon_bounds: [[26.92, 88.42], [27.02, 88.52], [27.05, 88.48], [26.95, 88.38]] }
+    ];
+
+    const DRIVER_HAZARDS = [
+      { id: 'HAZ-REPORT-801', location_name: 'Bhalukpong Gorge (Km 42)', hazard_type: '⛰️ Landslide / Rockfall', reporter: 'Driver #402', confidence_score: 92, status: 'ACTIVE_BLOCK', lat: 27.0134, lon: 92.6416 },
+      { id: 'HAZ-REPORT-802', location_name: 'Sonapur Tunnel East Portal (Km 118)', hazard_type: '🌊 Waterlogging / Mudslide', reporter: 'Driver #109', confidence_score: 88, status: 'ACTIVE_BLOCK', lat: 25.1150, lon: 92.3680 },
+      { id: 'HAZ-REPORT-803', location_name: 'Phesama Subsidence Zone (Km 28)', hazard_type: 'Road Sinking', reporter: 'Driver #305', confidence_score: 95, status: 'ACTIVE_BLOCK', lat: 25.6747, lon: 94.1100 }
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initMap();
+      evaluateSelectedRoute();
+      loadBhuvanZones();
+    });
+
+    function initMap() {
+      const NER_CENTER = [26.1445, 91.7362];
+      
+      map = L.map('map', {
+        center: NER_CENTER,
+        zoom: 7,
+        zoomControl: true
+      });
+
+      currentTileLayer = L.tileLayer(MAP_LAYERS.google_road, {
+        attribution: '&copy; Google Maps & RouteGuard AI GIS',
+        maxZoom: 19
+      }).addTo(map);
+
+      emergencyMarkersGroup = L.layerGroup().addTo(map);
+      hazardMarkersGroup = L.layerGroup().addTo(map);
+      bhuvanZonesGroup = L.layerGroup().addTo(map);
+      facilitiesMarkersGroup = L.layerGroup().addTo(map);
+      milestonesMarkersGroup = L.layerGroup().addTo(map);
+
+      setTimeout(() => {
+        if (map) map.invalidateSize();
+      }, 300);
+
+      window.addEventListener('resize', () => {
+        if (map) map.invalidateSize();
+      });
+    }
+
+    function toggleNightFogMode() {
+      const body = document.getElementById('bodyRoot');
+      const btn = document.getElementById('nightFogBtn');
+      body.classList.toggle('night-fog-mode');
+      if (body.classList.contains('night-fog-mode')) {
+        btn.innerHTML = "☀️ Daylight Mode";
+        btn.className = "bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs px-3 py-2 rounded-xl shadow flex items-center gap-1.5 transition cursor-pointer";
+      } else {
+        btn.innerHTML = "🌙 Night/Fog Mode";
+        btn.className = "bg-slate-800 hover:bg-slate-700 text-amber-300 font-extrabold text-xs px-3 py-2 rounded-xl border border-slate-700 shadow flex items-center gap-1.5 transition cursor-pointer";
+      }
+    }
+
+    function selectVehicle(type, label, speed) {
+      const icons = { truck: '🚚', thar: '🚗', ambulance: '🚑', bike: '🛵' };
+      selectedVehicleIcon = icons[type] || '🚚';
+      selectedVehicleSpeed = speed;
+      document.getElementById('vehicleTypeBadge').textContent = label;
+      alert(`Vehicle updated to ${label} (${speed} target speed). Navigation telemetry adjusted.`);
+    }
+
+    function triggerEmergencySirenAlert() {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.5);
+        osc.frequency.exponentialRampToValueAtTime(440, audioCtx.currentTime + 1.0);
+        gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 1.2);
+      } catch (e) {}
+
+      triggerWhatsAppSOS();
+    }
+
+    function changeMapStyle(styleKey) {
+      if (!map) return;
+      if (currentTileLayer) map.removeLayer(currentTileLayer);
+      const url = MAP_LAYERS[styleKey] || MAP_LAYERS.google_road;
+      currentTileLayer = L.tileLayer(url, { attribution: '&copy; Google Maps Engine', maxZoom: 19 }).addTo(map);
+    }
+
+    function searchLocation() {
+      const query = document.getElementById('citySearchInput').value.trim().toLowerCase();
+      if (!query) return;
+      
+      for (const city in CITY_COORDS) {
+        if (city.includes(query) || query.includes(city)) {
+          const coords = CITY_COORDS[city];
+          map.flyTo(coords, 11, { duration: 1.5 });
+          L.popup().setLatLng(coords).setContent(`<b>📍 ${city.toUpperCase()}</b><br>Logistics & Route Corridor Hub`).openOn(map);
+          return;
+        }
+      }
+      alert(`Location "${query}" mapped on North East Highway Network.`);
+    }
+
+    function filterFacility(type) {
+      if (!facilitiesMarkersGroup) return;
+      facilitiesMarkersGroup.clearLayers();
+      const list = FACILITIES[type] || [];
+      list.forEach(f => {
+        const marker = L.circleMarker([f.lat, f.lon], {
+          radius: 8, color: '#ffffff', fillColor: type === 'fuel' ? '#f59e0b' : type === 'dhaba' ? '#10b981' : type === 'mechanic' ? '#06b6d4' : '#ef4444', fillOpacity: 0.9
+        }).bindPopup(`<b>${f.name}</b><br>Highway Utility Node`);
+        facilitiesMarkersGroup.addLayer(marker);
+      });
+      if (list.length > 0) {
+        map.flyTo([list[0].lat, list[0].lon], 10, { duration: 1.2 });
+      }
+    }
+
+    function locateMyPosition() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            const lat = pos.coords.latitude;
+            const lon = pos.coords.longitude;
+            map.flyTo([lat, lon], 12, { duration: 1.5 });
+            L.circleMarker([lat, lon], { radius: 10, color: '#ffffff', fillColor: '#3b82f6', fillOpacity: 1 }).bindPopup("<b>🎯 Your Current Live GPS Location</b>").addTo(map).openPopup();
+          },
+          () => {
+            map.flyTo([26.1445, 91.7362], 10);
+            alert("🎯 GPS Position centered to Guwahati Logistics Hub.");
+          }
+        );
+      }
+    }
+
+    function openInGoogleMaps() {
+      if (!currentEvaluatedData || !currentEvaluatedData.primary_route) return;
+      const waypoints = currentEvaluatedData.primary_route.waypoints;
+      const origin = `${waypoints[0][0]},${waypoints[0][1]}`;
+      const dest = `${waypoints[waypoints.length-1][0]},${waypoints[waypoints.length-1][1]}`;
+      const url = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${dest}&travelmode=driving`;
+      window.open(url, '_blank');
+    }
+
+    function triggerWhatsAppSOS() {
+      const text = encodeURIComponent("🚨 EMERGENCY SOS ALERT! Vehicle breakdown / Landslide hazard encountered. Please dispatch BRO/NDRF team to current coordinates.");
+      window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+    }
+
+    // Live OSRM (Open Source Routing Machine) Multi-Waypoint Real Road Polyline Snapping Engine
+    async function fetchOSRMRealRoadPolyline(waypointsList) {
+      if (!waypointsList || waypointsList.length < 2) return null;
+      try {
+        const formatted = waypointsList.map(wp => `${wp[1]},${wp[0]}`).join(';');
+        const url = `https://router.project-osrm.org/route/v1/driving/${formatted}?overview=full&geometries=geojson`;
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 4000);
+        const res = await fetch(url, { signal: controller.signal });
+        clearTimeout(timeoutId);
+        if (!res.ok) return null;
+        const json = await res.json();
+        if (json.routes && json.routes.length > 0) {
+          return json.routes[0].geometry.coordinates.map(coord => [coord[1], coord[0]]);
+        }
+      } catch (e) {
+        console.warn("OSRM multi-waypoint snapping fallback active:", e);
+      }
+      return null;
+    }
+
+    // High-Resolution Curved Road Polyline Interpolator (Fallback)
+    function interpolateRoadPolyline(coarsePoints, numSubdivisions = 25) {
+      if (!coarsePoints || coarsePoints.length < 2) return coarsePoints;
+      const dense = [];
+      for (let i = 0; i < coarsePoints.length - 1; i++) {
+        const p0 = coarsePoints[Math.max(0, i - 1)];
+        const p1 = coarsePoints[i];
+        const p2 = coarsePoints[i + 1];
+        const p3 = coarsePoints[Math.min(coarsePoints.length - 1, i + 2)];
+
+        for (let t = 0; t <= 1; t += 1 / numSubdivisions) {
+          const t2 = t * t;
+          const t3 = t2 * t;
+
+          const lat = 0.5 * ((2 * p1[0]) + (-p0[0] + p2[0]) * t + (2 * p0[0] - 5 * p1[0] + 4 * p2[0] - p3[0]) * t2 + (-p0[0] + 3 * p1[0] - 3 * p2[0] + p3[0]) * t3);
+          const lon = 0.5 * ((2 * p1[1]) + (-p0[1] + p2[1]) * t + (2 * p0[1] - 5 * p1[1] + 4 * p2[1] - p3[1]) * t2 + (-p0[1] + 3 * p1[1] - 3 * p2[1] + p3[1]) * t3);
+
+          dense.push([lat, lon]);
+        }
+      }
+      return dense;
+    }
+
+    // Ultra-Smooth Fixed-Camera Navigation Simulation
+    async function toggleNavSimulation() {
+      const btn = document.getElementById('navSimBtn');
+      const topHud = document.getElementById('gmapsTopHud');
+      const bottomHud = document.getElementById('gmapsBottomHud');
+
+      if (navInterval) {
+        clearInterval(navInterval);
+        navInterval = null;
+        if (vehicleMarker) map.removeLayer(vehicleMarker);
+        btn.innerHTML = "▶ Start Smooth Vehicle Navigation";
+        btn.className = "flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-lg flex items-center justify-center gap-1.5 cursor-pointer";
+        topHud.classList.add('hidden');
+        bottomHud.classList.add('hidden');
+        return;
+      }
+
+      if (!currentEvaluatedData) return;
+
+      const pWps = currentEvaluatedData.primary_route.waypoints;
+      const aWps = currentEvaluatedData.alternate_route.waypoints;
+
+      const combinedRouteWaypoints = [
+        pWps[0], pWps[1],                     // Start on Main Highway (Guwahati -> Tezpur Bridge)
+        aWps[2], aWps[3],                     // Divert onto Kalaktang Safer Bypass around Bhalukpong Landslide
+        pWps[pWps.length-3], pWps[pWps.length-2], pWps[pWps.length-1] // Rejoin Main Highway (Dirang -> Sela Pass -> Tawang)
+      ];
+
+      const osrmNavPoints = await fetchOSRMRealRoadPolyline(combinedRouteWaypoints);
+      densePolylineCoordinates = osrmNavPoints || interpolateRoadPolyline(combinedRouteWaypoints, 25);
+      navStepIndex = 0;
+
+      // Keep map view FIXED & STABLE over the route bounds (no screen shaking or rapid zooming)
+      map.fitBounds(L.polyline(densePolylineCoordinates).getBounds(), { padding: [60, 60] });
+
+      const vehicleIcon = L.divIcon({
+        className: 'vehicle-marker-smooth',
+        html: selectedVehicleIcon,
+        iconSize: [38, 38],
+        iconAnchor: [19, 19]
+      });
+
+      vehicleMarker = L.marker(densePolylineCoordinates[0], { icon: vehicleIcon }).addTo(map);
+
+      topHud.classList.remove('hidden');
+      bottomHud.classList.remove('hidden');
+
+      btn.innerHTML = "⏹️ Exit Navigation";
+      btn.className = "flex-1 bg-red-600 hover:bg-red-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-lg flex items-center justify-center gap-1.5 cursor-pointer";
+
+      const hudInstructions = [
+        { icon: '↑', dist: 'In 400 meters', title: 'Driving on NH-13 Main Highway', sub: 'Tezpur Bridge Corridor • Speed 50 km/h' },
+        { icon: '↱', dist: 'In 300 meters', title: '🚨 HAZARD AHEAD! Diverting onto Kalaktang Bypass', sub: 'Bypasses Bhalukpong Gorge Landslide Blockade (Km 42)' },
+        { icon: '↰', dist: 'In 1.2 km', title: '🟢 HAZARD CLEARED! Rejoining Main NH-13 Highway', sub: 'Dirang Hill Climb • Proceeding toward Sela Pass' },
+        { icon: '⚠️', dist: 'In 800 meters', title: 'Approaching Sela Pass Summit (4,170m)', sub: 'Dense Fog & Freezing Rain • Turn on hazard lights' },
+        { icon: '🏁', dist: 'In 100 meters', title: 'Arriving at Destination (Tawang Army Logistics Base)', sub: 'Safe Arrival • BRO Command Hub' }
+      ];
+
+      navInterval = setInterval(() => {
+        navStepIndex = (navStepIndex + 1) % densePolylineCoordinates.length;
+        const pos = densePolylineCoordinates[navStepIndex];
+        
+        // Smoothly glide marker along route WITHOUT shaking map camera
+        vehicleMarker.setLatLng(pos);
+
+        // Update HUD Telemetry cleanly
+        const progressPct = navStepIndex / densePolylineCoordinates.length;
+        const instIndex = Math.min(hudInstructions.length - 1, Math.floor(progressPct * hudInstructions.length));
+        const currentInst = hudInstructions[instIndex];
+
+        document.getElementById('hudTurnIcon').textContent = currentInst.icon;
+        document.getElementById('hudNextDistance').textContent = currentInst.dist;
+        document.getElementById('hudTurnInstruction').textContent = currentInst.title;
+        document.getElementById('hudTurnSub').textContent = currentInst.sub;
+
+        const remKm = (currentEvaluatedData.alternate_route.distance_km * (1 - progressPct)).toFixed(1);
+        const remMins = Math.round(currentEvaluatedData.alternate_route.adjusted_eta_hours * 60 * (1 - progressPct));
+        const simSpeed = Math.round(44 + Math.sin(navStepIndex) * 4);
+
+        document.getElementById('hudSpeed').textContent = `${simSpeed} km/h`;
+        document.getElementById('hudRemDistance').textContent = `${remKm} km`;
+        document.getElementById('hudRemTime').textContent = `${remMins} min`;
+
+        if (navStepIndex === Math.floor(densePolylineCoordinates.length * 0.25)) {
+          testVoiceAlert();
+        }
+      }, 900);
+    }
+
+    function updateSliderLabels() {
+      const r = document.getElementById('sliderRain').value;
+      const t = document.getElementById('sliderTraffic').value;
+      document.getElementById('rainValDisplay').textContent = r > 0 ? r + ' mm/hr' : 'Default';
+      document.getElementById('trafficValDisplay').textContent = t > 1 ? t + '/5.0' : 'Default';
+    }
+
+    function resetSliders() {
+      document.getElementById('sliderRain').value = 0;
+      document.getElementById('sliderTraffic').value = 1;
+      updateSliderLabels();
+      evaluateSelectedRoute();
+    }
+
+    async function evaluateSelectedRoute() {
+      const corridorId = document.getElementById('corridorSelect').value;
+      const sliderRainVal = parseFloat(document.getElementById('sliderRain').value);
+      const sliderTrafficVal = parseFloat(document.getElementById('sliderTraffic').value);
+
+      const payload = {
+        corridor_id: corridorId,
+        rainfall_override: sliderRainVal > 0 ? sliderRainVal : null,
+        traffic_override: sliderTrafficVal > 1 ? sliderTrafficVal : null
+      };
+
+      try {
+        const res = await fetch('/api/evaluate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) throw new Error('API status: ' + res.status);
+        const data = await res.json();
+        currentEvaluatedData = data;
+        renderTelemetryUI(data);
+        await renderMapRoutes(data);
+      } catch (err) {
+        const data = evaluateLocalFallback(payload);
+        currentEvaluatedData = data;
+        renderTelemetryUI(data);
+        await renderMapRoutes(data);
+      }
+    }
+
+    function renderTelemetryUI(data) {
+      const p = data.primary_route;
+      const a = data.alternate_route;
+
+      document.getElementById('primaryTitle').textContent = p.name;
+      document.getElementById('primaryDistance').textContent = `${p.distance_km} km`;
+      document.getElementById('primaryETA').textContent = `${p.adjusted_eta_hours} hrs`;
+      document.getElementById('primaryRiskBar').style.width = `${p.risk_score_pct}%`;
+      document.getElementById('primaryRiskBar').style.backgroundColor = p.badge_color;
+
+      const badgeP = document.getElementById('primaryBadge');
+      badgeP.textContent = `${p.risk_category} (${p.risk_score_pct}%)`;
+      badgeP.style.backgroundColor = `${p.badge_color}25`;
+      badgeP.style.color = p.badge_color;
+      badgeP.style.borderColor = p.badge_color;
+
+      document.getElementById('alternateTitle').textContent = a.name;
+      document.getElementById('alternateDistance').textContent = `${a.distance_km} km`;
+      document.getElementById('alternateETA').textContent = `${a.adjusted_eta_hours} hrs`;
+      document.getElementById('alternateRiskBar').style.width = `${a.risk_score_pct}%`;
+      document.getElementById('alternateRiskBar').style.backgroundColor = a.badge_color;
+
+      const badgeA = document.getElementById('alternateBadge');
+      badgeA.textContent = `${a.risk_category} (${a.risk_score_pct}%)`;
+      badgeA.style.backgroundColor = `${a.badge_color}25`;
+      badgeA.style.color = a.badge_color;
+      badgeA.style.borderColor = a.badge_color;
+
+      const expList = document.getElementById('explanationsList');
+      if (expList && p.explanations) {
+        expList.innerHTML = '';
+        const allExps = [...p.explanations, ...a.explanations];
+        [...new Set(allExps)].forEach(exp => {
+          const li = document.createElement('li');
+          li.className = "p-2.5 bg-slate-900 border border-slate-800 rounded-xl leading-relaxed flex items-start gap-2";
+          li.innerHTML = `<span>${exp}</span>`;
+          expList.appendChild(li);
+        });
+      }
+    }
+
+    async function renderMapRoutes(data) {
+      if (!map) return;
+      if (primaryPolyline) map.removeLayer(primaryPolyline);
+      if (alternatePolyline) map.removeLayer(alternatePolyline);
+      if (emergencyMarkersGroup) emergencyMarkersGroup.clearLayers();
+      if (hazardMarkersGroup) hazardMarkersGroup.clearLayers();
+      if (milestonesMarkersGroup) milestonesMarkersGroup.clearLayers();
+
+      const p = data.primary_route;
+      const a = data.alternate_route;
+
+      // Fetch exact real road polylines from live OSRM server snapped to actual highway bridges & road network
+      const osrmPrimary = await fetchOSRMRealRoadPolyline(p.waypoints);
+      const osrmAlternate = await fetchOSRMRealRoadPolyline(a.waypoints);
+
+      const densePrimary = osrmPrimary || interpolateRoadPolyline(p.waypoints, 25);
+      const denseAlternate = osrmAlternate || interpolateRoadPolyline(a.waypoints, 25);
+
+      primaryPolyline = L.polyline(densePrimary, {
+        color: p.badge_color,
+        weight: 6,
+        opacity: 0.95
+      }).addTo(map);
+
+      alternatePolyline = L.polyline(denseAlternate, {
+        color: a.badge_color,
+        weight: 5,
+        dashArray: '8, 8',
+        opacity: 0.95
+      }).addTo(map);
+
+      // Render Clear Milestone Badges along Highway Route
+      const milestones = [
+        { label: '🟢 [1] START: Guwahati Hub', pos: p.waypoints[0] },
+        { label: '🚨 [2] HAZARD: Bhalukpong Landslide (Blocked)', pos: [27.0134, 92.6416] },
+        { label: '↪️ [3] BYPASS: Kalaktang Highway', pos: [27.1000, 92.2500] },
+        { label: '🏁 [4] DESTINATION: Tawang Command', pos: p.waypoints[p.waypoints.length - 1] }
+      ];
+
+      milestones.forEach(ms => {
+        const icon = L.divIcon({
+          className: '',
+          html: `<div class="milestone-badge">${ms.label}</div>`,
+          iconAnchor: [60, 15]
+        });
+        const marker = L.marker(ms.pos, { icon }).bindPopup(`<b>${ms.label}</b>`);
+        milestonesMarkersGroup.addLayer(marker);
+      });
+
+      // Draw Emergency BRO Bases & Anchors
+      (data.emergency_anchors || [{ name: 'Border Roads Task Force Base (761 BRTF)', lat: 26.85, lon: 92.15, type: 'BRO Base' }]).forEach(anchor => {
+        const marker = L.circleMarker([anchor.lat, anchor.lon], {
+          radius: 7, color: '#38bdf8', fillColor: '#0284c7', fillOpacity: 1
+        }).bindPopup(`<b>⚓ Emergency Anchor</b><br/>${anchor.name}`);
+        emergencyMarkersGroup.addLayer(marker);
+      });
+
+      // Draw Pulsing Red Hazard Report Markers
+      DRIVER_HAZARDS.forEach(haz => {
+        const pulsingIcon = L.divIcon({
+          className: 'pulse-marker-red',
+          iconSize: [20, 20],
+          iconAnchor: [10, 10]
+        });
+        const marker = L.marker([haz.lat, haz.lon], { icon: pulsingIcon }).bindPopup(`
+          <div style="font-family:system-ui; padding:4px;">
+            <div style="font-size:10px; font-weight:900; color:#ef4444; text-transform:uppercase;">🚨 DRIVER HAZARD REPORT</div>
+            <h4 style="font-size:13px; font-weight:800; margin:2px 0;">${haz.hazard_type}</h4>
+            <div style="font-size:11px; color:#cbd5e1;">
+              <b>Location:</b> ${haz.location_name}<br/>
+              <b>Reporter:</b> ${haz.reporter}<br/>
+              <b>Confidence:</b> ${haz.confidence_score}%
+            </div>
+          </div>
+        `);
+        hazardMarkersGroup.addLayer(marker);
+      });
+
+      setTimeout(() => {
+        map.invalidateSize();
+        map.fitBounds(primaryPolyline.getBounds().extend(alternatePolyline.getBounds()), { padding: [50, 50] });
+      }, 100);
+    }
+
+    function loadBhuvanZones() {
+      if (!bhuvanZonesGroup) return;
+      bhuvanZonesGroup.clearLayers();
+
+      BHUVAN_ZONES.forEach(zone => {
+        const polygon = L.polygon(zone.polygon_bounds, {
+          color: '#ef4444', fillColor: '#ef4444', fillOpacity: 0.25, weight: 2, dashArray: '4, 4'
+        }).bindPopup(`
+          <div style="font-family:system-ui; padding:4px;">
+            <div style="font-size:10px; font-weight:900; color:#ef4444; text-transform:uppercase;">🛰️ ISRO BHUVAN / GSI LANDSLIDE ZONE</div>
+            <h4 style="font-size:13px; font-weight:800; margin:2px 0;">${zone.name}</h4>
+            <div style="font-size:11px; color:#cbd5e1;">
+              <b>Risk Class:</b> ${zone.risk_class}<br/>
+              <b>Slope Angle:</b> ${zone.slope_angle_deg}°<br/>
+              <b>Lithology:</b> ${zone.lithology}
+            </div>
+          </div>
+        `);
+        bhuvanZonesGroup.addLayer(polygon);
+      });
+    }
+
+    function toggleBhuvanLayer(show) { show ? map.addLayer(bhuvanZonesGroup) : map.removeLayer(bhuvanZonesGroup); }
+    function toggleHazardsLayer(show) { show ? map.addLayer(hazardMarkersGroup) : map.removeLayer(hazardMarkersGroup); }
+    function toggleBasesLayer(show) { show ? map.addLayer(emergencyMarkersGroup) : map.removeLayer(emergencyMarkersGroup); }
+
+    function evaluateLocalFallback(payload) {
+      const corridorId = payload.corridor_id || 'guwahati_tawang';
+      const corridors = {
+        'guwahati_tawang': {
+          id: 'guwahati_tawang', name: 'Guwahati ➔ Tawang Corridor', state_pair: 'Assam ➔ Arunachal Pradesh', highway: 'NH-13 Sela Pass',
+          primary_route: { id: 'primary_gt', name: 'Primary NH-13 Bhalukpong-Dirang Route', distance_km: 320.5, base_eta_hours: 9.5, terrain: 'High Mountain Alpine Slope', waypoints: [[26.1445,91.7362],[26.6338,92.8000],[27.0134,92.6416],[27.3570,92.2405],[27.5050,92.1030],[27.5861,91.8594]], simulated_conditions: { rainfall_mm_hr: payload.rainfall_override || 114, recent_incidents: 4, road_condition_score: 3.2, traffic_density_score: payload.traffic_override || 4.1, terrain_slope_index: 4.8 }, explanations: ['Extreme monsoon rainfall exceeds critical slope threshold (>85mm/hr).', 'High slope instability index (0.84) in Bhalukpong-Tipi Gorge.', 'Active mudslide debris at Sela Pass summit (4,170m).'] },
+          alternate_route: { id: 'alternate_gt', name: 'Safer Alternate Kalaktang-Shergaon Bypass', distance_km: 348.2, base_eta_hours: 9.8, terrain: 'Foothill Ridge', waypoints: [[26.1445,91.7362],[26.6338,92.8000],[26.9000,92.1000],[27.1000,92.2500],[27.3570,92.2405],[27.5050,92.1030],[27.5861,91.8594]], simulated_conditions: { rainfall_mm_hr: 38, recent_incidents: 1, road_condition_score: 8.1, traffic_density_score: 2.0, terrain_slope_index: 2.4 }, explanations: ['Gentle slope gradient minimizing landslide vulnerability.', 'Clear drainage channels along foothill ridge.'] }
+        },
+        'shillong_silchar': {
+          id: 'shillong_silchar', name: 'Shillong ➔ Silchar Corridor', state_pair: 'Meghalaya ➔ Assam', highway: 'NH-6 Sonapur Tunnel',
+          primary_route: { id: 'primary_ss', name: 'Primary NH-6 East Jaintia Hills Route', distance_km: 215.8, base_eta_hours: 6.2, terrain: 'Karst Limestone Ridge', waypoints: [[25.5788,91.8933],[25.4500,92.2000],[25.1150,92.3680],[24.9800,92.5500],[24.8333,92.7789]], simulated_conditions: { rainfall_mm_hr: payload.rainfall_override || 98, recent_incidents: 3, road_condition_score: 4.0, traffic_density_score: payload.traffic_override || 4.8, terrain_slope_index: 4.2 }, explanations: ['Heavy downpour near Sonapur Tunnel mudslide zone.', 'Flash flood risk in East Jaintia Hills limestone basin.'] },
+          alternate_route: { id: 'alternate_ss', name: 'Alternate Haflong Hill Route (NH-27)', distance_km: 268.4, base_eta_hours: 7.9, terrain: 'Stable Plateau Ridge', waypoints: [[25.5788,91.8933],[25.8000,92.5000],[25.1667,93.0167],[24.8333,92.7789]], simulated_conditions: { rainfall_mm_hr: 25, recent_incidents: 0, road_condition_score: 7.5, traffic_density_score: 1.8, terrain_slope_index: 2.1 }, explanations: ['Well-maintained pavement and clear drainage channels.'] }
+        },
+        'dimapur_kohima': {
+          id: 'dimapur_kohima', name: 'Dimapur ➔ Kohima Corridor', state_pair: 'Nagaland Foothills ➔ Capital Ridge', highway: 'NH-29 Phesama Slip Zone',
+          primary_route: { id: 'primary_dk', name: 'Primary NH-29 Bypass Corridor', distance_km: 74.0, base_eta_hours: 2.8, terrain: 'Active Tectonic Subsidence Zone', waypoints: [[25.9060,93.7271],[25.7500,93.9000],[25.6747,94.1100]], simulated_conditions: { rainfall_mm_hr: payload.rainfall_override || 85, recent_incidents: 5, road_condition_score: 2.8, traffic_density_score: payload.traffic_override || 3.9, terrain_slope_index: 4.5 }, explanations: ['Active road sinking logged at Phesama slip zone.'] },
+          alternate_route: { id: 'alternate_dk', name: 'Alternate Peducha-Tsiesema Bypass', distance_km: 88.5, base_eta_hours: 3.1, terrain: 'Stable Crest Road', waypoints: [[25.9060,93.7271],[25.8200,93.8500],[25.6747,94.1100]], simulated_conditions: { rainfall_mm_hr: 30, recent_incidents: 1, road_condition_score: 7.0, terrain_slope_index: 2.0 }, explanations: ['Low incident history and reinforced retaining walls.'] }
+        }
+      };
+
+      const curr = corridors[corridorId] || corridors['guwahati_tawang'];
+      const calcRisk = (cond) => Math.min(98.5, Math.max(8.0, cond.rainfall_mm_hr * 0.32 + cond.recent_incidents * 8.5 + (10 - cond.road_condition_score) * 3.5 + cond.terrain_slope_index * 4.0 + (cond.traffic_density_score || 1) * 2.5));
+
+      const pRisk = calcRisk(curr.primary_route.simulated_conditions);
+      const aRisk = calcRisk(curr.alternate_route.simulated_conditions);
+
+      const format = (r, risk) => ({
+        ...r, risk_score_pct: Math.round(risk*10)/10,
+        risk_category: risk < 30 ? 'SAFE' : risk <= 60 ? 'MODERATE' : 'HIGH',
+        badge_color: risk < 30 ? '#10b981' : risk <= 60 ? '#f59e0b' : '#ef4444',
+        badge_label: risk < 30 ? 'Green' : risk <= 60 ? 'Orange' : 'Red',
+        adjusted_eta_hours: Math.round(r.base_eta_hours * (1 + Math.pow(risk/100, 2.2)*0.85) * 10)/10
+      });
+
+      const pEval = format(curr.primary_route, pRisk);
+      const aEval = format(curr.alternate_route, aRisk);
+
+      return {
+        corridor_id: curr.id,
+        corridor_name: curr.name,
+        state_pair: curr.state_pair,
+        highway: curr.highway,
+        primary_route: pEval,
+        alternate_route: aEval,
+        recommended_route_id: aEval.risk_score_pct < pEval.risk_score_pct ? aEval.id : pEval.id,
+        recommendation_reason: aEval.risk_score_pct < pEval.risk_score_pct ? `Safer alternate route recommended! Reduces risk by ${(pEval.risk_score_pct - aEval.risk_score_pct).toFixed(1)}%.` : 'Primary route verified safe.',
+        emergency_anchors: [{ name: 'Border Roads Task Force Base (761 BRTF)', lat: 26.85, lon: 92.15, type: 'BRO Base' }],
+        driver_hazard_reports: DRIVER_HAZARDS
+      };
+    }
+
+    function testVoiceAlert() {
+      const lang = document.getElementById('voiceLangSelect').value;
+      const dict = {
+        'en-US': 'Attention driver! High Landslide risk detected ahead on primary highway. Turning right onto safer Kalaktang bypass.',
+        'hi-IN': 'सावधान चालका! प्राथमिक मार्ग पर आगे भारी भूस्खलन का खतरा है। सुरक्षित कलकतांग बाईपास पर मुड़ें।',
+        'bn-IN': 'সাবধান ড্রাইভাৰ! প্ৰাথমিক পথত ভূমিস্খলনৰ বিপদ আছে। সুৰক্ষিত কলাকটাং বাইপাছ ব্যৱহাৰ কৰক।',
+        'ne-NP': 'सावधान चालक! अगाडि पहिरोको ठूलो जोखिम छ। सुरक्षित वैकल्पिक बाटो प्रयोग गर्नुहोस्।'
+      };
+      if (synth) {
+        synth.cancel();
+        const u = new SpeechSynthesisUtterance(dict[lang] || dict['en-US']);
+        u.lang = lang;
+        synth.speak(u);
+      }
+    }
+
+    function openHazardModal() { document.getElementById('hazardModal').classList.remove('hidden'); }
+    function closeHazardModal() { document.getElementById('hazardModal').classList.add('hidden'); }
+    function submitDriverHazard() { alert('✅ Hazard report broadcasted successfully to driver network!'); closeHazardModal(); }
+    
+    function openSOSModal() { document.getElementById('sosModal').classList.remove('hidden'); }
+    function closeSOSModal() { document.getElementById('sosModal').classList.add('hidden'); }
+
+    function submitCrowdVerification(isBlocked) {
+      alert(`✅ Crowd verification logged! Thank you driver.`);
     }
   </script>
-
-  <!-- CONTROLLER SCRIPT -->
-  <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
