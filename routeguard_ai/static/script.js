@@ -59,6 +59,14 @@ function initLeafletMap() {
   emergencyMarkersGroup = L.layerGroup().addTo(map);
   hazardMarkersGroup = L.layerGroup().addTo(map);
   bhuvanZonesGroup = L.layerGroup().addTo(map);
+
+  setTimeout(() => {
+    if (map) map.invalidateSize();
+  }, 250);
+
+  window.addEventListener('resize', () => {
+    if (map) map.invalidateSize();
+  });
 }
 
 // Setup Event Listeners
