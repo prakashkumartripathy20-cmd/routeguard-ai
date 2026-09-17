@@ -76,9 +76,9 @@
       </div>
       <div>
         <h1 class="font-extrabold text-base md:text-lg tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent flex items-center gap-2">
-          RouteGuard AI <span class="text-[10px] font-semibold uppercase tracking-wider text-emerald-400 px-2 py-0.5 rounded-full bg-emerald-950 border border-emerald-800">Google Maps Navigation Engine</span>
+          RouteGuard AI <span class="text-[10px] font-semibold uppercase tracking-wider text-emerald-400 px-2 py-0.5 rounded-full bg-emerald-950 border border-emerald-800">OSRM Real Road Snapped Engine</span>
         </h1>
-        <p class="text-[11px] text-slate-400 hidden sm:block">Real Road Polyline GIS • Altitude Telemetry • Native Indian Highway Safety</p>
+        <p class="text-[11px] text-slate-400 hidden sm:block">Exact Road Polyline GIS • OSRM Snapping • Native Indian Highway Safety</p>
       </div>
     </div>
 
@@ -166,7 +166,7 @@
       <section class="bg-slate-950 border border-slate-800 rounded-2xl p-3 shadow-xl">
         <div class="text-xs font-bold text-slate-300 mb-2 flex items-center justify-between">
           <span>🚛 Select Vehicle Type:</span>
-          <span id="vehicleTypeBadge" class="text-[10px] bg-cyan-950 text-cyan-400 px-2 py-0.5 rounded border border-cyan-800 font-mono">Truck (Convoy Mode)</span>
+          <span id="vehicleTypeBadge" class="text-[10px] bg-cyan-950 text-cyan-400 px-2 py-0.5 rounded border border-cyan-800 font-mono font-bold">Truck (Convoy Mode)</span>
         </div>
         <div class="grid grid-cols-4 gap-1.5 text-xs">
           <button onclick="selectVehicle('truck', '🚚 Heavy Truck', '35 km/h')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-center flex flex-col items-center gap-1 cursor-pointer">
@@ -672,7 +672,27 @@
       window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
     }
 
-    // High-Resolution Curved Road Polyline Interpolator (Catmull-Rom Spline)
+    // Live OSRM (Open Source Routing Machine) Real Road Polyline Snapping Engine
+    async function fetchOSRMRealRoadPolyline(startCoords, endCoords) {
+      try {
+        const url = `https://router.project-osrm.org/route/v1/driving/${startCoords[1]},${startCoords[0]};${endCoords[1]},${endCoords[0]}?overview=full&geometries=geojson`;
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 4000);
+        const res = await fetch(url, { signal: controller.signal });
+        clearTimeout(timeoutId);
+        if (!res.ok) return null;
+        const json = await res.json();
+        if (json.routes && json.routes.length > 0) {
+          // OSRM returns GeoJSON coordinates as [lon, lat]. Convert to Leaflet [lat, lon]
+          return json.routes[0].geometry.coordinates.map(coord => [coord[1], coord[0]]);
+        }
+      } catch (e) {
+        console.warn("OSRM direct snapping fallback active:", e);
+      }
+      return null;
+    }
+
+    // High-Resolution Curved Road Polyline Interpolator (Catmull-Rom Spline Fallback)
     function interpolateRoadPolyline(coarsePoints, numSubdivisions = 25) {
       if (!coarsePoints || coarsePoints.length < 2) return coarsePoints;
       const dense = [];
@@ -805,12 +825,12 @@
         const data = await res.json();
         currentEvaluatedData = data;
         renderTelemetryUI(data);
-        renderMapRoutes(data);
+        await renderMapRoutes(data);
       } catch (err) {
         const data = evaluateLocalFallback(payload);
         currentEvaluatedData = data;
         renderTelemetryUI(data);
-        renderMapRoutes(data);
+        await renderMapRoutes(data);
       }
     }
 
@@ -855,7 +875,7 @@
       }
     }
 
-    function renderMapRoutes(data) {
+    async function renderMapRoutes(data) {
       if (!map) return;
       if (primaryPolyline) map.removeLayer(primaryPolyline);
       if (alternatePolyline) map.removeLayer(alternatePolyline);
@@ -865,8 +885,17 @@
       const p = data.primary_route;
       const a = data.alternate_route;
 
-      const densePrimary = interpolateRoadPolyline(p.waypoints, 25);
-      const denseAlternate = interpolateRoadPolyline(a.waypoints, 25);
+      const pStart = p.waypoints[0];
+      const pEnd = p.waypoints[p.waypoints.length - 1];
+      const aStart = a.waypoints[0];
+      const aEnd = a.waypoints[a.waypoints.length - 1];
+
+      // Try fetching exact real road polylines from live OSRM server snapped to actual highways
+      const osrmPrimary = await fetchOSRMRealRoadPolyline(pStart, pEnd);
+      const osrmAlternate = await fetchOSRMRealRoadPolyline(aStart, aEnd);
+
+      const densePrimary = osrmPrimary || interpolateRoadPolyline(p.waypoints, 25);
+      const denseAlternate = osrmAlternate || interpolateRoadPolyline(a.waypoints, 25);
 
       primaryPolyline = L.polyline(densePrimary, {
         color: p.badge_color,
